@@ -2,16 +2,15 @@
 
 namespace NBDGreenerGrass.Models
 {
-    public class BidLabour
-    {
+    public class BidMaterial
+    { 
 
-        [Required(ErrorMessage = "Labour ID is required")]
-        public int LabourID { get; set; }
-        public Labour Labour { get; set; }
+        [Required(ErrorMessage = "Inventory ID is required")]
+        public int InventoryID { get; set; }
+        public Inventory inventory { get; set; }
 
         [Required(ErrorMessage = "Bid ID is required")]
         public int BidID { get; set; }
         public Bid Bid { get; set; }
-
     }
 }
