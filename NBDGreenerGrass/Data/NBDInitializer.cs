@@ -76,7 +76,7 @@ namespace NBDGreenerGrass.Data
                             EndDate = DateTime.Now.AddDays(7),
                             Location = "789 Fake Street",
                             Amount = 3000,
-                            ClientID = context.Clients.FirstOrDefault(c => c.FirstName == "Bob").ID
+                            ClientID = context.Clients.FirstOrDefault(c => c.FirstName == "Jane").ID
                         });
                         context.SaveChanges();
                 }
