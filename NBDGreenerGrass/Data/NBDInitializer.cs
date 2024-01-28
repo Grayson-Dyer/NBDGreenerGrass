@@ -72,6 +72,7 @@ namespace NBDGreenerGrass.Data
                         },
                         new Project
                         {
+                            //Edited this project
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(7),
                             Location = "789 Fake Street",
