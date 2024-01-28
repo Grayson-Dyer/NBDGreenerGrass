@@ -11,8 +11,8 @@ using NBDGreenerGrass.Data;
 namespace NBDGreenerGrass.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240127084142_Initial")]
-    partial class Initial
+    [Migration("20240128234906_ChangesToBidLabourAndProject")]
+    partial class ChangesToBidLabourAndProject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,9 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("LabourID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HoursWorked")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("BidID", "LabourID");
@@ -173,6 +176,9 @@ namespace NBDGreenerGrass.Data.NBDMigrations
 
                     b.Property<int>("ClientID")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateMade")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");

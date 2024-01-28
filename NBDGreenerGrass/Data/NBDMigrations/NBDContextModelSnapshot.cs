@@ -51,6 +51,9 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.Property<int>("LabourID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("HoursWorked")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("BidID", "LabourID");
 
                     b.HasIndex("LabourID");
@@ -170,6 +173,9 @@ namespace NBDGreenerGrass.Data.NBDMigrations
 
                     b.Property<int>("ClientID")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DateMade")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");

@@ -15,7 +15,7 @@ namespace NBDGreenerGrass.Data
             try
             {
                 context.Database.EnsureDeleted();
-                context.Database.Migrate();
+                context.Database.EnsureCreated();
 
                 Random random = new Random();
 
@@ -59,6 +59,7 @@ namespace NBDGreenerGrass.Data
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(7),
                             Location = "123 Fake Street",
+                            DateMade = DateTime.Now,
                             Amount = 1000,
                             ClientID = context.Clients.FirstOrDefault(c => c.FirstName == "John").ID
                         },
@@ -67,6 +68,7 @@ namespace NBDGreenerGrass.Data
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(7),
                             Location = "456 Fake Street",
+                            DateMade = DateTime.Now,
                             Amount = 2000,
                             ClientID = context.Clients.FirstOrDefault(c => c.FirstName == "Jane").ID
                         },
@@ -75,13 +77,15 @@ namespace NBDGreenerGrass.Data
                             StartDate = DateTime.Now,
                             EndDate = DateTime.Now.AddDays(7),
                             Location = "789 Fake Street",
+                            DateMade = DateTime.Now,
                             Amount = 3000,
                             ClientID = context.Clients.FirstOrDefault(c => c.FirstName == "Bob").ID
-                        });
+                        }) ;
                         context.SaveChanges();
                 }
-
-            } catch (Exception ex)
+                context.Database.Migrate();
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.GetBaseException().Message);
             }

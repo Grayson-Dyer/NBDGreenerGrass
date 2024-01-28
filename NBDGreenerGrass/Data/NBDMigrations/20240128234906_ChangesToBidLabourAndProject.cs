@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NBDGreenerGrass.Data.NBDMigrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class ChangesToBidLabourAndProject : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -82,6 +82,7 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateMade = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Location = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     ClientID = table.Column<int>(type: "INTEGER", nullable: false)
@@ -153,7 +154,8 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                 columns: table => new
                 {
                     LabourID = table.Column<int>(type: "INTEGER", nullable: false),
-                    BidID = table.Column<int>(type: "INTEGER", nullable: false)
+                    BidID = table.Column<int>(type: "INTEGER", nullable: false),
+                    HoursWorked = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

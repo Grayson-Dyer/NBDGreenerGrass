@@ -17,6 +17,11 @@ namespace NBDGreenerGrass.Models
         [Required(ErrorMessage = "Project End Date is required")]
         public DateTime EndDate { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Date project was made is required")]
+        public DateTime DateMade { get; set; }
+
         [Required(ErrorMessage = "Project Location is required")]
         [StringLength(100, ErrorMessage = "Project Location should be at most 100 characters")]
         public string Location { get; set; }
