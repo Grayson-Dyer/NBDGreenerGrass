@@ -20,8 +20,11 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Client
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, int? ClientID)
         {
+            
+            PopulateDropDownLists();
+
               return View(await _context.Clients.ToListAsync());
         }
 
@@ -153,9 +156,25 @@ namespace NBDGreenerGrass.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClientExists(int id)
+        //This is a twist on the PopulateDropDownLists approach
+        //  Create methods that return each SelectList separately
+        //  and one method to put them all into ViewData.
+        //This approach allows for AJAX requests to refresh
+        //DDL Data at a later date.
+        private SelectList ClientSelectList(int? selectedId)
         {
-          return _context.Clients.Any(e => e.ID == id);
+            return new SelectList(_context.Clients
+                .OrderBy(d => d.LastName)
+                .ThenBy(d => d.FirstName), "ID", "ContactRole", selectedId);
+        }
+        private void PopulateDropDownLists(Client client = null)
+        {
+            ViewData["ClientID"] = ClientSelectList(client?.ID);
+            
+        }
+        private bool ClientExists(int Clientid)
+        {
+          return _context.Clients.Any(e => e.ID == Clientid);
         }
     }
 }
