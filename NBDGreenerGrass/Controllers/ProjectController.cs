@@ -20,8 +20,11 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, int? ProjectID)
         {
+
+            PopulateDropDownLists();
+
             var nBDContext = _context.Projects.Include(p => p.Client);
             return View(await nBDContext.ToListAsync());
         }
@@ -158,6 +161,25 @@ namespace NBDGreenerGrass.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+
+        //This is a twist on the PopulateDropDownLists approach
+        //  Create methods that return each SelectList separately
+        //  and one method to put them all into ViewData.
+        //This approach allows for AJAX requests to refresh
+        //DDL Data at a later date.
+
+        private SelectList ProjectSelectList(int? selectedId)
+        {
+            return new SelectList(_context.Projects
+                
+                .OrderBy(d => d.Location), "ID", "Location", selectedId);
+        }
+        private void PopulateDropDownLists(Project project = null)
+        {
+            ViewData["ProjectID"] = ProjectSelectList(project?.ID);
+
         }
 
         private bool ProjectExists(int id)
