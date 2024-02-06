@@ -7,16 +7,19 @@ namespace NBDGreenerGrass.Models
         
         public int ID { get; set; }
 
+        [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Project Start Date is required")]
         public DateTime StartDate { get; set; }
 
+        [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Project End Date is required")]
         public DateTime EndDate { get; set; }
 
+        [Display(Name = "Date Made")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Date project was made is required")]
