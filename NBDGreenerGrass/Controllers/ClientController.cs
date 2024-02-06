@@ -25,7 +25,7 @@ namespace NBDGreenerGrass.Controllers
             
             PopulateDropDownLists();
 
-              return View(await _context.Clients.ToListAsync());
+            return View(await _context.Clients.ToListAsync());
         }
 
         // GET: Client/Details/5
