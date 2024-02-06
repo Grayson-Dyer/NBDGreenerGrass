@@ -6,14 +6,17 @@ namespace NBDGreenerGrass.Models
     {
         public int ID { get; set; }
 
+        [Display(Name = "First Name")]
         [Required(ErrorMessage = "First Name of the contact person is required")]
         [StringLength(50, ErrorMessage = "First Name should be at most 50 characters")]
         public string FirstName { get; set; }
 
+        [Display(Name = "Last Name")]
         [Required(ErrorMessage = "Last Name of the contact person is required")]
         [StringLength(50, ErrorMessage = "Last Name should be at most 50 characters")]
         public string LastName { get; set; }
 
+        [Display(Name = "Contact Role")]
         [Required(ErrorMessage = "Contact Role is required")]
         [StringLength(50, ErrorMessage = "Contact Role should be at most 50 characters")]
         public string ContactRole { get; set; }
