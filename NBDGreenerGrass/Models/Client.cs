@@ -27,6 +27,15 @@ namespace NBDGreenerGrass.Models
         [StringLength(255, ErrorMessage = "Client Address should be at most 255 characters")]
         public string Address { get; set; }
 
+        [Display(Name = "Client Name")]
+        public string ClientName
+        {
+            get { return $"{FirstName} {LastName}"; }
+        }
+
+        public int ClientRoleID { get; set; }
+
         public ICollection<Project> Projects { get; set; } = new HashSet<Project>();
     }
+
 }
