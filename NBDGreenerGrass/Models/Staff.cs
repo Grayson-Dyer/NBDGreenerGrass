@@ -8,15 +8,15 @@ namespace NBDGreenerGrass.Models
 
         [Required(ErrorMessage = "First Name is required")]
         [StringLength(50, ErrorMessage = "First Name should be at most 50 characters")]
-        public string FirstName { get; set; }
+        public string StaffFirst { get; set; }
 
         [Required(ErrorMessage = "Last Name is required")]
         [StringLength(50, ErrorMessage = "Last Name should be at most 50 characters")]
-        public string LastName { get; set; }
+        public string StaffLast { get; set; }
 
         [Required(ErrorMessage = "Staff Role is required")]
         [StringLength(50, ErrorMessage = "Staff Role should be at most 50 characters")]
-        public string Role { get; set; }
+        public string StaffRole { get; set; }
 
         public ICollection<Bid> Bids { get; set; } = new HashSet<Bid>();
 
