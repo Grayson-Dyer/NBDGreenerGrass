@@ -4,7 +4,6 @@ namespace NBDGreenerGrass.Models
 {
     public class Labour
     {
-        [Key]
         public int ID { get; set; }
         
         public string LabourType { get; set; }

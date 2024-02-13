@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
 
 namespace NBDGreenerGrass.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
 
-    public class Project
+
+    public class Project : IValidatableObject
     {
         public int ID { get; set; }
 
@@ -32,7 +32,6 @@ namespace NBDGreenerGrass.Models
         [Required(ErrorMessage = "Date project was made is required")]
         public DateTime ProjectDate { get; set; }
 
-        // Additional properties:
         public int ProjectStaffID { get; set; }
 
         [Required(ErrorMessage = "Project Address is required")]
@@ -56,6 +55,21 @@ namespace NBDGreenerGrass.Models
         public ICollection<Bid> Bids { get; set; } = new HashSet<Bid>();
 
         public ICollection<ProjectStaff> ProjectStaffs { get; set; } = new HashSet<ProjectStaff>();
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var results = new List<ValidationResult>();
+
+            // Custom validation logic
+            if (ProjectStart > ProjectEnd)
+            {
+                results.Add(new ValidationResult("Project Start Date must be before Project End Date.", new[] { nameof(ProjectStart), nameof(ProjectEnd) }));
+            }
+
+            // Add more custom validation as needed...
+
+            return results;
+        }
     }
 
 }
