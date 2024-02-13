@@ -2,6 +2,7 @@
 {
     public class ProjectStaff
     {
+        public int ID { get; set; }
         public int ProjectID { get; set; }
         public Project Project { get; set; }
 
