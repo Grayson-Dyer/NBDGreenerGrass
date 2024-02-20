@@ -6,20 +6,24 @@ namespace NBDGreenerGrass.Models
     {
         public int ID { get; set; }
 
+        [Display(Name = "First Name")]
         [Required(ErrorMessage = "First Name is required")]
         [StringLength(50, ErrorMessage = "First Name should be at most 50 characters")]
         public string StaffFirst { get; set; }
 
+        [Display(Name = "Last Name")]
         [Required(ErrorMessage = "Last Name is required")]
         [StringLength(50, ErrorMessage = "Last Name should be at most 50 characters")]
         public string StaffLast { get; set; }
 
+        [Display(Name = "Role")]
         [Required(ErrorMessage = "Staff Role is required")]
-        [StringLength(50, ErrorMessage = "Staff Role should be at most 50 characters")]
-        public string StaffRole { get; set; }
+        public string StaffRoleID { get; set; }
 
-        public ICollection<Bid> Bids { get; set; } = new HashSet<Bid>();
+        [Display(Name = "Role")]
+        public StaffRole StaffRole { get; set; }
 
-        public ICollection<ProjectStaff> projectStaffs { get; set; } = new HashSet<ProjectStaff>();
+
+        public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
     }
 }

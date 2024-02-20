@@ -10,51 +10,67 @@ namespace NBDGreenerGrass.Models
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Client ID is required")]
-        public int ClientID { get; set; }
-
+        [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Project Start Date is required")]
         public DateTime ProjectStart { get; set; }
 
+        [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Project End Date is required")]
         public DateTime ProjectEnd { get; set; }
 
+        [Display(Name = "Project Cost")]
         [Required(ErrorMessage = "Project Amount is required")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Project Amount must be greater than 0")]
+        [DataType(DataType.Currency)]
         public decimal ProjectAmount { get; set; }
 
+        [Display(Name = "Project Date Created")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Date project was made is required")]
         public DateTime ProjectDate { get; set; }
 
-        public int ProjectStaffID { get; set; }
+        [Display(Name = "Additonal Project Notes")]
+        [StringLength(255, ErrorMessage = "Project Notes should be at most 255 characters")]
+        [DataType(DataType.MultilineText)]
+        public string ProjectNotes { get; set; }
 
-        [Required(ErrorMessage = "Project Address is required")]
-        [StringLength(255, ErrorMessage = "Project Address should be at most 255 characters")]
-        public string ProjectAddress { get; set; }
+        [Display(Name = "Project Street")]
+        [Required(ErrorMessage = "Project Street is required")]
+        [StringLength(255, ErrorMessage = "Project Street should be at most 255 characters")]
+        public string ProjectStreet { get; set; }
 
+        [Display(Name = "Project Province")]
         [Required(ErrorMessage = "Project Province is required")]
         [StringLength(50, ErrorMessage = "Project Province should be at most 50 characters")]
         public string ProjectProvince { get; set; }
 
+        [Display(Name = "Project Postal Code")]
         [Required(ErrorMessage = "Project Postal Code is required")]
         [StringLength(20, ErrorMessage = "Project Postal Code should be at most 20 characters")]
+        [RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d$", ErrorMessage = "Please enter a valid Canadian postal code.")]
         public string ProjectPostal { get; set; }
 
+        [Display(Name = "Project City")]
         [Required(ErrorMessage = "Project City is required")]
         [StringLength(50, ErrorMessage = "Project City should be at most 50 characters")]
         public string ProjectCity { get; set; }
 
+        [Display(Name = "Client")]
+        [Required(ErrorMessage = "Client is required")]
+        public int ClientID { get; set; }
+
+        [Display(Name = "Client")]
         public Client Client { get; set; }
+
 
         public ICollection<Bid> Bids { get; set; } = new HashSet<Bid>();
 
-        public ICollection<ProjectStaff> ProjectStaffs { get; set; } = new HashSet<ProjectStaff>();
+        public ICollection<BidStaff> ProjectStaffs { get; set; } = new HashSet<BidStaff>();
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

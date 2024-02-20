@@ -8,6 +8,7 @@ namespace NBDGreenerGrass.Data
         {
         }
 
+        public DbSet<StaffRole> StaffRoles { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Bid> Bids { get; set; }
@@ -16,7 +17,8 @@ namespace NBDGreenerGrass.Data
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<BidLabour> BidLabours { get; set; }
         public DbSet<BidMaterial> BidMaterials { get; set; }
-        public DbSet<ProjectStaff> ProjectStaffs { get; set; }
+        public DbSet<BidStaff> Bidstaffs { get; set; }
+        public DbSet<ClientRole> ClientRoles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,9 +34,9 @@ namespace NBDGreenerGrass.Data
             modelBuilder.Entity<BidMaterial>()
                 .HasKey(bm => new { bm.BidID, bm.InventoryID });
 
-            modelBuilder.Entity<ProjectStaff>()
+            modelBuilder.Entity<BidStaff>()
                 .HasKey(ps => new { ps.ProjectID, ps.StaffID });
-
+            
 
         }
     }
