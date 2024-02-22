@@ -12,6 +12,7 @@ namespace NBDGreenerGrass.Models
         [StringLength(50, ErrorMessage = "Bid Stage should be at most 50 characters")]
         public string Stage { get; set; }
 
+        // Get rid of these
         [Display(Name = "Bid Staff")]
         [Required(ErrorMessage = "BidStaff ID is required")]
         public int BidStaffID { get; set; }
