@@ -16,6 +16,12 @@ namespace NBDGreenerGrass.Models
         [Required(ErrorMessage = "Inventory Size is required")]
         public string InventorySize { get; set; }
 
+        // TODO: Should this be a string or a number? = No, look at the model, it's a float(8,2)
+        [Display(Name = "Inventory Size")]
+        [Required(ErrorMessage = "Inventory Size is required")]
+        [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
+        public decimal? InventorySize { get; set; }
+
         [Display(Name = "Inventory Code")]
         [Required(ErrorMessage = "Inventory Code is required")]
         [StringLength(50, ErrorMessage = "Inventory Code should be at most 50 characters")]
