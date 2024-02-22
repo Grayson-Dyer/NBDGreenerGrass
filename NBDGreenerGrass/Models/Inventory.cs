@@ -11,11 +11,6 @@ namespace NBDGreenerGrass.Models
         [Display(Name = "Inventory Desc")]
         public string InventoryDesc { get; set; }
 
-        //TODO: Should this be a string or a number? = No look at the model it's a float(8,2)
-        [Display(Name = "Inventory Size")]
-        [Required(ErrorMessage = "Inventory Size is required")]
-        public string InventorySize { get; set; }
-
         // TODO: Should this be a string or a number? = No, look at the model, it's a float(8,2)
         [Display(Name = "Inventory Size")]
         [Required(ErrorMessage = "Inventory Size is required")]
