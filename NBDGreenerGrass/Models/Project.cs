@@ -29,19 +29,21 @@ namespace NBDGreenerGrass.Models
         [RegularExpression(@"^\d{1,8}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 9999999.99")]
         public decimal ProjectAmount { get; set; }
 
-
         [Display(Name = "Project Date Created")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Date project was made is required")]
         public DateTime ProjectDate { get; set; }
 
-       
-
         [Display(Name = "Project Street")]
         [Required(ErrorMessage = "Project Street is required")]
         [StringLength(255, ErrorMessage = "Project Street should be at most 255 characters")]
         public string ProjectStreet { get; set; }
+
+        [Display(Name = "Project City")]
+        [Required(ErrorMessage = "Project City is required")]
+        [StringLength(50, ErrorMessage = "Project City should be at most 50 characters")]
+        public string ProjectCity { get; set; }
 
         [Display(Name = "Project Province")]
         [Required(ErrorMessage = "Project Province is required")]
@@ -53,11 +55,6 @@ namespace NBDGreenerGrass.Models
         [StringLength(20, ErrorMessage = "Project Postal Code should be at most 20 characters")]
         [RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d$", ErrorMessage = "Please enter a valid Canadian postal code.")]
         public string ProjectPostal { get; set; }
-
-        [Display(Name = "Project City")]
-        [Required(ErrorMessage = "Project City is required")]
-        [StringLength(50, ErrorMessage = "Project City should be at most 50 characters")]
-        public string ProjectCity { get; set; }
 
         [Display(Name = "Additonal Project Notes")]
         [StringLength(255, ErrorMessage = "Project Notes should be at most 255 characters")]
