@@ -33,7 +33,8 @@ namespace NBDGreenerGrass.Models
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Labour Price is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Labour Price must be greater than or equal to 0")]
-        public double LabourPrice { get; set; }
+        [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
+        public decimal LabourPrice { get; set; }
 
         [Display(Name = "Labour Cost")]
         [DataType(DataType.Currency)]
