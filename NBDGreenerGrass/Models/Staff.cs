@@ -18,7 +18,8 @@ namespace NBDGreenerGrass.Models
 
         [Display(Name = "Role")]
         [Required(ErrorMessage = "Staff Role is required")]
-        public string StaffRoleID { get; set; }
+        public int StaffRoleID { get; set; }
+
 
         [Display(Name = "Role")]
         public StaffRole StaffRole { get; set; }
