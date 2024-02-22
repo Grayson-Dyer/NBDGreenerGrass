@@ -1,4 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+
+
+
+
+// we get rid of this here class
+
+using System.ComponentModel.DataAnnotations;
 namespace NBDGreenerGrass.Models
 {
     public class BidStaff
