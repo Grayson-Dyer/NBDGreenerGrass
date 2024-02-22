@@ -21,6 +21,7 @@ namespace NBDGreenerGrass.Models
         [Display(Name = "Bid")]
         public Bid Bid { get; set; }
 
+        // Needs to be added to our model
         [Display(Name = "Hours Worked")]
         [Range(0, int.MaxValue, ErrorMessage = "Hours Worked must be greater than 0")]
         public int? HoursWorked { get; set; }
@@ -36,11 +37,13 @@ namespace NBDGreenerGrass.Models
         [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
         public decimal LabourPrice { get; set; }
 
+        // Needs to be a float(8,2) in our data model
         [Display(Name = "Labour Cost")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Labour Cost is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Labour Cost must be greater than or equal to 0")]
-        public double LabourCost { get; set; }
+        [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
+        public decimal LabourCost { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
     }
