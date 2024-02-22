@@ -26,7 +26,9 @@ namespace NBDGreenerGrass.Models
         [Required(ErrorMessage = "Project Amount is required")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Project Amount must be greater than 0")]
         [DataType(DataType.Currency)]
+        [RegularExpression(@"^\d{1,8}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 9999999.99")]
         public decimal ProjectAmount { get; set; }
+
 
         [Display(Name = "Project Date Created")]
         [DataType(DataType.Date)]
