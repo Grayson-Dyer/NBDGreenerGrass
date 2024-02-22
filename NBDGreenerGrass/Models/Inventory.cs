@@ -21,7 +21,9 @@ namespace NBDGreenerGrass.Models
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Inventory List Price is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Inventory List Price must be greater than or equal to 0")]
-        public double InventoryListPrice { get; set; } // This was a decimal in the original code but I changed it to a double to match the other BidMaterial properties
+        [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
+        public decimal InventoryListPrice { get; set; }
+        // This was a decimal in the original code but I changed it to a double to match the other BidMaterial properties = changed back for precision
 
         [Display(Name = "Inventory Code")]
         [Required(ErrorMessage = "Inventory Code is required")]
