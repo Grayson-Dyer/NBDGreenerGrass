@@ -13,9 +13,9 @@ namespace NBDGreenerGrass.Models
 
         // TODO: Should this be a string or a number? = In the model, it's a float(8,2) 
         [Display(Name = "Inventory Size")]
+        [StringLength(50, ErrorMessage = "Inventory Size should be at most 50 characters")]
         [Required(ErrorMessage = "Inventory Size is required")]
-        [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
-        public decimal? InventorySize { get; set; }
+        public string InventorySize { get; set; }
 
         [Display(Name = "Inventory List Price")]
         [DataType(DataType.Currency)]
@@ -32,5 +32,20 @@ namespace NBDGreenerGrass.Models
 
 
         public ICollection<BidMaterial> BidMaterials { get; set; }
+
+        // Additional property to store the numeric value if applicable
+        public decimal? NumericInventorySize
+        {
+            get
+            {
+                // Try parsing the numeric part from the InventorySize string
+                if (decimal.TryParse(Regex.Match(InventorySize, @"\d+(\.\d+)?").Value, out decimal result))
+                {
+                    return result;
+                }
+                return null; // Return null if parsing fails
+            }
+        }
+        
     }
 }
