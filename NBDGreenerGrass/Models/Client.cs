@@ -26,7 +26,7 @@ namespace NBDGreenerGrass.Models
         [StringLength(50, ErrorMessage = "Last Name should be at most 50 characters")]
         public string ClientContactLast { get; set; }
 
-        // See note below
+        // See note below = we can dumb this down a wee bit if we have to...
         [Display(Name = "Contact Phone Number")]
         [Required(ErrorMessage = "Contact Phone Number is required")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid phone number")]
