@@ -3,7 +3,6 @@ namespace NBDGreenerGrass.Models
 {
     public class StaffRole
     {
-
         public int ID { get; set; }
 
         [Display(Name = "Role")]
