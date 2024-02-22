@@ -37,7 +37,7 @@ namespace NBDGreenerGrass.Models
         [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
         public decimal LabourPrice { get; set; }
 
-        // Needs to be a float(8,2) in our data model
+        // Needs to be a float(8,2) in our data model just to keep it the same as all other's
         [Display(Name = "Labour Cost")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Labour Cost is required")]
