@@ -13,6 +13,7 @@ namespace NBDGreenerGrass.Models
         [Display(Name = "Labour Price")]
         [Required(ErrorMessage = "Labour Price is required")]
         [DataType(DataType.Currency)]
+        [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
         public decimal LabourPrice { get; set; }
 
         [Display(Name = "Labour Cost")]
