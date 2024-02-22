@@ -7,7 +7,7 @@ namespace NBDGreenerGrass.Models
         
         public int ID { get; set; }
 
-        //TODO: Shouldnt there be an inventory name?
+        //TODO: Shouldnt there be an inventory name? = No if you cross ref the model with the excell we use Code & Desc for that.
         [Display(Name = "Inventory Desc")]
         public string InventoryDesc { get; set; }
 
