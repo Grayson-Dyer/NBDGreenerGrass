@@ -36,10 +36,7 @@ namespace NBDGreenerGrass.Models
         [Required(ErrorMessage = "Date project was made is required")]
         public DateTime ProjectDate { get; set; }
 
-        [Display(Name = "Additonal Project Notes")]
-        [StringLength(255, ErrorMessage = "Project Notes should be at most 255 characters")]
-        [DataType(DataType.MultilineText)]
-        public string ProjectNotes { get; set; }
+       
 
         [Display(Name = "Project Street")]
         [Required(ErrorMessage = "Project Street is required")]
@@ -61,6 +58,11 @@ namespace NBDGreenerGrass.Models
         [Required(ErrorMessage = "Project City is required")]
         [StringLength(50, ErrorMessage = "Project City should be at most 50 characters")]
         public string ProjectCity { get; set; }
+
+        [Display(Name = "Additonal Project Notes")]
+        [StringLength(255, ErrorMessage = "Project Notes should be at most 255 characters")]
+        [DataType(DataType.MultilineText)]
+        public string ProjectDesc{ get; set; }
 
         [Display(Name = "Client")]
         [Required(ErrorMessage = "Client is required")]
