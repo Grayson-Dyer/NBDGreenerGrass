@@ -7,11 +7,11 @@ namespace NBDGreenerGrass.Models
         
         public int ID { get; set; }
 
-        //TODO: Shouldnt there be an inventory name? = No if you cross ref the model with the excell we use Code & Desc for that.
+        //TODO: Shouldnt there be an inventory name? = Cross ref the model with the excell we use Code & Desc for that.
         [Display(Name = "Inventory Desc")]
         public string InventoryDesc { get; set; }
 
-        // TODO: Should this be a string or a number? = No, look at the model, it's a float(8,2)
+        // TODO: Should this be a string or a number? = Look at the model, it's a float(8,2)
         [Display(Name = "Inventory Size")]
         [Required(ErrorMessage = "Inventory Size is required")]
         [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
