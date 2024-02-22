@@ -11,7 +11,7 @@ namespace NBDGreenerGrass.Models
         [Display(Name = "Inventory Desc")]
         public string InventoryDesc { get; set; }
 
-        // TODO: Should this be a string or a number? = Look at the model, it's a float(8,2)
+        // TODO: Should this be a string or a number? = Look at the model, it's a float(8,2) / thats being kind as the highest list price are $749.00
         [Display(Name = "Inventory Size")]
         [Required(ErrorMessage = "Inventory Size is required")]
         [RegularExpression(@"^\d{1,6}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 999999.99")]
