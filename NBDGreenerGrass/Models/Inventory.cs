@@ -11,7 +11,7 @@ namespace NBDGreenerGrass.Models
         [Display(Name = "Inventory Desc")]
         public string InventoryDesc { get; set; }
 
-        // TODO: Should this be a string or a number? = In the model, it's a float(8,2) 
+        // TODO: Should this be a string or a number? = = Looks like booth see note below 
         [Display(Name = "Inventory Size")]
         [StringLength(50, ErrorMessage = "Inventory Size should be at most 50 characters")]
         [Required(ErrorMessage = "Inventory Size is required")]
