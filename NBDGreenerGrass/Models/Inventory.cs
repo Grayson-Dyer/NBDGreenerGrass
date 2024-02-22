@@ -49,3 +49,12 @@ namespace NBDGreenerGrass.Models
         
     }
 }
+
+
+//If your InventorySize property is specified as float(8,2) in your model but in practice, it contains both numeric values 
+//and text (like "15 gal"), and you want to handle both cases, you may need to keep the property as a string and implement logic to handle parsing or validation.
+
+//In this example, InventorySize remains a string property, and a separate property NumericInventorySize is added to store the numeric value if applicable. 
+//The Regex.Match is used to extract the numeric part from the string, and decimal.TryParse is used to attempt parsing it into a numeric value.
+
+//This approach allows you to handle cases where InventorySize contains both numeric and text values.
