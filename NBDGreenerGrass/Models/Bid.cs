@@ -17,8 +17,9 @@ namespace NBDGreenerGrass.Models
         [Required(ErrorMessage = "BidStaff ID is required")]
         public int BidStaffID { get; set; }
 
-        [Display(Name = "Bid Staff")]
-        public BidStaff BidStaff { get; set; }
+        // Bid Staff no longer exists
+        //[Display(Name = "Bid Staff")]
+        //public BidStaff BidStaff { get; set; }
 
         [Display(Name = "Project")]
         [Required(ErrorMessage = "Project ID is required")]
@@ -29,7 +30,7 @@ namespace NBDGreenerGrass.Models
         
         public ICollection<BidMaterial> BidMaterials { get; set; } = new HashSet<BidMaterial>();
         public ICollection<BidLabour> BidLabours { get; set; } = new HashSet<BidLabour>();
-        public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
+        //public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
 
     }
 

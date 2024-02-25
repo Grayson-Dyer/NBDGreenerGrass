@@ -23,10 +23,22 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProjectID")
+                    b.Property<int?>("BidLabourBidID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("StaffID")
+                    b.Property<int?>("BidLabourLabourID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("BidMaterialBidID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("BidMaterialInventoryID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BidStaffID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProjectID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Stage")
@@ -38,7 +50,9 @@ namespace NBDGreenerGrass.Data.NBDMigrations
 
                     b.HasIndex("ProjectID");
 
-                    b.HasIndex("StaffID");
+                    b.HasIndex("BidLabourBidID", "BidLabourLabourID");
+
+                    b.HasIndex("BidMaterialBidID", "BidMaterialInventoryID");
 
                     b.ToTable("Bids");
                 });
@@ -53,6 +67,19 @@ namespace NBDGreenerGrass.Data.NBDMigrations
 
                     b.Property<int?>("HoursWorked")
                         .HasColumnType("INTEGER");
+
+                    b.Property<int>("ID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("LabourCost")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("LabourPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LabourType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("BidID", "LabourID");
 
@@ -69,6 +96,27 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.Property<int>("InventoryID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("InventoryCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("InventoryDesc")
+                        .IsRequired()
+                        .HasMaxLength(75)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("InventoryListPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("InventorySize")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("BidID", "InventoryID");
 
                     b.HasIndex("InventoryID");
@@ -82,33 +130,69 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ContactRole")
+                    b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FirstName")
+                    b.Property<int>("ClientRoleID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContactFirst")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("ContactLast")
                         .IsRequired()
                         .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Postal")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ID");
 
+                    b.HasIndex("ClientRoleID");
+
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("NBDGreenerGrass.Models.ClientRole", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ClientRoles");
                 });
 
             modelBuilder.Entity("NBDGreenerGrass.Models.Inventory", b =>
@@ -117,20 +201,18 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Code")
+                    b.Property<string>("InventoryCode")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
+                    b.Property<string>("InventoryDesc")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("ListPrice")
+                    b.Property<decimal>("InventoryListPrice")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Size")
+                    b.Property<string>("InventorySize")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
@@ -146,15 +228,14 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Cost")
+                    b.Property<decimal>("LabourCost")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("LabourPrice")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("LabourType")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
@@ -171,21 +252,40 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("ClientID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateMade")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<string>("Desc")
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Location")
+                    b.Property<DateTime>("End")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Postal")
                         .IsRequired()
-                        .HasMaxLength(100)
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
@@ -195,36 +295,37 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("NBDGreenerGrass.Models.ProjectStaff", b =>
-                {
-                    b.Property<int>("ProjectID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StaffID")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProjectID", "StaffID");
-
-                    b.HasIndex("StaffID");
-
-                    b.ToTable("ProjectStaffs");
-                });
-
             modelBuilder.Entity("NBDGreenerGrass.Models.Staff", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("StaffFirst")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("StaffLast")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("StaffRoleID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("StaffRoleID");
+
+                    b.ToTable("Staffs");
+                });
+
+            modelBuilder.Entity("NBDGreenerGrass.Models.StaffRole", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -233,7 +334,7 @@ namespace NBDGreenerGrass.Data.NBDMigrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Staffs");
+                    b.ToTable("StaffRoles");
                 });
 
             modelBuilder.Entity("NBDGreenerGrass.Models.Bid", b =>
@@ -244,11 +345,13 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NBDGreenerGrass.Models.Staff", null)
+                    b.HasOne("NBDGreenerGrass.Models.BidLabour", null)
                         .WithMany("Bids")
-                        .HasForeignKey("StaffID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BidLabourBidID", "BidLabourLabourID");
+
+                    b.HasOne("NBDGreenerGrass.Models.BidMaterial", null)
+                        .WithMany("Bids")
+                        .HasForeignKey("BidMaterialBidID", "BidMaterialInventoryID");
 
                     b.Navigation("Project");
                 });
@@ -262,7 +365,7 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .IsRequired();
 
                     b.HasOne("NBDGreenerGrass.Models.Labour", "Labour")
-                        .WithMany()
+                        .WithMany("BidLabours")
                         .HasForeignKey("LabourID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -280,15 +383,26 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NBDGreenerGrass.Models.Inventory", "inventory")
-                        .WithMany()
+                    b.HasOne("NBDGreenerGrass.Models.Inventory", "Inventory")
+                        .WithMany("BidMaterials")
                         .HasForeignKey("InventoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Bid");
 
-                    b.Navigation("inventory");
+                    b.Navigation("Inventory");
+                });
+
+            modelBuilder.Entity("NBDGreenerGrass.Models.Client", b =>
+                {
+                    b.HasOne("NBDGreenerGrass.Models.ClientRole", "ClientRole")
+                        .WithMany("Clients")
+                        .HasForeignKey("ClientRoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClientRole");
                 });
 
             modelBuilder.Entity("NBDGreenerGrass.Models.Project", b =>
@@ -302,23 +416,15 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("NBDGreenerGrass.Models.ProjectStaff", b =>
+            modelBuilder.Entity("NBDGreenerGrass.Models.Staff", b =>
                 {
-                    b.HasOne("NBDGreenerGrass.Models.Project", "Project")
-                        .WithMany("ProjectStaffs")
-                        .HasForeignKey("ProjectID")
+                    b.HasOne("NBDGreenerGrass.Models.StaffRole", "StaffRole")
+                        .WithMany("Staffs")
+                        .HasForeignKey("StaffRoleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NBDGreenerGrass.Models.Staff", "Staff")
-                        .WithMany("projectStaffs")
-                        .HasForeignKey("StaffID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Staff");
+                    b.Navigation("StaffRole");
                 });
 
             modelBuilder.Entity("NBDGreenerGrass.Models.Bid", b =>
@@ -328,23 +434,44 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.Navigation("BidMaterials");
                 });
 
+            modelBuilder.Entity("NBDGreenerGrass.Models.BidLabour", b =>
+                {
+                    b.Navigation("Bids");
+                });
+
+            modelBuilder.Entity("NBDGreenerGrass.Models.BidMaterial", b =>
+                {
+                    b.Navigation("Bids");
+                });
+
             modelBuilder.Entity("NBDGreenerGrass.Models.Client", b =>
                 {
                     b.Navigation("Projects");
                 });
 
+            modelBuilder.Entity("NBDGreenerGrass.Models.ClientRole", b =>
+                {
+                    b.Navigation("Clients");
+                });
+
+            modelBuilder.Entity("NBDGreenerGrass.Models.Inventory", b =>
+                {
+                    b.Navigation("BidMaterials");
+                });
+
+            modelBuilder.Entity("NBDGreenerGrass.Models.Labour", b =>
+                {
+                    b.Navigation("BidLabours");
+                });
+
             modelBuilder.Entity("NBDGreenerGrass.Models.Project", b =>
                 {
                     b.Navigation("Bids");
-
-                    b.Navigation("ProjectStaffs");
                 });
 
-            modelBuilder.Entity("NBDGreenerGrass.Models.Staff", b =>
+            modelBuilder.Entity("NBDGreenerGrass.Models.StaffRole", b =>
                 {
-                    b.Navigation("Bids");
-
-                    b.Navigation("projectStaffs");
+                    b.Navigation("Staffs");
                 });
 #pragma warning restore 612, 618
         }

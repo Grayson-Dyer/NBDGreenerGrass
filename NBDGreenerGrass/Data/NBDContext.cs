@@ -17,7 +17,7 @@ namespace NBDGreenerGrass.Data
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<BidLabour> BidLabours { get; set; }
         public DbSet<BidMaterial> BidMaterials { get; set; }
-        public DbSet<BidStaff> Bidstaffs { get; set; }
+        //public DbSet<BidStaff> Bidstaffs { get; set; }
         public DbSet<ClientRole> ClientRoles { get; set; }
 
 
@@ -33,10 +33,16 @@ namespace NBDGreenerGrass.Data
 
             modelBuilder.Entity<BidMaterial>()
                 .HasKey(bm => new { bm.BidID, bm.InventoryID });
+            modelBuilder.Entity<Bid>()
+                .HasMany(bl => bl.BidLabours)
+                .WithOne(b => b.Bid);
+            modelBuilder.Entity<Bid>()
+                .HasMany(bm => bm.BidMaterials)
+                .WithOne(b => b.Bid);
+            // BidStaff no longer exists
+            //modelBuilder.Entity<BidStaff>()
+            //    .HasKey(ps => new { ps.ProjectID, ps.StaffID });
 
-            modelBuilder.Entity<BidStaff>()
-                .HasKey(ps => new { ps.ProjectID, ps.StaffID });
-            
 
         }
     }

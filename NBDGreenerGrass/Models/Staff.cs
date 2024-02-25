@@ -23,7 +23,7 @@ namespace NBDGreenerGrass.Models
         [Display(Name = "Role")]
         public StaffRole StaffRole { get; set; }
 
-
-        public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
+        // BidStaff no longer exists
+        //public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
     }
 }
