@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using NBDGreenerGrass.Enums;
 
 namespace NBDGreenerGrass.Models
 {
@@ -9,13 +11,13 @@ namespace NBDGreenerGrass.Models
 
         [Display(Name = "Bid Stage")]
         [Required(ErrorMessage = "Bid Stage is required")]
-        [StringLength(50, ErrorMessage = "Bid Stage should be at most 50 characters")]
-        public string Stage { get; set; }
+        [EnumDataType(typeof(BidStage), ErrorMessage = "Invalid Bid Stage")]
+        public BidStage Stage { get; set; } = BidStage.Unapproved;
 
         // Get rid of these
-        [Display(Name = "Bid Staff")]
-        [Required(ErrorMessage = "BidStaff ID is required")]
-        public int BidStaffID { get; set; }
+        //[Display(Name = "Bid Staff")]
+        //[Required(ErrorMessage = "BidStaff ID is required")]
+        //public int BidStaffID { get; set; }
 
         // Bid Staff no longer exists
         //[Display(Name = "Bid Staff")]
@@ -32,6 +34,16 @@ namespace NBDGreenerGrass.Models
         public ICollection<BidLabour> BidLabours { get; set; } = new HashSet<BidLabour>();
         //public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
 
+
+        public void BidReviewed()
+        {
+            Stage = BidStage.Reviewed;
+        }
+
+        public void BidApproved()
+        {
+            Stage = BidStage.Approved;
+        }
     }
 
 }

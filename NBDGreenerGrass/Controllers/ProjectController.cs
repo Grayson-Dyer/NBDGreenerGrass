@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NBDGreenerGrass.Data;
+using NBDGreenerGrass.Enums;
 using NBDGreenerGrass.Models;
 
 namespace NBDGreenerGrass.Controllers
@@ -34,13 +36,23 @@ namespace NBDGreenerGrass.Controllers
                 return NotFound();
             }
 
+
+
             var project = await _context.Projects
                 .Include(p => p.Client)
+                .Include(p => p.Bids)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+
             if (project == null)
             {
                 return NotFound();
             }
+
+            bool anyBidApproved = project.Bids.Any(b => b.Stage == BidStage.Approved);
+
+            ViewBag.AnyBidApproved = anyBidApproved;
+
 
             return View(project);
         }

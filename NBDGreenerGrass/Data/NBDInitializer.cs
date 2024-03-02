@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
-
+using NBDGreenerGrass.Enums;
 namespace NBDGreenerGrass.Data
 {
     public class NBDInitializer
@@ -15,9 +15,37 @@ namespace NBDGreenerGrass.Data
             try
             {
                 context.Database.EnsureDeleted();
+                context.Database.Migrate();
                 context.Database.EnsureCreated();
 
                 Random random = new Random();
+
+
+                if(!context.ClientRoles.Any())
+                {
+                    context.ClientRoles.AddRange(
+                        new ClientRole
+                        {
+                            Role = "Owner"
+                        },
+                        new ClientRole
+                        {
+                            Role = "Architect"
+                        },
+                        new ClientRole
+                        {
+                            Role = "General Contractor"
+                        },
+                        new ClientRole
+                        {
+                            Role = "Sub-Contractor"
+                        },
+                        new ClientRole
+                        {
+                            Role = "Supplier"
+                        });
+                        context.SaveChanges();
+                }
 
                 // Generate 5 Clients
                 if(!context.Clients.Any())
@@ -25,17 +53,19 @@ namespace NBDGreenerGrass.Data
                     context.Clients.AddRange(
                         new Client
                         {
+                            Name = "John's Construction",
                             ContactFirst = "John",
                             ContactLast = "Smith",
+                            Phone = "111-555-5555",
                             Street = "999 Fake Street",
                             City = "Toronto",
                             Province = "ON",
                             Postal = "Z1Z 2Z3",
-                            Phone = "111-555-5555",
                             ClientRoleID = 1
                         },
                         new Client
                         {
+                            Name = "John's Construction",
                             ContactFirst = "Jane",
                             ContactLast = "Doe",
                             Street = "321 Fake Street",
@@ -47,6 +77,8 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         {
+
+                            Name = "John's Construction",
                             ContactFirst = "Billy",
                             ContactLast = "Joel",
                             Street = "111 Real Street",
@@ -58,6 +90,8 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         {
+
+                            Name = "John's Construction",
                             ContactFirst = "Real",
                             ContactLast = "Person",
                             Street = "321 Electric Avenue",
@@ -68,7 +102,8 @@ namespace NBDGreenerGrass.Data
                             ClientRoleID = 1
                         },
                         new Client
-                        {
+                        { 
+                            Name = "John's Construction",
                             ContactFirst = "Bob",
                             ContactLast = "Ross",
                             Street = "123 Fake Street",
@@ -78,7 +113,6 @@ namespace NBDGreenerGrass.Data
                             Phone = "416-555-5555",
                             ClientRoleID = 1
                         });
-
                         context.SaveChanges();
                 }
                 // Generate 5 Projects
@@ -89,12 +123,12 @@ namespace NBDGreenerGrass.Data
                         {
                             Start = DateTime.Now,
                             End = DateTime.Now.AddDays(7),
+                            Amount = 1000,
+                            Created = DateTime.Now,
+                            Street = "123 Fake Street",
                             City = "Toronto",
                             Province = "ON",
                             Postal = "Z1Z 1Z1",
-                            Street = "123 Fake Street",
-                            Created = DateTime.Now,
-                            Amount = 1000,
                             ClientID = context.Clients.FirstOrDefault(c => c.ContactFirst == "John").ID
                         },
                         new Project
@@ -145,6 +179,37 @@ namespace NBDGreenerGrass.Data
                             Amount = 3000,
                             ClientID = context.Clients.FirstOrDefault(c => c.ContactFirst == "Bob").ID
                         }) ;
+                        context.SaveChanges();
+                }
+                //Generate 5 Bids 
+                if(!context.Bids.Any())
+                {
+                    context.Bids.AddRange(
+                        new Bid
+                        {
+                            Stage = BidStage.Unapproved,
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Street == "123 Fake Street").ID
+                        },
+                        new Bid
+                        {
+                            Stage = BidStage.Unapproved,
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Street == "123 Fake Street").ID
+                        },
+                        new Bid
+                        {
+                            Stage = BidStage.Unapproved,
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Street == "23 Real Street").ID
+                        },
+                        new Bid
+                        {
+                            Stage = BidStage.Unapproved,
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Street == "99 Real Street").ID
+                        },
+                        new Bid
+                        {
+                            Stage = BidStage.Unapproved,
+                            ProjectID = context.Projects.FirstOrDefault(p => p.Street == "789 Fake Street").ID
+                        });
                         context.SaveChanges();
                 }
                 context.Database.Migrate();
