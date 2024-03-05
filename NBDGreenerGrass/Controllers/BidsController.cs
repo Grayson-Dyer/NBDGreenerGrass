@@ -62,18 +62,26 @@ namespace NBDGreenerGrass.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,ProjectID")] Bid bid)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (ModelState.IsValid)
+                {
 
-                bid.Stage = Enums.BidStage.Unapproved;
+                    bid.Stage = Enums.BidStage.Unapproved;
 
 
-                _context.Add(bid);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    _context.Add(bid);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City", bid.ProjectID);
+                ViewData["BidStages"] = new SelectList(Enum.GetValues(typeof(Enums.BidStage)));
             }
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City", bid.ProjectID);
-            ViewData["BidStages"] = new SelectList(Enum.GetValues(typeof(Enums.BidStage)));
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+            }
+
             return View(bid);
         }
 
@@ -125,6 +133,10 @@ namespace NBDGreenerGrass.Controllers
                         throw;
                     }
                 }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City", bid.ProjectID);
@@ -155,17 +167,25 @@ namespace NBDGreenerGrass.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Bids == null)
+            try
             {
-                return Problem("Entity set 'NBDContext.Bids'  is null.");
+                if (_context.Bids == null)
+                {
+                    return Problem("Entity set 'NBDContext.Bids'  is null.");
+                }
+                var bid = await _context.Bids.FindAsync(id);
+                if (bid != null)
+                {
+                    _context.Bids.Remove(bid);
+                }
+
+                await _context.SaveChangesAsync();
             }
-            var bid = await _context.Bids.FindAsync(id);
-            if (bid != null)
+            catch (DbUpdateException)
             {
-                _context.Bids.Remove(bid);
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

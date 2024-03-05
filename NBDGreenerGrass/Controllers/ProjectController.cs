@@ -71,13 +71,21 @@ namespace NBDGreenerGrass.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Start,End,Amount,Created,Street,City,Province,Postal,Desc,ClientID")] Project project)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(project);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "City", project.ClientID);
             }
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "City", project.ClientID);
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+            }
+            
             return View(project);
         }
 
@@ -128,6 +136,10 @@ namespace NBDGreenerGrass.Controllers
                         throw;
                     }
                 }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "City", project.ClientID);
@@ -158,17 +170,26 @@ namespace NBDGreenerGrass.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Projects == null)
+
+            try
             {
-                return Problem("Entity set 'NBDContext.Projects'  is null.");
+                if (_context.Projects == null)
+                {
+                    return Problem("Entity set 'NBDContext.Projects'  is null.");
+                }
+                var project = await _context.Projects.FindAsync(id);
+                if (project != null)
+                {
+                    _context.Projects.Remove(project);
+                }
+
+                await _context.SaveChangesAsync();
             }
-            var project = await _context.Projects.FindAsync(id);
-            if (project != null)
+            catch (DbUpdateException)
             {
-                _context.Projects.Remove(project);
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

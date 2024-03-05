@@ -59,13 +59,21 @@ namespace NBDGreenerGrass.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,ContactFirst,ContactLast,Phone,Street,City,Postal,Province,ClientRoleID")] Client client)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(client);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(client);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["ClientRoleID"] = new SelectList(_context.ClientRoles, "ID", "Role", client.ClientRoleID);
             }
-            ViewData["ClientRoleID"] = new SelectList(_context.ClientRoles, "ID", "Role", client.ClientRoleID);
+            catch
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+            }
+
             return View(client);
         }
 
@@ -116,6 +124,10 @@ namespace NBDGreenerGrass.Controllers
                         throw;
                     }
                 }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClientRoleID"] = new SelectList(_context.ClientRoles, "ID", "Role", client.ClientRoleID);
@@ -146,17 +158,25 @@ namespace NBDGreenerGrass.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Clients == null)
+            try
             {
-                return Problem("Entity set 'NBDContext.Clients'  is null.");
+                if (_context.Clients == null)
+                {
+                    return Problem("Entity set 'NBDContext.Clients'  is null.");
+                }
+                var client = await _context.Clients.FindAsync(id);
+                if (client != null)
+                {
+                    _context.Clients.Remove(client);
+                }
+
+                await _context.SaveChangesAsync();
             }
-            var client = await _context.Clients.FindAsync(id);
-            if (client != null)
+            catch (DbUpdateException)
             {
-                _context.Clients.Remove(client);
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
