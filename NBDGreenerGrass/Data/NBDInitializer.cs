@@ -53,7 +53,7 @@ namespace NBDGreenerGrass.Data
                     context.Clients.AddRange(
                         new Client
                         {
-                            Name = "John's Construction",
+                            Name = "Susan's Flowers",
                             ContactFirst = "John",
                             ContactLast = "Smith",
                             Phone = "111-555-5555",
@@ -65,7 +65,7 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         {
-                            Name = "John's Construction",
+                            Name = "Susan's Sweets",
                             ContactFirst = "Jane",
                             ContactLast = "Doe",
                             Street = "321 Fake Street",
@@ -91,7 +91,7 @@ namespace NBDGreenerGrass.Data
                         new Client
                         {
 
-                            Name = "John's Construction",
+                            Name = "Larry's Construction",
                             ContactFirst = "Real",
                             ContactLast = "Person",
                             Street = "321 Electric Avenue",
@@ -103,7 +103,7 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         { 
-                            Name = "John's Construction",
+                            Name = "Bob's Construction",
                             ContactFirst = "Bob",
                             ContactLast = "Ross",
                             Street = "123 Fake Street",
@@ -187,26 +187,32 @@ namespace NBDGreenerGrass.Data
                     context.Bids.AddRange(
                         new Bid
                         {
+                            DateMade = DateTime.Now,
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "123 Fake Street").ID
                         },
                         new Bid
                         {
+                            DateMade = DateTime.Now,
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "123 Fake Street").ID
                         },
                         new Bid
                         {
+                            DateMade = DateTime.Now.Subtract(TimeSpan.FromDays(12)),
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "23 Real Street").ID
                         },
                         new Bid
                         {
+                            DateMade = DateTime.Now.Subtract(TimeSpan.FromDays(50)),
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "99 Real Street").ID
                         },
                         new Bid
                         {
+
+                            DateMade = DateTime.Now.Subtract(TimeSpan.FromDays(7)),
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "789 Fake Street").ID
                         });
