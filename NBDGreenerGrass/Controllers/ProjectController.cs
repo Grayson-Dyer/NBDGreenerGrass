@@ -22,9 +22,73 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, string StreetString,
+            int? page, string actionButton, string sortDirection = "asc", string sortField = "Client")
         {
-            var nBDContext = _context.Projects.Include(p => p.Client);
+            var nBDContext = _context.Projects
+                .Include(c => c.Client)
+                .AsNoTracking();
+
+            ViewData["Filtering"] = "btn-outline-secondary";
+            int numberFilters = 0;
+
+            string[] sortOptions = new[] { "Client First Name" };
+
+
+
+            if (!System.String.IsNullOrEmpty(SearchString))
+            {
+                nBDContext = nBDContext.Where(p => p.Client.Name.ToUpper().Contains(SearchString.ToUpper()));
+                numberFilters++;
+            }
+            if (!System.String.IsNullOrEmpty(StreetString))
+            {
+                nBDContext = nBDContext.Where(p => p.Street.ToUpper().Contains(StreetString.ToUpper()));
+                numberFilters++;
+            }
+
+            if (numberFilters != 0)
+            {
+                ViewData["Filtering"] = " btn-danger";
+                ViewData["numberFilters"] = "(" + numberFilters.ToString()
+                    + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
+            }
+
+            if (!System.String.IsNullOrEmpty(actionButton))
+            {
+                page = 1;
+
+                if (sortOptions.Contains(actionButton))
+                {
+                    if (actionButton == sortField) 
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;
+                }
+            }
+
+            else if (sortField == "Client")
+            {
+                if (sortDirection == "asc")
+                {
+                    nBDContext = nBDContext
+                        .OrderBy(p => p.Client.Name)
+                        .ThenBy(p => p.Start);
+                }
+                else
+                {
+                    nBDContext = nBDContext
+                        .OrderByDescending(p => p.Client.Name)
+                        .ThenByDescending(p => p.Start);
+                }
+            }
+
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+
             return View(await nBDContext.ToListAsync());
         }
 
