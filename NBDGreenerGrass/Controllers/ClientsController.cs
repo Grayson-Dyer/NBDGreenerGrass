@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NBDGreenerGrass.Data;
 using NBDGreenerGrass.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NBDGreenerGrass.Controllers
 {
@@ -20,10 +21,89 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Clients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, int? ClientID,
+            int? page, string actionButton, string sortDirection = "asc", string sortField = "Client")
         {
-            var nBDContext = _context.Clients.Include(c => c.ClientRole);
+            var nBDContext = _context.Clients
+                .Include(c => c.ClientRole)
+                .Include(c => c.Projects)
+                .AsNoTracking();
+
+            //Count the number of filters applied - start by assuming no filters
+            ViewData["Filtering"] = "btn-outline-secondary";
+            int numberFilters = 0;
+            //Then in each "test" for filtering, add to the count of Filters applied
+
+            //List of sort options.
+            //NOTE: make sure this array has matching values to the column headings
+            string[] sortOptions = new[] { "Client First Name" };
+
+            //Add as many filters as needed
+            if (ClientID.HasValue)
+            {
+                nBDContext = nBDContext.Where(p => p.ID == ClientID);
+                numberFilters++;
+            }
+
+            if (!System.String.IsNullOrEmpty(SearchString))
+            {
+                nBDContext = nBDContext.Where(p => p.ContactLast.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.ContactFirst.ToUpper().Contains(SearchString.ToUpper())
+                                       || p.Name.ToUpper().Contains(SearchString.ToUpper()));
+                numberFilters++;
+            }
+            //Give feedback about the state of the filters
+            if (numberFilters != 0)
+            {
+                //Toggle the Open/Closed state of the collapse depending on if we are filtering
+                ViewData["Filtering"] = " btn-danger";
+                //Show how many filters have been applied
+                ViewData["numberFilters"] = "(" + numberFilters.ToString()
+                    + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
+                //Keep the Bootstrap collapse open
+                //@ViewData["ShowFilter"] = " show";
+            }
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!System.String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            {
+                page = 1;//Reset page to start
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by
+            else if (sortField == "Client")
+            {
+                if (sortDirection == "asc")
+                {
+                    nBDContext = nBDContext
+                        .OrderBy(p => p.ContactLast)
+                        .ThenBy(p => p.ContactLast);
+                }
+                else
+                {
+                    nBDContext = nBDContext
+                        .OrderByDescending(p => p.ContactLast)
+                        .ThenByDescending(p => p.ContactFirst);
+                }
+            }
+
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+
             return View(await nBDContext.ToListAsync());
+
+
+
         }
 
         // GET: Clients/Details/5

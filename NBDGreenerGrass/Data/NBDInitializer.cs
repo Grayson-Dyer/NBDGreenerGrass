@@ -53,7 +53,7 @@ namespace NBDGreenerGrass.Data
                     context.Clients.AddRange(
                         new Client
                         {
-                            Name = "John's Construction",
+                            Name = "Susan's Flowers",
                             ContactFirst = "John",
                             ContactLast = "Smith",
                             Phone = "111-555-5555",
@@ -65,7 +65,7 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         {
-                            Name = "John's Construction",
+                            Name = "Susan's Sweets",
                             ContactFirst = "Jane",
                             ContactLast = "Doe",
                             Street = "321 Fake Street",
@@ -91,7 +91,7 @@ namespace NBDGreenerGrass.Data
                         new Client
                         {
 
-                            Name = "John's Construction",
+                            Name = "Larry's Construction",
                             ContactFirst = "Real",
                             ContactLast = "Person",
                             Street = "321 Electric Avenue",
@@ -103,7 +103,7 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         { 
-                            Name = "John's Construction",
+                            Name = "Bob's Construction",
                             ContactFirst = "Bob",
                             ContactLast = "Ross",
                             Street = "123 Fake Street",
