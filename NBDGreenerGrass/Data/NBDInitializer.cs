@@ -187,26 +187,32 @@ namespace NBDGreenerGrass.Data
                     context.Bids.AddRange(
                         new Bid
                         {
+                            DateMade = DateTime.Now,
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "123 Fake Street").ID
                         },
                         new Bid
                         {
+                            DateMade = DateTime.Now,
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "123 Fake Street").ID
                         },
                         new Bid
                         {
+                            DateMade = DateTime.Now.Subtract(TimeSpan.FromDays(12)),
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "23 Real Street").ID
                         },
                         new Bid
                         {
+                            DateMade = DateTime.Now.Subtract(TimeSpan.FromDays(50)),
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "99 Real Street").ID
                         },
                         new Bid
                         {
+
+                            DateMade = DateTime.Now.Subtract(TimeSpan.FromDays(7)),
                             Stage = BidStage.Unapproved,
                             ProjectID = context.Projects.FirstOrDefault(p => p.Street == "789 Fake Street").ID
                         });

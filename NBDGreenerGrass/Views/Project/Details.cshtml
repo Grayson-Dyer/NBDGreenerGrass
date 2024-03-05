@@ -76,7 +76,9 @@
     <table>
         <thead>
             <tr>
+                <th>Date Made</th>
                 <th>Stage</th>
+                <th></th>
                 <th></th>
             </tr>
 
@@ -89,7 +91,15 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(modelItem => item.DateMade)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Stage)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="Bids" asp-route-id="@item.ID">Details</a>
+                        <a asp-action="Edit" asp-controller="Bids" asp-route-projectId="@Model.ID" asp-route-id="@item.ID">Edit</a>
+                        <a asp-action="Delete" asp-controller="Bids" asp-route-id="@item.ID">Delete</a>
                     </td>
                     <td>
                         @if (item.Stage == NBDGreenerGrass.Enums.BidStage.Reviewed && !anyBidApproved)
@@ -104,12 +114,21 @@
                                 <input type="submit" id="projectAdminReviewedBtn" value="Project Admin Reviewed" class="btn btn-primary" />
                             </form>
                         }
+                        else if (item.Stage == NBDGreenerGrass.Enums.BidStage.Approved)
+                        {
+                            <form asp-action="BidDemote" asp-controller="Bids" method="post" asp-route-id="@item.ID">
+                                <input type="submit" id="projectAdminDemoteBtn" value="Unapprove" class="btn btn-primary" />
+                            </form>
+                        }
                     </td>
                 </tr>
-                
             }
     </table>
 </div>
+<div>
+    <a asp-controller="Bids" asp-action="Create" asp-route-projectId="@Model.ID">Create New Bid</a>
+</div>
+
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |

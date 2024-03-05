@@ -49,9 +49,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Bids/Create
-        public IActionResult Create()
+        public IActionResult Create(int projectId)
         {
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City");
+            var bid = new Bid { ProjectID = projectId };
             return View();
         }
 
@@ -60,27 +60,26 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,ProjectID")] Bid bid)
+        public async Task<IActionResult> Create([Bind("ID,Description,ProjectID")] Bid bid)
         {
             if (ModelState.IsValid)
             {
-
-                bid.Stage = Enums.BidStage.Unapproved;
-
-
+                //Default the stage to unapproved and make the Date Made the current date
+                bid.Stage = BidStage.Unapproved;
+                bid.DateMade = DateTime.Now;
+                
                 _context.Add(bid);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Project", new { id = bid.ProjectID });
             }
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City", bid.ProjectID);
-            ViewData["BidStages"] = new SelectList(Enum.GetValues(typeof(Enums.BidStage)));
-            return View(bid);
+
+            return RedirectToAction("Details", "Project", new { id = bid.ProjectID });
         }
 
         // GET: Bids/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? projectId)
         {
-            if (id == null || _context.Bids == null)
+            if (id == null || projectId == null || _context.Bids == null)
             {
                 return NotFound();
             }
@@ -90,7 +89,7 @@ namespace NBDGreenerGrass.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City", bid.ProjectID);
+            ViewData["ProjectID"] = projectId;
             return View(bid);
         }
 
@@ -99,7 +98,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ProjectID")] Bid bid)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Description,ProjectID")] Bid bid)
         {
             if (id != bid.ID)
             {
@@ -110,6 +109,7 @@ namespace NBDGreenerGrass.Controllers
             {
                 try
                 {
+                    // Set the stage to unapproved because the bid has been edited
                     bid.Stage = Enums.BidStage.Unapproved;
                     _context.Update(bid);
                     await _context.SaveChangesAsync();
@@ -125,9 +125,8 @@ namespace NBDGreenerGrass.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Project", new { id = bid.ProjectID });
             }
-            ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City", bid.ProjectID);
             return View(bid);
         }
 
@@ -166,7 +165,7 @@ namespace NBDGreenerGrass.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Project", new { id = bid.ProjectID });
         }
 
         private bool BidExists(int id)
@@ -210,6 +209,26 @@ namespace NBDGreenerGrass.Controllers
                 _context.Bids.Update(bid);
 
                  _context.SaveChanges();
+
+            }
+
+            return RedirectToAction("Details", "Project", new { id = bid.ProjectID });
+        }
+
+        [ValidateAntiForgeryToken]
+        public IActionResult BidDemote(int id)
+        {
+            if (_context.Bids == null)
+            {
+                return Problem("Entity set 'NBDContext.Bids'  is null.");
+            }
+            var bid = _context.Bids.Find(id);
+
+            if (bid != null)
+            {
+                bid.BidDemote();
+                _context.Bids.Update(bid);
+                _context.SaveChanges();
 
             }
 
