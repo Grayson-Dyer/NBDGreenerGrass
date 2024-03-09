@@ -11,34 +11,34 @@ namespace NBDGreenerGrass.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "Client Name")]
+        [Display(Name = "Client Name", Description = "Enter the client's full name")]
         [Required(ErrorMessage = "Client Name is required")]
         [StringLength(100, ErrorMessage = "Client Name should be at most 100 characters")]
         public string Name { get; set; }
 
-        [Display(Name = "Contact First Name")]
+        [Display(Name = "Contact First Name", Description = "Enter the contact person's first name")]
         [Required(ErrorMessage = "First Name of the contact person is required")]
         [StringLength(50, ErrorMessage = "First Name should be at most 50 characters")]
         public string ContactFirst { get; set; }
 
-        [Display(Name = "Contact Last Name")]
+        [Display(Name = "Contact Last Name", Description = "Enter the contact person's last name")]
         [Required(ErrorMessage = "Last Name of the contact person is required")]
         [StringLength(50, ErrorMessage = "Last Name should be at most 50 characters")]
         public string ContactLast { get; set; }
 
         // See note below = we can dumb this down a wee bit if we have to...
-        [Display(Name = "Contact Phone Number")]
+        [Display(Name = "Contact Phone Number", Description = "Enter the contact phone number (e.g., +1 (555) 123-4567)")]
         [Required(ErrorMessage = "Contact Phone Number is required")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid phone number")]
         [RegularExpression(@"^\+?(\d{1,4})?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$", ErrorMessage = "Invalid phone number format")]
         public string Phone { get; set; }
 
-        [Display(Name = "Client Street")]
+        [Display(Name = "Client Street", Description = "Enter the client's street address")]
         [Required(ErrorMessage = "Client Street is required")]
         [StringLength(255, ErrorMessage = "Client Street should be at most 255 characters")]
         public string Street { get; set; }
 
-        [Display(Name = "Client City")]
+        [Display(Name = "Client City", Description = "Enter the client's city")]
         [Required(ErrorMessage = "Client City is required")]
         [StringLength(50, ErrorMessage = "Client City should be at most 50 characters")]
         public string City { get; set; }
@@ -50,7 +50,7 @@ namespace NBDGreenerGrass.Models
         [RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d$", ErrorMessage = "Please enter a valid Canadian postal code.")] 
         public string Postal { get; set; }
 
-        [Display(Name = "Client Province")]
+        [Display(Name = "Client Province", Description = "Enter the client's province")]
         [Required(ErrorMessage = "Client Province is required")]
         [StringLength(50, ErrorMessage = "Client Province should be at most 50 characters")]
         public string Province { get; set; }
