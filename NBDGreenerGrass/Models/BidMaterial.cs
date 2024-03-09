@@ -10,37 +10,37 @@ namespace NBDGreenerGrass.Models
         //TODO: Is this a composite key?
         public int ID { get; set; }
 
-        [Display(Name = "Bid")]
+        [Display(Name = "Bid", Description = "Select the bid associated with this entry")]
         [Required(ErrorMessage = "Bid ID is required")]
         public int BidID { get; set; }
 
         [Display(Name = "Bid")]
         public Bid Bid { get; set; }
 
-        [Display(Name = "Inventory")]
+        [Display(Name = "Inventory", Description = "Select the inventory associated with this entry")]
         [Required(ErrorMessage = "Inventory ID is required")]
         public int InventoryID { get; set; }
 
         [Display(Name = "Inventory")]  
         public Inventory Inventory { get; set; }
 
-        [Display(Name = "Inventory Description")]
+        [Display(Name = "Inventory Description", Description = "Enter a brief description of the inventory")]
         [StringLength(75, ErrorMessage = "Inventory Description should be at most 75 characters")]
         [Required(ErrorMessage = "Inventory Description is required")]
         public string InventoryDesc { get; set; }
 
         //TODO: is this a string or a number??? = Looks like booth see note below 
-        [Display(Name = "Inventory Size")]
+        [Display(Name = "Inventory Size", Description = "Enter the size of the inventory")]
         [StringLength(50, ErrorMessage = "Inventory Size should be at most 50 characters")]
         [Required(ErrorMessage = "Inventory Size is required")]
         public string InventorySize { get; set; }
 
-        [Display(Name = "Inventory Code")]
+        [Display(Name = "Inventory Code", Description = "Enter the code associated with the inventory")]
         [StringLength(50, ErrorMessage = "Inventory Code should be at most 50 characters")]
         [Required(ErrorMessage = "Inventory Code is required")]
         public string InventoryCode { get; set; }
 
-        [Display(Name = "Inventory List Price")]
+        [Display(Name = "Inventory List Price", Description = "Enter the list price of the inventory")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Inventory List Price is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Inventory List Price must be greater than or equal to 0")]
