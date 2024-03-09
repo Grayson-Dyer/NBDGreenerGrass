@@ -9,17 +9,17 @@ namespace NBDGreenerGrass.Models
         
         public int ID { get; set; }
 
-        [Display(Name = "Bid Stage")]
+        [Display(Name = "Bid Stage", Description = "Select the current bid stage")]
         [Required(ErrorMessage = "Bid Stage is required")]
         [EnumDataType(typeof(BidStage), ErrorMessage = "Invalid Bid Stage")]
         public BidStage Stage { get; set; } = BidStage.Unapproved;
 
-        [Display(Name = "Date Made")]
+        [Display(Name = "Date Made", Description = "Enter the date the bid was made")]
         [Required(ErrorMessage = "Date Made is required")]
         [DataType(DataType.Date)]
         public DateTime DateMade { get; set; } = DateTime.Now;
 
-        [Display(Name = "Description")]
+        [Display(Name = "Description", Description = "Provide a brief description of the bid")]
         [DataType(DataType.MultilineText)]
         [StringLength(1500, ErrorMessage = "Description cannot be more than 500 characters")]
         public string Description { get; set; }
