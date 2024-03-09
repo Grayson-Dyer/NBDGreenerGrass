@@ -10,58 +10,58 @@ namespace NBDGreenerGrass.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "Start Date")]
+        [Display(Name = "Start Date", Description = "Select the project start date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Project Start Date is required")]
         public DateTime Start { get; set; }
 
-        [Display(Name = "End Date")]
+        [Display(Name = "End Date", Description = "Select the project end date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Project End Date is required")]
         public DateTime End { get; set; }
 
-        [Display(Name = "Project Cost")]
+        [Display(Name = "Project Cost", Description = "Enter the cost of the project")]
         [Required(ErrorMessage = "Project Amount is required")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Project Amount must be greater than 0")]
         [DataType(DataType.Currency)]
         [RegularExpression(@"^\d{1,8}(\.\d{1,2})?$", ErrorMessage = "Invalid format. Maximum 9999999.99")]
         public decimal Amount { get; set; }
 
-        [Display(Name = "Project Date Created")]
+        [Display(Name = "Project Date Created", Description = "Select the date the project was created")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "Date project was made is required")]
         public DateTime Created { get; set; }
 
-        [Display(Name = "Project Street")]
+        [Display(Name = "Project Street", Description = "Enter the street address of the project")]
         [Required(ErrorMessage = "Project Street is required")]
         [StringLength(255, ErrorMessage = "Project Street should be at most 255 characters")]
         public string Street { get; set; }
 
-        [Display(Name = "Project City")]
+        [Display(Name = "Project City", Description = "Enter the city of the project")]
         [Required(ErrorMessage = "Project City is required")]
         [StringLength(50, ErrorMessage = "Project City should be at most 50 characters")]
         public string City { get; set; }
 
-        [Display(Name = "Project Province")]
+        [Display(Name = "Project Province", Description = "Enter the province of the project")]
         [Required(ErrorMessage = "Project Province is required")]
         [StringLength(50, ErrorMessage = "Project Province should be at most 50 characters")]
         public string Province { get; set; }
 
-        [Display(Name = "Project Postal Code")]
+        [Display(Name = "Project Postal Code", Description = "Enter the postal code of the project (e.g., A1B 2C3)")]
         [Required(ErrorMessage = "Project Postal Code is required")]
         [StringLength(20, ErrorMessage = "Project Postal Code should be at most 20 characters")]
         [RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d$", ErrorMessage = "Please enter a valid Canadian postal code.")]
         public string Postal { get; set; }
 
-        [Display(Name = "Additonal Project Notes")]
+        [Display(Name = "Additonal Project Notes", Description = "Enter any additional notes for the project")]
         [StringLength(255, ErrorMessage = "Project Notes should be at most 255 characters")]
         [DataType(DataType.MultilineText)]
         public string Desc{ get; set; }
 
-        [Display(Name = "Client")]
+        [Display(Name = "Client", Description = "Select the client associated with this project")]
         [Required(ErrorMessage = "Client is required")]
         public int ClientID { get; set; }
 
