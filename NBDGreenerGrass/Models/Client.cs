@@ -43,7 +43,7 @@ namespace NBDGreenerGrass.Models
         [StringLength(50, ErrorMessage = "Client City should be at most 50 characters")]
         public string City { get; set; }
 
-        [Display(Name = "Client Postal Code")]
+        [Display(Name = "Client Postal Code", Description = "Example: G5T 5Y7")]
         [Required(ErrorMessage = "Client Postal Code is required")]
         [StringLength(20, ErrorMessage = "Client Postal Code should be at most 20 characters")]
         // Canadian postal code format (D F I O Q U V are gone on purpose)
