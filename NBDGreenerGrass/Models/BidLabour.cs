@@ -9,28 +9,28 @@ namespace NBDGreenerGrass.Models
         //TODO: is this a composite key?
         public int ID { get; set; }
 
-        [Display(Name = "Labour", Description = "Select the labor associated with this entry")]
+        [Display(Name = "Labour")]
         [Required(ErrorMessage = "Labour ID is required")]
         public int LabourID { get; set; }
         [Display(Name = "Labour")]
         public Labour Labour { get; set; }
 
-        [Display(Name = "Bid", Description = "Select the bid associated with this entry")]
+        [Display(Name = "Bid")]
         [Required(ErrorMessage = "Bid ID is required")]
         public int BidID { get; set; }
         [Display(Name = "Bid")]
         public Bid Bid { get; set; }
 
         // Needs to be added to our model
-        [Display(Name = "Hours Worked", Description = "Enter the number of hours worked")]
+        [Display(Name = "Hours Worked")]
         [Range(0, int.MaxValue, ErrorMessage = "Hours Worked must be greater than 0")]
         public int? HoursWorked { get; set; }
 
-        [Display(Name = "Labour Type", Description = "Specify the type of labor")]
+        [Display(Name = "Labour Type")]
         [Required(ErrorMessage = "Labour Type is required")]
         public string LabourType { get; set; }
 
-        [Display(Name = "Labour Price", Description = "Enter the price for the labor")]
+        [Display(Name = "Labour Price")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Labour Price is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Labour Price must be greater than or equal to 0")]
@@ -38,7 +38,7 @@ namespace NBDGreenerGrass.Models
         public decimal LabourPrice { get; set; }
 
         // Needs to be a float(8,2) in our data model just to keep it the same as all other's
-        [Display(Name = "Labour Cost", Description = "Enter the cost for the labor")]
+        [Display(Name = "Labour Cost")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Labour Cost is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Labour Cost must be greater than or equal to 0")]
