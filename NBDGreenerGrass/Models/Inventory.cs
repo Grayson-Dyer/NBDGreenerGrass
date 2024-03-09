@@ -9,21 +9,21 @@ namespace NBDGreenerGrass.Models
         public int ID { get; set; }
 
         //TODO: Shouldnt there be an inventory name? = Cross ref the model with the excel we use Code & Desc for that.
-        [Display(Name = "Inventory Desc")]
+        [Display(Name = "Inventory Desc", Description = "Enter a brief description of the inventory")]
         public string InventoryDesc { get; set; }
 
         // TODO: Should this be a string or a number? = Looks like booth see note below 
-        [Display(Name = "Inventory Size")]
+        [Display(Name = "Inventory Size", Description = "Enter the size of the inventory")]
         [StringLength(50, ErrorMessage = "Inventory Size should be at most 50 characters")]
         [Required(ErrorMessage = "Inventory Size is required")]
         public string InventorySize { get; set; }
 
-        [Display(Name = "Inventory Code")]
+        [Display(Name = "Inventory Code", Description = "Enter the code associated with the inventory")]
         [Required(ErrorMessage = "Inventory Code is required")]
         [StringLength(50, ErrorMessage = "Inventory Code should be at most 50 characters")]
         public string InventoryCode { get; set; }
 
-        [Display(Name = "Inventory List Price")]
+        [Display(Name = "Inventory List Price", Description = "Enter the list price of the inventory")]
         [DataType(DataType.Currency)]
         [Required(ErrorMessage = "Inventory List Price is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Inventory List Price must be greater than or equal to 0")]
