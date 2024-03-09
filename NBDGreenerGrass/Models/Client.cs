@@ -14,7 +14,6 @@ namespace NBDGreenerGrass.Models
         [Display(Name = "Client Name", Description = "Enter the client's full name")]
         [Required(ErrorMessage = "Client Name is required")]
         [StringLength(100, ErrorMessage = "Client Name should be at most 100 characters")]
-        [DisplayFormat(NullDisplayText = "", Prompt = "Enter client's full name")]
         public string Name { get; set; }
 
         [Display(Name = "Contact First Name", Description = "Enter the contact person's first name")]
