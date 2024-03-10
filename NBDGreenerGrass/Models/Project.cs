@@ -61,7 +61,7 @@ namespace NBDGreenerGrass.Models
         [DataType(DataType.MultilineText)]
         public string Desc{ get; set; }
 
-        [Display(Name = "Client")]
+        [Display(Name = "Client", Description = "Select the client associated with this project")]
         [Required(ErrorMessage = "Client is required")]
         public int ClientID { get; set; }
 
