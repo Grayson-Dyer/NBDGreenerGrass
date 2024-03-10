@@ -46,32 +46,6 @@ namespace NBDGreenerGrass.Data
                 }
 
 
-                if(!context.ClientRoles.Any())
-                {
-                    context.ClientRoles.AddRange(
-                        new ClientRole
-                        {
-                            Role = "Owner"
-                        },
-                        new ClientRole
-                        {
-                            Role = "Architect"
-                        },
-                        new ClientRole
-                        {
-                            Role = "General Contractor"
-                        },
-                        new ClientRole
-                        {
-                            Role = "Sub-Contractor"
-                        },
-                        new ClientRole
-                        {
-                            Role = "Supplier"
-                        });
-                        context.SaveChanges();
-                }
-
                 // Generate 5 Clients
                 if (!context.Clients.Any())
                 {
