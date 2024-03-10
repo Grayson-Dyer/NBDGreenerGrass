@@ -1,8 +1,46 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Welcome to Natural By Design</h1>
+        <p>Efficiently manage our clients and their projects with ease.</p>
+    </div>
+    <!-- Instructional Note -->
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Getting Started!</h4>
+        <p>Begin by exploring our Clients section first, Understanding our clients is crucial before diving into the specifics of ongoing projects.</p>
+    </div>
+    <div class="row text-center mt-3">
+        <!-- Clients Shortcut -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100 border-primary">
+                <div class="card-header bg-primary text-white">
+                    Step 1: Review Our Clients
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Clients Overview</h5>
+                    <p class="card-text">Get to know the clients we're working with to tailor our projects effectively.</p>
+                    <a href="~/Clients/Index" class="btn btn-primary">
+                        Go to Clients
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Projects Shortcut -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100 border-success">
+                <div class="card-header bg-success text-white">
+                    Step 2: Manage Projects
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Projects Dashboard</h5>
+                    <p class="card-text">After reviewing our clients, proceed to manage and track the progress of our projects.</p>
+                    <a href="~/Project/Index" class="btn btn-success" aria-disabled="true">
+                        Go to Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

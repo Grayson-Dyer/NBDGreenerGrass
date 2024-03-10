@@ -19,6 +19,31 @@ namespace NBDGreenerGrass.Data
                 context.Database.EnsureCreated();
 
                 Random random = new Random();
+                if (!context.ClientRoles.Any())
+                {
+                    context.ClientRoles.AddRange(
+                        new ClientRole
+                        {
+                            Role = "Owner"
+                        },
+                        new ClientRole
+                        {
+                            Role = "Architect"
+                        },
+                        new ClientRole
+                        {
+                            Role = "General Contractor"
+                        },
+                        new ClientRole
+                        {
+                            Role = "Sub-Contractor"
+                        },
+                        new ClientRole
+                        {
+                            Role = "Supplier"
+                        });
+                    context.SaveChanges();
+                }
 
 
                 if(!context.ClientRoles.Any())
@@ -48,12 +73,12 @@ namespace NBDGreenerGrass.Data
                 }
 
                 // Generate 5 Clients
-                if(!context.Clients.Any())
+                if (!context.Clients.Any())
                 {
                     context.Clients.AddRange(
                         new Client
                         {
-                            Name = "Susan's Flowers",
+                            Name = "John's Construction",
                             ContactFirst = "John",
                             ContactLast = "Smith",
                             Phone = "111-555-5555",
@@ -65,7 +90,7 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         {
-                            Name = "Susan's Sweets",
+                            Name = "John's Construction",
                             ContactFirst = "Jane",
                             ContactLast = "Doe",
                             Street = "321 Fake Street",
@@ -91,7 +116,7 @@ namespace NBDGreenerGrass.Data
                         new Client
                         {
 
-                            Name = "Larry's Construction",
+                            Name = "John's Construction",
                             ContactFirst = "Real",
                             ContactLast = "Person",
                             Street = "321 Electric Avenue",
@@ -102,8 +127,8 @@ namespace NBDGreenerGrass.Data
                             ClientRoleID = 1
                         },
                         new Client
-                        { 
-                            Name = "Bob's Construction",
+                        {
+                            Name = "John's Construction",
                             ContactFirst = "Bob",
                             ContactLast = "Ross",
                             Street = "123 Fake Street",
@@ -113,10 +138,11 @@ namespace NBDGreenerGrass.Data
                             Phone = "416-555-5555",
                             ClientRoleID = 1
                         });
+                    context.SaveChanges();
                         context.SaveChanges();
                 }
                 // Generate 5 Projects
-                if(!context.Projects.Any())
+                if (!context.Projects.Any())
                 {
                     context.Projects.AddRange(
                         new Project
@@ -178,8 +204,8 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Amount = 3000,
                             ClientID = context.Clients.FirstOrDefault(c => c.ContactFirst == "Bob").ID
-                        }) ;
-                        context.SaveChanges();
+                        });
+                    context.SaveChanges();
                 }
                 //Generate 5 Bids 
                 if(!context.Bids.Any())
