@@ -1,0 +1,72 @@
+﻿@model NBDGreenerGrass.Models.Client
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Client</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter client's full name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactFirst" class="control-label"></label>
+                <input asp-for="ContactFirst" class="form-control" placeholder="Enter contact person's first name"/>
+                <span asp-validation-for="ContactFirst" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactLast" class="control-label"></label>
+                <input asp-for="ContactLast" class="form-control" placeholder="Enter contact person's last name" />
+                <span asp-validation-for="ContactLast" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control"  placeholder="Enter phone number"/>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" placeholder="Enter street address"/>
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" placeholder="Enter city"/>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Postal" class="control-label"></label>
+                <input asp-for="Postal" class="form-control" placeholder="Enter postal code"/>
+                <span asp-validation-for="Postal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Province" class="control-label"></label>
+                <input asp-for="Province" class="form-control" placeholder="Enter province"/>
+                <span asp-validation-for="Province" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientRoleID" class="control-label"></label>
+                <select asp-for="ClientRoleID" class ="form-control" asp-items="ViewBag.ClientRoleID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

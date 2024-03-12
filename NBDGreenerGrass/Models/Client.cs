@@ -7,84 +7,90 @@ namespace NBDGreenerGrass.Models
 
    
 
-    public class Client : IValidatableObject
+    public class Client
     {
         public int ID { get; set; }
 
+
+        public string FullName
+        {
+            get
+            {
+                return ContactFirst + " " + ContactLast;
+            }
+        }
+
+        [Display(Name = "Client Name")]
         [Required(ErrorMessage = "Client Name is required")]
         [StringLength(100, ErrorMessage = "Client Name should be at most 100 characters")]
-        public string ClientName { get; set; }
+        public string Name { get; set; }
 
+        [Display(Name = "Contact First Name")]
         [Required(ErrorMessage = "First Name of the contact person is required")]
         [StringLength(50, ErrorMessage = "First Name should be at most 50 characters")]
-        public string ClientContactFirst { get; set; }
+        public string ContactFirst { get; set; }
 
+        [Display(Name = "Contact Last Name")]
         [Required(ErrorMessage = "Last Name of the contact person is required")]
         [StringLength(50, ErrorMessage = "Last Name should be at most 50 characters")]
-        public string ClientContactLast { get; set; }
+        public string ContactLast { get; set; }
 
-        [Required(ErrorMessage = "Contact Role is required")]
-        [StringLength(50, ErrorMessage = "Contact Role should be at most 50 characters")]
-        public string ClientContactRole { get; set; }
+        // See note below = we can dumb this down a wee bit if we have to...
+        [Display(Name = "Contact Phone Number")]
+        [Required(ErrorMessage = "Contact Phone Number is required")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid phone number")]
+        [RegularExpression(@"^\+?(\d{1,4})?[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$", ErrorMessage = "Invalid phone number format")]
+        public string Phone { get; set; }
 
-        [Required(ErrorMessage = "Phone number is required")]
-        [Phone(ErrorMessage = "Invalid phone number")]
-        public string ClientPhone { get; set; }
+        [Display(Name = "Client Street")]
+        [Required(ErrorMessage = "Client Street is required")]
+        [StringLength(255, ErrorMessage = "Client Street should be at most 255 characters")]
+        public string Street { get; set; }
 
-        [Required(ErrorMessage = "Client Address is required")]
-        [StringLength(255, ErrorMessage = "Client Address should be at most 255 characters")]
-        public string ClientAddress { get; set; }
-
-        [Required(ErrorMessage = "Client Province is required")]
-        [StringLength(50, ErrorMessage = "Client Province should be at most 50 characters")]
-        public string ClientProvince { get; set; }
-
-        [Required(ErrorMessage = "Client Postal Code is required")]
-        [StringLength(20, ErrorMessage = "Client Postal Code should be at most 20 characters")]
-        public string ClientPostal { get; set; }
-
+        [Display(Name = "Client City")]
         [Required(ErrorMessage = "Client City is required")]
         [StringLength(50, ErrorMessage = "Client City should be at most 50 characters")]
-        public string ClientCity { get; set; }
+        public string City { get; set; }
 
-        [Required(ErrorMessage = "Client Role ID is required")]
+        [Display(Name = "Client Postal Code")]
+        [Required(ErrorMessage = "Client Postal Code is required")]
+        [StringLength(20, ErrorMessage = "Client Postal Code should be at most 20 characters")]
+        // Canadian postal code format (D F I O Q U V are gone on purpose)
+        [RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d$", ErrorMessage = "Please enter a valid Canadian postal code.")] 
+        public string Postal { get; set; }
+
+        [Display(Name = "Client Province")]
+        [Required(ErrorMessage = "Client Province is required")]
+        [StringLength(50, ErrorMessage = "Client Province should be at most 50 characters")]
+        public string Province { get; set; }
+
+        [Display(Name = "Contact Role")]
+        [Required(ErrorMessage = "Contact Role is required")]
         public int ClientRoleID { get; set; }
+
+        [Display(Name = "Contact Role")]
+        public ClientRole ClientRole { get; set; }
+
+        //Removed validation because it can be implemented in the via DataAnnotations
 
         public ICollection<Project> Projects { get; set; } = new HashSet<Project>();
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var results = new List<ValidationResult>();
-
-            // Custom validation logic
-            if (string.IsNullOrWhiteSpace(ClientProvince))
-            {
-                results.Add(new ValidationResult("Client Province is required.", new[] { nameof(ClientProvince) }));
-            }
-
-            if (string.IsNullOrWhiteSpace(ClientPostal))
-            {
-                results.Add(new ValidationResult("Client Postal Code is required.", new[] { nameof(ClientPostal) }));
-            }
-            else if (!IsValidPostalCode(ClientPostal))
-            {
-                results.Add(new ValidationResult("Invalid Postal Code format.", new[] { nameof(ClientPostal) }));
-            }
-
-            // Add more custom validation as needed...
-
-            return results;
-        }
-
-        // Custom method to validate postal code format (you can adjust this based on your requirements)
-        private bool IsValidPostalCode(string postalCode)
-        {
-            // Implement your postal code validation logic here
-            // Example: Check if it follows a specific pattern
-            // For simplicity, assuming a format of "A1A 1A1" (letter, digit, letter, space, digit, letter, digit)
-            return System.Text.RegularExpressions.Regex.IsMatch(postalCode, @"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$");
-        }
     }
 
 
 }
+
+//In this example, the DataType(DataType.PhoneNumber) attribute is used to indicate that the property represents a phone number. 
+//The RegularExpression attribute is then used to enforce a specific pattern for phone numbers, allowing for common formats while still being flexible. 
+//This regular expression allows for international numbers, optional country code, parentheses, dashes, spaces, and dots. 
+//You can adjust the regular expression to fit your specific formatting requirements if needed.
+
+//Valid phone number examples that match the specified pattern:
+
+//    +1 555-123-4567
+//    555.123.4567
+//    (555) 123-4567
+//    123-4567
+
+//This regular expression is designed to handle common variations in phone number formats, allowing for flexibility while still enforcing a general structure. 
+//Adjust the regular expression according to your specific requirements.

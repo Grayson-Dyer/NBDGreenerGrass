@@ -1,0 +1,85 @@
+﻿@model NBDGreenerGrass.Models.Project
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-3">
+    <h1 class="mb-4">Project Details</h1>
+
+    <div class="mb-5">
+        <h4>Project Information</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4">Start Date</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Start)</dd>
+
+            <dt class="col-sm-4">End Date</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.End)</dd>
+
+            <dt class="col-sm-4">Amount</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Amount)</dd>
+
+            <dt class="col-sm-4">Created On</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Created)</dd>
+
+            <dt class="col-sm-4">Street</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Street)</dd>
+
+            <dt class="col-sm-4">City</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.City)</dd>
+
+            <dt class="col-sm-4">Province</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Province)</dd>
+
+            <dt class="col-sm-4">Postal Code</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Postal)</dd>
+
+            <dt class="col-sm-4">Description</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Desc)</dd>
+
+            <dt class="col-sm-4">Client Location</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Client.City)</dd>
+        </dl>
+    </div>
+
+    <div class="mb-4">
+        <h4>Bids</h4>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Date Made</th>
+                    <th>Stage</th>
+                    <th>Actions</th>
+                    <th>Status Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    bool anyBidApproved = ViewBag.AnyBidApproved;
+                }
+                @foreach (var item in Model.Bids)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.DateMade)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Stage)</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Bids" asp-route-id="@item.ID" class="btn btn-info btn-sm">Details</a>
+                            <a asp-action="Edit" asp-controller="Bids" asp-route-projectId="@Model.ID" asp-route-id="@item.ID" class="btn btn-primary btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-controller="Bids" asp-route-id="@item.ID" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mb-4">
+        <a asp-controller="Bids" asp-action="Create" asp-route-projectId="@Model.ID" class="btn btn-success">Create New Bid</a>
+    </div>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.ID" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

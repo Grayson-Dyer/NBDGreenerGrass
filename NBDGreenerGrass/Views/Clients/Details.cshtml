@@ -1,0 +1,51 @@
+﻿@model NBDGreenerGrass.Models.Client
+
+@{
+    ViewData["Title"] = "Client Details";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h2>Client Details</h2>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Name:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Name)</dd>
+
+                <dt class="col-sm-4">Contact First Name:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.ContactFirst)</dd>
+
+                <dt class="col-sm-4">Contact Last Name:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.ContactLast)</dd>
+
+                <dt class="col-sm-4">Phone:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Phone)</dd>
+
+                <dt class="col-sm-4">Street:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Street)</dd>
+
+                <dt class="col-sm-4">City:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.City)</dd>
+
+                <dt class="col-sm-4">Postal Code:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Postal)</dd>
+
+                <dt class="col-sm-4">Province:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Province)</dd>
+
+                <dt class="col-sm-4">Role:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.ClientRole.Role)</dd>
+            </dl>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="@Url.Action("Edit", new { id = Model?.ID })" class="btn btn-primary me-2">
+                <i class="bi bi-pencil-square"></i> Edit
+            </a>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-square-fill"></i> Back to List
+            </a>
+        </div>
+    </div>
+</div>

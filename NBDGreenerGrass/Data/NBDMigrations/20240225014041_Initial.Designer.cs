@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NBDGreenerGrass.Data;
 
@@ -10,12 +11,14 @@ using NBDGreenerGrass.Data;
 namespace NBDGreenerGrass.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    partial class NBDContextModelSnapshot : ModelSnapshot
+    [Migration("20240225014041_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.16");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.15");
 
             modelBuilder.Entity("NBDGreenerGrass.Models.Bid", b =>
                 {
@@ -35,24 +38,16 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.Property<int?>("BidMaterialInventoryID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateMade")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeniedClientReason")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeniedManagerReason")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1500)
-                        .HasColumnType("TEXT");
+                    b.Property<int>("BidStaffID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ProjectID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Stage")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ID");
 
