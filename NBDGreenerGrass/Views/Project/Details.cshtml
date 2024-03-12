@@ -68,26 +68,6 @@
                             <a asp-action="Edit" asp-controller="Bids" asp-route-projectId="@Model.ID" asp-route-id="@item.ID" class="btn btn-primary btn-sm">Edit</a>
                             <a asp-action="Delete" asp-controller="Bids" asp-route-id="@item.ID" class="btn btn-danger btn-sm">Delete</a>
                         </td>
-                        <td>
-                            @if (item.Stage == NBDGreenerGrass.Enums.BidStage.Reviewed && !anyBidApproved)
-                            {
-                                <form asp-action="BidApproved" asp-controller="Bids" method="post" asp-route-id="@item.ID">
-                                    <input type="submit" value="Client Approved" class="btn btn-success btn-sm" />
-                                </form>
-                            }
-                            else if (item.Stage == NBDGreenerGrass.Enums.BidStage.Unapproved && !anyBidApproved)
-                            {
-                                <form asp-action="BidReviewed" asp-controller="Bids" method="post" asp-route-id="@item.ID">
-                                    <input type="submit" value="Project Admin Reviewed" class="btn btn-warning btn-sm" />
-                                </form>
-                            }
-                            else if (item.Stage == NBDGreenerGrass.Enums.BidStage.Approved)
-                            {
-                                <form asp-action="BidDemote" asp-controller="Bids" method="post" asp-route-id="@item.ID">
-                                    <input type="submit" value="Unapprove" class="btn btn-secondary btn-sm" />
-                                </form>
-                            }
-                        </td>
                     </tr>
                 }
             </tbody>

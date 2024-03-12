@@ -24,6 +24,14 @@ namespace NBDGreenerGrass.Models
         [StringLength(1500, ErrorMessage = "Description cannot be more than 500 characters")]
         public string Description { get; set; }
 
+        [Display(Name = "Client Denied Description")]
+        [DataType(DataType.MultilineText)]
+        public string DeniedClientReason { get; set; }
+
+        [Display(Name = "Manager Denied Description")]
+        [DataType(DataType.MultilineText)]
+        public string DeniedManagerReason { get; set; }
+
         // Get rid of these
         //[Display(Name = "Bid Staff")]
         //[Required(ErrorMessage = "BidStaff ID is required")]

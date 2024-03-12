@@ -11,6 +11,15 @@ namespace NBDGreenerGrass.Models
     {
         public int ID { get; set; }
 
+
+        public string FullName
+        {
+            get
+            {
+                return ContactFirst + " " + ContactLast;
+            }
+        }
+
         [Display(Name = "Client Name")]
         [Required(ErrorMessage = "Client Name is required")]
         [StringLength(100, ErrorMessage = "Client Name should be at most 100 characters")]
