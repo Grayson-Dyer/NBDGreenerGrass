@@ -196,8 +196,9 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                 {
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Stage = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    BidStaffID = table.Column<int>(type: "INTEGER", nullable: false),
+                    Stage = table.Column<int>(type: "INTEGER", nullable: false),
+                    DateMade = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 1500, nullable: true),
                     ProjectID = table.Column<int>(type: "INTEGER", nullable: false),
                     BidLabourBidID = table.Column<int>(type: "INTEGER", nullable: true),
                     BidLabourLabourID = table.Column<int>(type: "INTEGER", nullable: true),

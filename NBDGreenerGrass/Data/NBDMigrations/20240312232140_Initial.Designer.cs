@@ -11,8 +11,8 @@ using NBDGreenerGrass.Data;
 namespace NBDGreenerGrass.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240305004454_BidsUpdated")]
-    partial class BidsUpdated
+    [Migration("20240312232140_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

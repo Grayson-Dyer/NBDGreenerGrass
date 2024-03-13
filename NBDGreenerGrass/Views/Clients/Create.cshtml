@@ -1,72 +1,81 @@
 ﻿@model NBDGreenerGrass.Models.Client
 
-@{
-    ViewData["Title"] = "Create";
-}
+<br />
+<h2 class="text-center">Create Client</h2> <!-- Centered Heading -->
 
-<h1>Create</h1>
-
-<h4>Client</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" placeholder="Enter client's full name" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <div class="row">
+                <!-- Client Details Section -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" placeholder="GreenGrass Company" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactFirst" class="control-label"></label>
+                        <input asp-for="ContactFirst" class="form-control" placeholder="Harry" />
+                        <span asp-validation-for="ContactFirst" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactLast" class="control-label"></label>
+                        <input asp-for="ContactLast" class="form-control" placeholder="Duke" />
+                        <span asp-validation-for="ContactLast" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" placeholder="278-980-5667" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ClientRoleID" class="control-label"></label>
+                        <select asp-for="ClientRoleID" class="form-control" asp-items="ViewBag.ClientRoleID"></select>
+                    </div>
+                </div>
+                <!-- Address Section -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Street" class="control-label"></label>
+                        <input asp-for="Street" class="form-control" placeholder="401 Fake Street" />
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" placeholder="Welland" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Postal" class="control-label"></label>
+                        <input asp-for="Postal" class="form-control" placeholder="L3C 5X5" />
+                        <span asp-validation-for="Postal" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Province" class="control-label"></label>
+                        <input asp-for="Province" class="form-control" placeholder="Enter province" />
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="ContactFirst" class="control-label"></label>
-                <input asp-for="ContactFirst" class="form-control" placeholder="Enter contact person's first name"/>
-                <span asp-validation-for="ContactFirst" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContactLast" class="control-label"></label>
-                <input asp-for="ContactLast" class="form-control" placeholder="Enter contact person's last name" />
-                <span asp-validation-for="ContactLast" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control"  placeholder="Enter phone number"/>
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" placeholder="Enter street address"/>
-                <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" placeholder="Enter city"/>
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Postal" class="control-label"></label>
-                <input asp-for="Postal" class="form-control" placeholder="Enter postal code"/>
-                <span asp-validation-for="Postal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Province" class="control-label"></label>
-                <input asp-for="Province" class="form-control" placeholder="Enter province"/>
-                <span asp-validation-for="Province" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClientRoleID" class="control-label"></label>
-                <select asp-for="ClientRoleID" class ="form-control" asp-items="ViewBag.ClientRoleID"></select>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group text-center">
+                <!-- Centered Button -->
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+<div class="text-center mt-4">
+    <!-- Centered Back to List Link -->
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

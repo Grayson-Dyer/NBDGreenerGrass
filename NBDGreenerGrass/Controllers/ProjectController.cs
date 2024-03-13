@@ -22,26 +22,21 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project
-        public async Task<IActionResult> Index(string SearchString, string StreetString,
-            int? page, string actionButton, string sortDirection = "asc", string sortField = "Client")
+        public async Task<IActionResult> Index(string SearchString, string StreetString, int? page, string actionButton, string sortDirection = "asc", string sortField = "Client")
         {
             var nBDContext = _context.Projects
                 .Include(c => c.Client)
-                .AsNoTracking();
+                .AsQueryable(); // Convert to IQueryable for dynamic querying
 
             ViewData["Filtering"] = "btn-outline-secondary";
             int numberFilters = 0;
 
-            string[] sortOptions = new[] { "Client First Name" };
-
-
-
-            if (!System.String.IsNullOrEmpty(SearchString))
+            if (!string.IsNullOrEmpty(SearchString))
             {
                 nBDContext = nBDContext.Where(p => p.Client.Name.ToUpper().Contains(SearchString.ToUpper()));
                 numberFilters++;
             }
-            if (!System.String.IsNullOrEmpty(StreetString))
+            if (!string.IsNullOrEmpty(StreetString))
             {
                 nBDContext = nBDContext.Where(p => p.Street.ToUpper().Contains(StreetString.ToUpper()));
                 numberFilters++;
@@ -50,44 +45,38 @@ namespace NBDGreenerGrass.Controllers
             if (numberFilters != 0)
             {
                 ViewData["Filtering"] = " btn-danger";
-                ViewData["numberFilters"] = "(" + numberFilters.ToString()
-                    + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
+                ViewData["numberFilters"] = "(" + numberFilters.ToString() + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
             }
 
-            if (!System.String.IsNullOrEmpty(actionButton))
+            if (!string.IsNullOrEmpty(actionButton))
             {
                 page = 1;
 
-                if (sortOptions.Contains(actionButton))
-                {
-                    if (actionButton == sortField) 
-                    {
-                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
-                    }
-                    sortField = actionButton;
-                }
+                // Update sort direction
+                sortDirection = sortDirection == "asc" ? "desc" : "asc";
+
+                // Update sort field
+                sortField = actionButton;
             }
 
-            else if (sortField == "Client")
+            // Apply sorting based on sortField and sortDirection
+            switch (sortField)
             {
-                if (sortDirection == "asc")
-                {
-                    nBDContext = nBDContext
-                        .OrderBy(p => p.Client.Name)
-                        .ThenBy(p => p.Start);
-                }
-                else
-                {
-                    nBDContext = nBDContext
-                        .OrderByDescending(p => p.Client.Name)
-                        .ThenByDescending(p => p.Start);
-                }
+                case "Client":
+                    nBDContext = sortDirection == "asc" ? nBDContext.OrderBy(p => p.Client.Name) : nBDContext.OrderByDescending(p => p.Client.Name);
+                    break;
+                case "Start":
+                    nBDContext = sortDirection == "asc" ? nBDContext.OrderBy(p => p.Start) : nBDContext.OrderByDescending(p => p.Start);
+                    break;
+                // Add cases for other fields if needed
+                default:
+                    nBDContext = nBDContext.OrderBy(p => p.Client.Name); // Default sorting
+                    break;
             }
 
-            //Set sort for next time
+            // Set sort for next time
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
-
 
             return View(await nBDContext.ToListAsync());
         }
@@ -124,7 +113,7 @@ namespace NBDGreenerGrass.Controllers
         // GET: Project/Create
         public IActionResult Create()
         {
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "City");
+            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Name");
             return View();
         }
 
@@ -143,7 +132,7 @@ namespace NBDGreenerGrass.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "City", project.ClientID);
+                ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Name", project.ClientID);
             }
             catch (DbUpdateException)
             {
