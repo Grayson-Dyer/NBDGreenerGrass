@@ -19,6 +19,89 @@ namespace NBDGreenerGrass.Data
                 context.Database.EnsureCreated();
 
                 Random random = new Random();
+                if (!context.Inventories.Any())
+                {
+                    context.AddRange(
+                        new Inventory
+                        {
+                            InventoryDesc = "Decorative Cedar bark",
+                            InventorySize = "5 cu ft",
+                            InventoryCode = "CBRK5",
+                            InventoryListPrice = 15.95m
+                        },
+                        new Inventory
+                        {
+                            InventoryDesc = "Crushed Grantie",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "CRGRN",
+                            InventoryListPrice = 14.00m
+                        },
+                        new Inventory
+                        {
+                            InventoryDesc = "Pea Gravel",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "PGRV",
+                            InventoryListPrice = 20.00m
+                        },
+                        new Inventory
+                        {
+                            InventoryDesc = "1\" Gravel",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "GRV1",
+                            InventoryListPrice = 5.90m
+                        },
+                        new Inventory
+                        {
+                            InventoryDesc = "Topsoil",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "TSOIL",
+                            InventoryListPrice = 12.50m
+                        },
+                        new Inventory
+                        {
+                            InventoryDesc = "Patio block-grey",
+                            InventorySize = "1 Each",
+                            InventoryCode = "PBLKG",
+                            InventoryListPrice = 0.84m
+                        },
+                        new Inventory
+                        {
+                            InventoryDesc = "Patio block-red",
+                            InventorySize = "1 Each",
+                            InventoryCode = "PBLKR",
+                            InventoryListPrice = 0.84m
+                        });
+                    context.SaveChanges();
+                }
+
+                if (!context.Labours.Any())
+                {
+                    context.Labours.AddRange(
+                        new Labour {
+                            LabourType = "Production Worker",
+                            LabourPrice = 30.00m,
+                            LabourCost = 18.00m
+                        },
+                        new Labour
+                        {
+                            LabourType = "Designer",
+                            LabourPrice = 65.00m,
+                            LabourCost = 40.00m
+                        },
+                        new Labour
+                        {
+                            LabourType = "Equipment operator",
+                            LabourPrice = 65.00m,
+                            LabourCost = 45.00m
+                        },
+                        new Labour
+                        {
+                            LabourType = "Botanist",
+                            LabourPrice = 75.00m,
+                            LabourCost = 50.00m
+                        });
+                    context.SaveChanges();
+                }
                 if (!context.ClientRoles.Any())
                 {
                     context.ClientRoles.AddRange(
@@ -218,7 +301,105 @@ namespace NBDGreenerGrass.Data
                         });
                         context.SaveChanges();
                 }
+                //Generate 5 BidMaterials
+                if(!context.BidMaterials.Any())
+                {
+                    context.BidMaterials.AddRange(
+                        new BidMaterial
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.InventoryDesc == "Decorative Cedar bark").ID,
+                            InventoryDesc = "Decorative Cedar bark",
+                            InventorySize = "5 cu ft",
+                            InventoryCode = "CBRK5",
+                            InventoryListPrice = 15.95m,
+                            BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
+                        },
+                        new BidMaterial
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.InventoryDesc == "Crushed Grantie").ID,
+                            InventoryDesc = "Crushed Grantie",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "CRGRN",
+                            InventoryListPrice = 14.00m,
+                            BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
+
+                        },
+                        new BidMaterial
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.InventoryDesc == "Pea Gravel").ID,
+                            InventoryDesc = "Pea Gravel",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "PGRV",
+                            InventoryListPrice = 20.00m,
+                            BidID = context.Bids.FirstOrDefault(b => b.Stage == BidStage.Unapproved).ID
+                        },
+                        new BidMaterial
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.InventoryDesc == "1\" Gravel").ID,
+                            InventoryDesc = "1\" Gravel",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "GRV1",
+                            InventoryListPrice = 5.90m,
+                            BidID = context.Bids.FirstOrDefault(b => b.Stage == BidStage.Unapproved).ID
+                        },
+                        new BidMaterial
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.InventoryDesc == "Topsoil").ID,
+                            InventoryDesc = "Topsoil",
+                            InventorySize = "1 Yard",
+                            InventoryCode = "TSOIL",
+                            InventoryListPrice = 12.50m,
+                            BidID = context.Bids.FirstOrDefault(b => b.Stage == BidStage.Unapproved).ID
+                        });
+                    context.SaveChanges();
+                }
+                if (!context.BidLabours.Any())
+                {
+                    context.BidLabours.AddRange(
+                        new BidLabour
+                        {
+                            LabourID = context.Labours.FirstOrDefault(l => l.LabourType == "Production Worker").ID,
+                            LabourType = "Production Worker",
+                            LabourPrice = 30.00m,
+                            LabourCost = 18.00m,
+                            BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
+                        },
+                        new BidLabour
+                        {
+                            LabourID = context.Labours.FirstOrDefault(l => l.LabourType == "Designer").ID,
+                            LabourType = "Designer",
+                            LabourPrice = 65.00m,
+                            LabourCost = 40.00m,
+                            BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
+                        },
+                        new BidLabour
+                        {
+                            LabourID = context.Labours.FirstOrDefault(l => l.LabourType == "Equipment operator").ID,
+                            LabourType = "Equipment operator",
+                            LabourPrice = 65.00m,
+                            LabourCost = 45.00m,
+                            BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
+                        },
+                        new BidLabour
+                        {
+                            LabourID = context.Labours.FirstOrDefault(l => l.LabourType == "Botanist").ID,
+                            LabourType = "Botanist",
+                            LabourPrice = 75.00m,
+                            LabourCost = 50.00m,
+                            BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
+                        },
+                        new BidLabour
+                        {
+                            LabourID = context.Labours.FirstOrDefault(l => l.LabourType == "Production Worker").ID,
+                            LabourType = "Production Worker",
+                            LabourPrice = 30.00m,
+                            LabourCost = 18.00m,
+                            BidID = context.Bids.FirstOrDefault(b => b.ID == 2).ID
+                        });
+                    context.SaveChanges();
+                }
                 context.Database.Migrate();
+
             }
             catch (Exception ex)
             {

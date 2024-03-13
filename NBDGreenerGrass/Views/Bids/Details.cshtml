@@ -49,6 +49,55 @@
         }
 
     </dl>
+
+    <div>
+        <h4>Bid Materials</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Inventory Description</th>
+                    <th>Inventory Size</th>
+                    <th>Inventory Code</th>
+                    <th>Inventory List Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var material in Model.BidMaterials)
+                {
+                    <tr>
+                        <td>@material.InventoryDesc</td>
+                        <td>@material.InventorySize</td>
+                        <td>@material.InventoryCode</td>
+                        <td>@material.InventoryListPrice.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h4>Bid Labours</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Labour Type</th>
+                    <th>Labour Price</th>
+                    <th>Labour Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var labour in Model.BidLabours)
+                {
+                    <tr>
+                        <td>@labour.LabourType</td>
+                        <td>@labour.LabourPrice.ToString("C")</td>
+                        <td>@labour.LabourCost.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 </div>
 <div>
     <h4>Actions</h4>
