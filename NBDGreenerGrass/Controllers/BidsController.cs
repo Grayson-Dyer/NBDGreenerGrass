@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Evaluation;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using NBDGreenerGrass.Data;
 using NBDGreenerGrass.Enums;
@@ -30,20 +33,20 @@ namespace NBDGreenerGrass.Controllers
         // GET: Bids/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Bids == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var bid = await _context.Bids
-                .Include(b => b.Project)
+                .Include(b => b.BidMaterials)
+                .Include(b => b.BidLabours)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (bid == null)
             {
                 return NotFound();
             }
-
-
 
             return View(bid);
         }
@@ -167,6 +170,7 @@ namespace NBDGreenerGrass.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            
             try
             {
                 if (_context.Bids == null)
@@ -174,19 +178,20 @@ namespace NBDGreenerGrass.Controllers
                     return Problem("Entity set 'NBDContext.Bids'  is null.");
                 }
                 var bid = await _context.Bids.FindAsync(id);
+                int projectId = bid.ProjectID;
                 if (bid != null)
                 {
                     _context.Bids.Remove(bid);
                 }
-
                 await _context.SaveChangesAsync();
+                return RedirectToAction("Details", "Project", new { id = projectId });
             }
             catch (DbUpdateException)
             {
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Bids", new { id = id });
         }
 
         private bool BidExists(int id)
