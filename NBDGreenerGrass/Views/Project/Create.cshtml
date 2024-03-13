@@ -1,77 +1,88 @@
 ﻿@model NBDGreenerGrass.Models.Project
 
-@{
-    ViewData["Title"] = "Create";
-}
+<br />
+<h2 class="text-center">Create Project</h2> <!-- Centered Heading -->
 
-<h1>Create</h1>
-
-<h4>Project</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Start" class="control-label"></label>
-                <input asp-for="Start" class="form-control" />
-                <span asp-validation-for="Start" class="text-danger"></span>
+            <div class="row">
+                <!-- Project Details Section -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Start" class="control-label"></label>
+                        <input asp-for="Start" class="form-control" />
+                        <span asp-validation-for="Start" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="End" class="control-label"></label>
+                        <input asp-for="End" class="form-control" />
+                        <span asp-validation-for="End" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input asp-for="Amount" class="form-control" placeholder="$14000" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Created" class="control-label"></label>
+                        <input asp-for="Created" class="form-control" />
+                        <span asp-validation-for="Created" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ClientID" class="control-label"></label>
+                        <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Desc" class="control-label"></label>
+                        <textarea asp-for="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
+                        <span asp-validation-for="Desc" class="text-danger"></span>
+                    </div>
+                   
+                </div>
+                <!-- Project Address Section -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Street" class="control-label"></label>
+                        <input asp-for="Street" class="form-control" placeholder="456 Fake Street" />
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <input asp-for="City" class="form-control" placeholder="Welland" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Province" class="control-label"></label>
+                        <input asp-for="Province" class="form-control" placeholder="Enter project province" />
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Postal" class="control-label"></label>
+                        <input asp-for="Postal" class="form-control" placeholder="L3C 5X5" />
+                        <span asp-validation-for="Postal" class="text-danger"></span>
+                    </div>
+                    
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="End" class="control-label"></label>
-                <input asp-for="End" class="form-control" />
-                <span asp-validation-for="End" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" placeholder="Enter project amount" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" placeholder="Enter project street" />
-                <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" placeholder="Enter project city" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Province" class="control-label"></label>
-                <input asp-for="Province" class="form-control" placeholder="Enter project province" />
-                <span asp-validation-for="Province" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Postal" class="control-label"></label>
-                <input asp-for="Postal" class="form-control" placeholder="Enter project postal code" />
-                <span asp-validation-for="Postal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Desc" class="control-label"></label>
-                <textarea asp-for="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
-                <span asp-validation-for="Desc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClientID" class="control-label"></label>
-                <select asp-for="ClientID" class ="form-control" asp-items="ViewBag.ClientID"></select>
-            </div>
-            <div class="form-group">
+            <br />
+            <div class="form-group text-center">
+                <!-- Centered Button -->
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+<div class="text-center mt-4">
+    <!-- Centered Back to List Link -->
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

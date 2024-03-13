@@ -90,7 +90,7 @@ namespace NBDGreenerGrass.Data
                         new Client
                         {
 
-                            Name = "John's Construction",
+                            Name = "Real's Construction",
                             ContactFirst = "Real",
                             ContactLast = "Person",
                             Street = "321 Electric Avenue",
@@ -102,7 +102,7 @@ namespace NBDGreenerGrass.Data
                         },
                         new Client
                         {
-                            Name = "John's Construction",
+                            Name = "Fake's Construction",
                             ContactFirst = "Bob",
                             ContactLast = "Ross",
                             Street = "123 Fake Street",

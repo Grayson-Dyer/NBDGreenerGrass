@@ -36,20 +36,27 @@
 
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Client.Name)</th>
-                <th>@Html.DisplayNameFor(model => model.Start)</th>
-                <th>@Html.DisplayNameFor(model => model.End)</th>
-                <th>@Html.DisplayNameFor(model => model.Amount)</th>
-                <th>@Html.DisplayNameFor(model => model.Created)</th>
-                <th>@Html.DisplayName("Address")</th> 
-                <th>@Html.DisplayName("City")</th>
-                <th>@Html.DisplayName("Province")</th>
-                <th>@Html.DisplayName("Postal")</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+       <thead class="table-dark">
+    <tr>
+        <th>
+            <a asp-action="Index" asp-route-actionButton="Client" style="color: @(ViewData["sortField"].ToString() == "Client" ? "wheat" : "inherit")">Client Name</a>
+        </th>
+        <th>
+                    <a asp-action="Index" asp-route-actionButton="Start" style="color: @(ViewData["sortField"].ToString() == "Start" ? "wheat" : "inherit")">Start Date</a>
+        </th>
+        <th>
+                    <a asp-action="Index" asp-route-actionButton="End" style="color: @(ViewData["sortField"].ToString() == "End" ? "wheat" : "inherit")">End Date</a>
+        </th>
+        <th>
+            Cost
+        </th>
+        <th>
+                    <a asp-action="Index" asp-route-actionButton="Created" style="color: @(ViewData["sortField"].ToString() == "Created" ? "wheat" : "inherit")">Created</a>
+        </th>
+        <th>Actions</th>
+    </tr>
+</thead>
+
         <tbody>
             @foreach (var item in Model)
             {
@@ -59,14 +66,10 @@
                     <td>@Html.DisplayFor(modelItem => item.End)</td>
                     <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                     <td>@Html.DisplayFor(modelItem => item.Created)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Street)</td>
-                    <td>@Html.DisplayFor(modelItem => item.City)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Province)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Postal)</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-sm btn-outline-secondary">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.ID"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             }

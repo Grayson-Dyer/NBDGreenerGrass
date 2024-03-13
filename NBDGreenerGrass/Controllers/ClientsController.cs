@@ -21,8 +21,8 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Clients
-        public async Task<IActionResult> Index(string SearchString, int? ClientID,
-            int? page, string actionButton, string sortDirection = "asc", string sortField = "Client")
+        public async Task<IActionResult> Index(string SearchString, int? ClientID, string? ContactFirstString, string? ContactLastString,
+      int? page, string actionButton, string sortDirection = "asc", string sortField = "Client")
         {
             var nBDContext = _context.Clients
                 .Include(c => c.ClientRole)
@@ -36,7 +36,7 @@ namespace NBDGreenerGrass.Controllers
 
             //List of sort options.
             //NOTE: make sure this array has matching values to the column headings
-            string[] sortOptions = new[] { "Client First Name" };
+            string[] sortOptions = new[] { "Name", "ContactFirst", "ContactLast", "Phone", "ClientRole" };
 
             //Add as many filters as needed
             if (ClientID.HasValue)
@@ -45,18 +45,28 @@ namespace NBDGreenerGrass.Controllers
                 numberFilters++;
             }
 
-            if (!System.String.IsNullOrEmpty(SearchString))
+            if (!string.IsNullOrEmpty(SearchString))
             {
-                nBDContext = nBDContext.Where(p => p.ContactLast.ToUpper().Contains(SearchString.ToUpper())
-                                       || p.ContactFirst.ToUpper().Contains(SearchString.ToUpper())
-                                       || p.Name.ToUpper().Contains(SearchString.ToUpper()));
+                nBDContext = nBDContext.Where(p => p.Name.ToUpper().Contains(SearchString.ToUpper()));
+                numberFilters++;
+            }
+
+            if (!string.IsNullOrEmpty(ContactLastString))
+            {
+                nBDContext = nBDContext.Where(p => p.ContactLast.ToUpper().Contains(ContactLastString.ToUpper()));
+                numberFilters++;
+            }
+
+            if (!string.IsNullOrEmpty(ContactFirstString))
+            {
+                nBDContext = nBDContext.Where(p => p.ContactFirst.ToUpper().Contains(ContactFirstString.ToUpper()));
                 numberFilters++;
             }
             //Give feedback about the state of the filters
             if (numberFilters != 0)
             {
                 //Toggle the Open/Closed state of the collapse depending on if we are filtering
-                ViewData["Filtering"] = " btn-danger";
+                ViewData["Filtering"] = "btn-danger";
                 //Show how many filters have been applied
                 ViewData["numberFilters"] = "(" + numberFilters.ToString()
                     + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
@@ -65,7 +75,7 @@ namespace NBDGreenerGrass.Controllers
             }
 
             //Before we sort, see if we have called for a change of filtering or sorting
-            if (!System.String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            if (!string.IsNullOrEmpty(actionButton)) //Form Submitted!
             {
                 page = 1;//Reset page to start
 
@@ -78,20 +88,61 @@ namespace NBDGreenerGrass.Controllers
                     sortField = actionButton;//Sort by the button clicked
                 }
             }
+
             //Now we know which field and direction to sort by
-            else if (sortField == "Client")
+            if (sortField == "Name")
             {
                 if (sortDirection == "asc")
                 {
-                    nBDContext = nBDContext
-                        .OrderBy(p => p.ContactLast)
-                        .ThenBy(p => p.ContactLast);
+                    nBDContext = nBDContext.OrderBy(p => p.Name);
                 }
                 else
                 {
-                    nBDContext = nBDContext
-                        .OrderByDescending(p => p.ContactLast)
-                        .ThenByDescending(p => p.ContactFirst);
+                    nBDContext = nBDContext.OrderByDescending(p => p.Name);
+                }
+            }
+            else if (sortField == "ContactFirst")
+            {
+                if (sortDirection == "asc")
+                {
+                    nBDContext = nBDContext.OrderBy(p => p.ContactFirst);
+                }
+                else
+                {
+                    nBDContext = nBDContext.OrderByDescending(p => p.ContactFirst);
+                }
+            }
+            else if (sortField == "ContactLast")
+            {
+                if (sortDirection == "asc")
+                {
+                    nBDContext = nBDContext.OrderBy(p => p.ContactLast);
+                }
+                else
+                {
+                    nBDContext = nBDContext.OrderByDescending(p => p.ContactLast);
+                }
+            }
+            else if (sortField == "Phone")
+            {
+                if (sortDirection == "asc")
+                {
+                    nBDContext = nBDContext.OrderBy(p => p.Phone);
+                }
+                else
+                {
+                    nBDContext = nBDContext.OrderByDescending(p => p.Phone);
+                }
+            }
+            else if (sortField == "ClientRole")
+            {
+                if (sortDirection == "asc")
+                {
+                    nBDContext = nBDContext.OrderBy(p => p.ClientRole.Role);
+                }
+                else
+                {
+                    nBDContext = nBDContext.OrderByDescending(p => p.ClientRole.Role);
                 }
             }
 
@@ -99,12 +150,9 @@ namespace NBDGreenerGrass.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-
             return View(await nBDContext.ToListAsync());
-
-
-
         }
+
 
         // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
