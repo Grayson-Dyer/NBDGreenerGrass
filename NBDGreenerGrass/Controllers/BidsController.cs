@@ -30,23 +30,24 @@ namespace NBDGreenerGrass.Controllers
         // GET: Bids/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Bids == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var bid = await _context.Bids
-                .Include(b => b.Project)
+                .Include(b => b.BidMaterials)
+                .Include(b => b.BidLabours)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (bid == null)
             {
                 return NotFound();
             }
 
-
-
             return View(bid);
         }
+
 
         // GET: Bids/Create
         public IActionResult Create(int projectId)
@@ -194,46 +195,149 @@ namespace NBDGreenerGrass.Controllers
           return _context.Bids.Any(e => e.ID == id);
         }
 
-        
-        [ValidateAntiForgeryToken]
-        public IActionResult BidReviewed(int id)
+
+        //GET: Bids/Review/5
+        public async Task<IActionResult> Review(int? id)
         {
-            if (_context.Bids == null)
+            if (id == null || _context.Bids == null)
             {
-                return Problem("Entity set 'NBDContext.Bids'  is null.");
-            }
-            var bid = _context.Bids.Find(id);
-
-            if(bid != null)
-            {
-                bid.BidReviewed();
-                _context.Bids.Update(bid);
+                return NotFound();
             }
 
-            _context.SaveChanges();
-            return RedirectToAction("Details", "Project", new {id = bid.ProjectID });
+            var bid = await _context.Bids
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (bid == null)
+            {
+                return NotFound();
+            }
+
+            return View(bid);
         }
 
-        
+
+        //POST: Bids/Review/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult BidApproved(int id)
+        public async Task<IActionResult> BidReviewed(int id, [Bind("ID,ProjectID,DeniedManagerReason")] Bid bid, string action)
         {
-            if (_context.Bids == null)
+            if (id != bid.ID)
             {
-                return Problem("Entity set 'NBDContext.Bids'  is null.");
+                return NotFound();
             }
-            var bid =  _context.Bids.Find(id);
-
-            if (bid != null)
+            if (ModelState.IsValid)
             {
-                bid.BidApproved();
-                _context.Bids.Update(bid);
+                try
+                {
+                    var existingBid = await _context.Bids.FindAsync(id);
+                    if (existingBid == null)
+                    {
+                        return NotFound();
+                    }
+                    if (action == "Approve")
+                    {
+                        existingBid.BidReviewed();
+                    }
+                    else if (action == "Deny")
+                    {
+                        existingBid.DeniedManagerReason = bid.DeniedManagerReason;
+                        existingBid.BidDemote();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
 
-                 _context.SaveChanges();
 
+                    _context.Update(existingBid);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BidExists(bid.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return RedirectToAction("Details", "Bids", new { id = bid.ID });
+            }
+            return View(bid);
+        }
+
+
+        //GET: Bids/Approve/5
+        public async Task<IActionResult> Approve(int? id)
+        {
+            if (id == null || _context.Bids == null)
+            {
+                return NotFound();
             }
 
-            return RedirectToAction("Details", "Project", new { id = bid.ProjectID });
+            var bid = await _context.Bids
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (bid == null)
+            {
+                return NotFound();
+            }
+
+            return View(bid);
+        }
+
+        //POST: Bids/Approve/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BidApproval(int id, [Bind("ID,ProjectID,DeniedClientReason")] Bid bid, string action)
+        {
+            if (id != bid.ID)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var existingBid = await _context.Bids.FindAsync(id);
+                    if (existingBid == null)
+                    {
+                        return NotFound();
+                    }
+                    if (action == "Approve")
+                    {
+                        existingBid.BidApproved();
+                    }
+                    else if (action == "Deny")
+                    {
+                        existingBid.DeniedClientReason = bid.DeniedClientReason;
+                        existingBid.BidDemote();
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+
+
+                    _context.Update(existingBid);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BidExists(bid.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return RedirectToAction("Details", "Bids", new { id = bid.ID });
+            }
+            return View(bid);
         }
 
         [ValidateAntiForgeryToken]
@@ -257,6 +361,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
     }
+
 
 
 

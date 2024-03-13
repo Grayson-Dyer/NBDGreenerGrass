@@ -6,7 +6,7 @@ namespace NBDGreenerGrass.Models
 {
     public class Bid
     {
-        
+
         public int ID { get; set; }
 
         [Display(Name = "Bid Stage")]
@@ -23,6 +23,14 @@ namespace NBDGreenerGrass.Models
         [DataType(DataType.MultilineText)]
         [StringLength(1500, ErrorMessage = "Description cannot be more than 500 characters")]
         public string Description { get; set; }
+
+        [Display(Name = "Client Denied Description")]
+        [DataType(DataType.MultilineText)]
+        public string DeniedClientReason { get; set; }
+
+        [Display(Name = "Manager Denied Description")]
+        [DataType(DataType.MultilineText)]
+        public string DeniedManagerReason { get; set; }
 
         // Get rid of these
         //[Display(Name = "Bid Staff")]
@@ -42,7 +50,7 @@ namespace NBDGreenerGrass.Models
 
         [Display(Name = "Project")]
         public Project Project { get; set; }
-        
+
         public ICollection<BidMaterial> BidMaterials { get; set; } = new HashSet<BidMaterial>();
         public ICollection<BidLabour> BidLabours { get; set; } = new HashSet<BidLabour>();
         //public ICollection<BidStaff> BidStaffs { get; set; } = new HashSeWt<BidStaff>();
