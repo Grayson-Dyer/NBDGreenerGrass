@@ -59,6 +59,8 @@
                     <th>Inventory Size</th>
                     <th>Inventory Code</th>
                     <th>Inventory List Price</th>
+                    <th>Quantity</th> 
+                    <th></th> 
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +71,10 @@
                         <td>@material.InventorySize</td>
                         <td>@material.InventoryCode</td>
                         <td>@material.InventoryListPrice.ToString("C")</td>
+                        <td>@material.Quantity</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="BidMaterial" asp-route-bidId="@material.BidID" asp-route-inventoryId="@material.InventoryID">Edit</a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -103,6 +109,9 @@
     <h4>Actions</h4>
     <a asp-action="Review" asp-route-Id="@Model.ID" asp-route-ID="@Model?.ID">Review</a>
     <a asp-action="Approve" asp-route-Id="@Model.ID" asp-route-ID="@Model?.ID">Approve</a>
+    <a asp-action="CreateBidMaterial" asp-controller="BidMaterial" asp-route-bidId="@Model.ID">Add Material</a>
+    <a asp-action="CreateBidLabour" asp-controller="BidLabour" asp-route-bidId="@Model.ID">Add Labour</a>
+
 </div>
 <div>
     <a asp-action="Edit" asp-route-projectId="@Model.ProjectID" asp-route-id="@Model?.ID">Edit</a> |

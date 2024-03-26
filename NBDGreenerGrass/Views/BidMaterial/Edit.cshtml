@@ -1,0 +1,57 @@
+﻿@model NBDGreenerGrass.Models.BidMaterial
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BidMaterial</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BidID" />
+            <input type="hidden" asp-for="InventoryID" />
+            
+            <div class="form-group">
+                <label asp-for="InventoryDesc" class="control-label"></label>
+                <input asp-for="InventoryDesc" class="form-control" readonly />
+                <span asp-validation-for="InventoryDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventorySize" class="control-label"></label>
+                <input asp-for="InventorySize" class="form-control" readonly />
+                <span asp-validation-for="InventorySize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryCode" class="control-label"></label>
+                <input asp-for="InventoryCode" class="form-control" readonly />
+                <span asp-validation-for="InventoryCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InventoryListPrice" class="control-label"></label>
+                <input asp-for="InventoryListPrice" class="form-control" readonly />
+                <span asp-validation-for="InventoryListPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" min="1" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

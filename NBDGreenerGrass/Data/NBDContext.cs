@@ -23,16 +23,16 @@ namespace NBDGreenerGrass.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BidMaterial>()
+                .HasKey(bm => new { bm.BidID, bm.InventoryID });
+            modelBuilder.Entity<BidLabour>()
+                .HasKey(bl => new { bl.BidID, bl.LabourID });
+
+
             modelBuilder.Entity<Project>()
                 .HasOne(p => p.Client)
                 .WithMany(c => c.Projects)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<BidLabour>()
-                .HasKey(bl => new { bl.BidID, bl.LabourID });
-
-            modelBuilder.Entity<BidMaterial>()
-                .HasKey(bm => new { bm.BidID, bm.InventoryID });
             modelBuilder.Entity<Bid>()
                 .HasMany(bl => bl.BidLabours)
                 .WithOne(b => b.Bid);

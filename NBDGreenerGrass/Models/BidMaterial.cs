@@ -7,8 +7,6 @@ namespace NBDGreenerGrass.Models
 
     public class BidMaterial
     {
-        //TODO: Is this a composite key?
-        public int ID { get; set; }
 
         [Display(Name = "Bid")]
         [Required(ErrorMessage = "Bid ID is required")]
@@ -23,6 +21,11 @@ namespace NBDGreenerGrass.Models
 
         [Display(Name = "Inventory")]  
         public Inventory Inventory { get; set; }
+
+        [Display(Name = "Quantity")]
+        [Required(ErrorMessage = "Quantity is required")]
+        [Range(0, int.MaxValue, ErrorMessage = "Quantity must be greater than 0")]
+        public int Quantity { get; set; }
 
         [Display(Name = "Inventory Description")]
         [StringLength(75, ErrorMessage = "Inventory Description should be at most 75 characters")]
@@ -54,12 +57,11 @@ namespace NBDGreenerGrass.Models
         {
             get
             {
-                // Try parsing the numeric part from the InventorySize string
+
                 if (float.TryParse(Regex.Match(InventorySize, @"\d+(\.\d+)?").Value, out float result))
-                {
                     return result;
-                }
-                return null; // Return null if parsing fails
+
+                return null;
             }
         }
         

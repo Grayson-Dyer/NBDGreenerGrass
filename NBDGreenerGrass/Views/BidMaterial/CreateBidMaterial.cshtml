@@ -1,0 +1,43 @@
+﻿@model BidMaterialViewModel
+
+<h2>Add Material to Bid</h2>
+
+<form asp-action="CreateBidMaterial" method="post">
+    <div class="form-group">
+        <label>Available Inventory</label>
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Select</th>
+                        <th>Description</th>
+                        <th>Size</th>
+                        <th>Code</th>
+                        <th>List Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.AvailableInventory.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="selectedInventory" value="@Model.AvailableInventory.ElementAt(i).ID" />
+                            </td>
+                            <td>@Model.AvailableInventory.ElementAt(i).InventoryDesc</td>
+                            <td>@Model.AvailableInventory.ElementAt(i).InventorySize</td>
+                            <td>@Model.AvailableInventory.ElementAt(i).InventoryCode</td>
+                            <td>@Model.AvailableInventory.ElementAt(i).InventoryListPrice.ToString("C")</td>
+                            <td>
+                                <input type="number" name="quantities[@i]" min="1" value="1" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <input type="hidden" name="bidID" value="@Model.BidID" />
+    <button type="submit">Save</button>
+</form>

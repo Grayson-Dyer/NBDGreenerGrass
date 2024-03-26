@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NBDGreenerGrass.Data.NBDMigrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class RebuildingDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -150,8 +150,7 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                 {
                     LabourID = table.Column<int>(type: "INTEGER", nullable: false),
                     BidID = table.Column<int>(type: "INTEGER", nullable: false),
-                    ID = table.Column<int>(type: "INTEGER", nullable: false),
-                    HoursWorked = table.Column<int>(type: "INTEGER", nullable: true),
+                    HoursWorked = table.Column<int>(type: "INTEGER", nullable: false),
                     LabourType = table.Column<string>(type: "TEXT", nullable: false),
                     LabourPrice = table.Column<decimal>(type: "TEXT", nullable: false),
                     LabourCost = table.Column<decimal>(type: "TEXT", nullable: false)
@@ -173,7 +172,7 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                 {
                     BidID = table.Column<int>(type: "INTEGER", nullable: false),
                     InventoryID = table.Column<int>(type: "INTEGER", nullable: false),
-                    ID = table.Column<int>(type: "INTEGER", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     InventoryDesc = table.Column<string>(type: "TEXT", maxLength: 75, nullable: false),
                     InventorySize = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     InventoryCode = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
@@ -199,6 +198,8 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     Stage = table.Column<int>(type: "INTEGER", nullable: false),
                     DateMade = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 1500, nullable: true),
+                    DeniedClientReason = table.Column<string>(type: "TEXT", nullable: true),
+                    DeniedManagerReason = table.Column<string>(type: "TEXT", nullable: true),
                     ProjectID = table.Column<int>(type: "INTEGER", nullable: false),
                     BidLabourBidID = table.Column<int>(type: "INTEGER", nullable: true),
                     BidLabourLabourID = table.Column<int>(type: "INTEGER", nullable: true),
