@@ -3,6 +3,7 @@
     public int BidID { get; set; }
     public IEnumerable<InventoryItem> AvailableInventory { get; set; }
     public List<SelectedInventoryItem> SelectedInventoryItems { get; set; }
+    public decimal ProjectCost { get; set; }
 
     public BidMaterialViewModel()
     {

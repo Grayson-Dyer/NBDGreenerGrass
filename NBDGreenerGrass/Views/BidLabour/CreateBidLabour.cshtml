@@ -7,6 +7,9 @@
         <label>Available Labour Types</label>
         <div class="table-responsive">
 
+            <h1>Project:</h1>
+            <label for="projectCost">Project Cost:</label>
+            <input type="number" name="projectCost" value="@Model.ProjectCost" readonly/>
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
                     <tr>
@@ -22,7 +25,7 @@
                     {
                         <tr>
                             <td>
-                                <input type="checkbox" name="selectedLabourTypes" value="@Model.AvailableLabourTypes.ElementAt(i).ID" />
+                                <input type="checkbox" name="selectedLabourTypes[@i]" value="@Model.AvailableLabourTypes.ElementAt(i).ID" />
                             </td>
                             <td>@Model.AvailableLabourTypes.ElementAt(i).LabourType</td>
                             <td>@Model.AvailableLabourTypes.ElementAt(i).LabourPrice.ToString("C")</td>

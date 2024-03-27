@@ -55,10 +55,10 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Inventory Description</th>
-                    <th>Inventory Size</th>
-                    <th>Inventory Code</th>
-                    <th>Inventory List Price</th>
+                    <th>Description</th>
+                    <th>Size</th>
+                    <th>Code</th>
+                    <th>List Price</th>
                     <th>Quantity</th> 
                     <th></th> 
                 </tr>
@@ -87,8 +87,10 @@
             <thead>
                 <tr>
                     <th>Labour Type</th>
-                    <th>Labour Price</th>
-                    <th>Labour Cost</th>
+                    <th>Price</th>
+                    <th>Cost</th>
+                    <th>Hours Worked</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -98,6 +100,12 @@
                         <td>@labour.LabourType</td>
                         <td>@labour.LabourPrice.ToString("C")</td>
                         <td>@labour.LabourCost.ToString("C")</td>
+                        <td>@labour.HoursWorked</td>
+
+                        <td>
+                            <a asp-action="Edit" asp-controller="BidLabour" asp-route-bidId="@labour.BidID" asp-route-labourId="@labour.LabourID">Edit</a>
+
+                        </td>
                     </tr>
                 }
             </tbody>

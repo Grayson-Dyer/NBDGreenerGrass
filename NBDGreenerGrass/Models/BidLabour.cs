@@ -45,6 +45,8 @@ namespace NBDGreenerGrass.Models
         public decimal LabourCost { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
+
+
     }
 
 }

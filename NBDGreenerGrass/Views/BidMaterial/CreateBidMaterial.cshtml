@@ -6,7 +6,9 @@
     <div class="form-group">
         <label>Available Inventory</label>
         <div class="table-responsive">
-
+            <h1>Project:</h1>
+            <label for="projectCost">Project Cost:</label>
+            <input type="number" name="projectCost" value="@Model.ProjectCost" readonly />
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
                     <tr>
@@ -23,7 +25,7 @@
                     {
                         <tr>
                             <td>
-                                <input type="checkbox" name="selectedInventory" value="@Model.AvailableInventory.ElementAt(i).ID" />
+                                <input type="checkbox" name="selectedInventory[@i]" value="@Model.AvailableInventory.ElementAt(i).ID" />
                             </td>
                             <td>@Model.AvailableInventory.ElementAt(i).InventoryDesc</td>
                             <td>@Model.AvailableInventory.ElementAt(i).InventorySize</td>

@@ -79,6 +79,7 @@ namespace NBDGreenerGrass.Models
         {
             Stage = BidStage.Approved;
         }
-    }
 
+
+    }
 }

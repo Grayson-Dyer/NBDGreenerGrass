@@ -73,10 +73,12 @@ namespace NBDGreenerGrass.Controllers
 
                     _context.Add(bid);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("CreateBidMaterial", "BidMaterial", new { bidID = bid.ID });
                 }
                 ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "City", bid.ProjectID);
                 ViewData["BidStages"] = new SelectList(Enum.GetValues(typeof(Enums.BidStage)));
+                 
+
             }
             catch (DbUpdateException)
             {

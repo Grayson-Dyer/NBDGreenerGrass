@@ -3,6 +3,7 @@
     public int BidID { get; set; }
     public IEnumerable<LabourItem> AvailableLabourTypes { get; set; }
     public List<SelectedLabour> SelectedLabourTypes { get; set; }
+    public decimal ProjectCost { get; set;}
 
     public BidLabourViewModel()
     {

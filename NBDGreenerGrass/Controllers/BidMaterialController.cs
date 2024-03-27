@@ -63,17 +63,9 @@ namespace NBDGreenerGrass.Controllers
 
                 var viewModel = new BidMaterialViewModel
                 {
+                    ProjectCost = _context.Projects.FirstOrDefault(p => p.ID == bid.ProjectID).Amount,
                     BidID = bidId,
-                    AvailableInventory = _context.Inventories
-                        .Include(i => i.BidMaterials) // Include BidMaterials to avoid null reference
-                        .Select(i => new InventoryItem
-                        {
-                            ID = i.ID,
-                            InventoryDesc = i.InventoryDesc,
-                            InventorySize = i.InventorySize,
-                            InventoryCode = i.InventoryCode,
-                            InventoryListPrice = i.InventoryListPrice
-                        })
+                    AvailableInventory = GetAvailableInventory()
                 };
 
                 return View(viewModel);
@@ -88,7 +80,7 @@ namespace NBDGreenerGrass.Controllers
 
         // POST: BidMaterial/CreateBidMaterial
         [HttpPost]
-        public async  Task<IActionResult> CreateBidMaterial(BidMaterialViewModel viewModel, int[] selectedInventory, int[] quantities)
+        public async Task<IActionResult> CreateBidMaterial(BidMaterialViewModel viewModel, Dictionary<int, int> selectedInventory, Dictionary<int, int> quantities)
         {
             if (selectedInventory == null || quantities == null)
             {
@@ -96,13 +88,35 @@ namespace NBDGreenerGrass.Controllers
                 return View(viewModel);
             }
 
+            var bidLabours = _context.BidLabours.Where(bl => bl.BidID == viewModel.BidID);
+            var bidMaterials = _context.BidMaterials.Where(bm => bm.BidID == viewModel.BidID);
+            var totalCost = bidLabours.AsEnumerable().Sum(bl => bl.LabourPrice * bl.HoursWorked) + bidMaterials.AsEnumerable().Sum(bm => bm.InventoryListPrice * bm.Quantity);
 
-            for (int i = 0; i < selectedInventory.Length; i++)
+            var project = _context.Projects.FirstOrDefault(p => p.ID == _context.Bids.FirstOrDefault(b => b.ID == viewModel.BidID).ProjectID);
+
+            if (totalCost > project.Amount)
             {
-                int inventoryID = selectedInventory[i];
-                int quantity = quantities[i];
+                ModelState.AddModelError("", "The total cost of all BidLabours and BidMaterials cannot exceed the Project cost.");
+                viewModel.AvailableInventory = GetAvailableInventory();
+                return View(viewModel);
+            }
+
+            foreach (var item in selectedInventory)
+            {
+                int inventoryID = item.Value;
+                int quantity = quantities[item.Key];
                 var inventory = await _context.Inventories.FindAsync(inventoryID);
+                totalCost += inventory.InventoryListPrice * quantity;
+
+
+                if (totalCost > project.Amount)
+                {
+                    ModelState.AddModelError("", "The total cost of all BidLabours and BidMaterials cannot exceed the Project cost.");
+                    viewModel.AvailableInventory = GetAvailableInventory();
+                    return View(viewModel);
+                }
                 // Create a new BidMaterial instance and save it to the database
+
                 var bidMaterial = new BidMaterial
                 {
                     BidID = viewModel.BidID,
@@ -114,13 +128,15 @@ namespace NBDGreenerGrass.Controllers
                     InventoryListPrice = inventory.InventoryListPrice
                 };
 
+
                 await _context.BidMaterials.AddAsync(bidMaterial);
             }
+
 
             await _context.SaveChangesAsync();
 
             // Redirect or return a view as needed
-            return RedirectToAction("Details", "Bids", new { id = viewModel.BidID });
+            return RedirectToAction("CreateBidLabour", "BidLabour", new { bidID = viewModel.BidID });
         }
 
 
@@ -188,6 +204,20 @@ namespace NBDGreenerGrass.Controllers
                     if (existingBidMaterial == null)
                     {
                         return NotFound();
+                    }
+
+
+                    var bidLabours = _context.BidLabours.Where(bl => bl.BidID == bidMaterial.BidID);
+                    var bidMaterials = _context.BidMaterials.Where(bm => bm.BidID == bidMaterial.BidID);
+                    var totalCost = bidLabours.AsEnumerable().Sum(bl => bl.LabourPrice * bl.HoursWorked) + bidMaterials.AsEnumerable().Sum(bm => bm.InventoryListPrice * bm.Quantity);
+                    Bid bid = _context.Bids.FirstOrDefault(b => b.ID == bidMaterial.BidID);
+
+                    totalCost -= existingBidMaterial.InventoryListPrice * existingBidMaterial.Quantity;
+                    totalCost += bidMaterial.InventoryListPrice * bidMaterial.Quantity;
+                    if (totalCost > _context.Projects.FirstOrDefault(p => p.ID == bid.ProjectID).Amount)
+                    {
+                        ModelState.AddModelError("", "The total cost of all BidLabours and BidMaterials cannot exceed the Project cost.");
+                        return View(bidMaterial);
                     }
 
                     // Update the quantity of the existing bid material
@@ -258,6 +288,22 @@ namespace NBDGreenerGrass.Controllers
         {
           return _context.BidMaterials.Any(e => e.BidID == id);
         }
+
+        public List<InventoryItem> GetAvailableInventory()
+        {
+            return _context.Inventories
+                .Include(i => i.BidMaterials) // Include BidMaterials to avoid null reference
+                .Select(i => new InventoryItem
+                {
+                    ID = i.ID,
+                    InventoryDesc = i.InventoryDesc,
+                    InventorySize = i.InventorySize,
+                    InventoryCode = i.InventoryCode,
+                    InventoryListPrice = i.InventoryListPrice
+                }).ToList();
+        }
+        
+        
         
     }
 }
