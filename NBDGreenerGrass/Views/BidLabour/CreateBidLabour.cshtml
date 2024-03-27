@@ -10,7 +10,7 @@
             <h1>Project:</h1>
             <label for="projectCost">Project Cost:</label>
             <input type="number" name="projectCost" value="@Model.ProjectCost" readonly/>
-            <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                 <thead class="table-dark">
                     <tr>
                         <th>Select</th>
@@ -40,5 +40,5 @@
         </div>
     </div>
     <input type="hidden" name="bidID" value="@Model.BidID" />
-    <button type="submit">Save</button>
+    <button type="submit" class="btn btn-primary">Save</button>
 </form>
