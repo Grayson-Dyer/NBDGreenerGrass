@@ -314,6 +314,7 @@ namespace NBDGreenerGrass.Data
                             InventorySize = "5 cu ft",
                             InventoryCode = "CBRK5",
                             InventoryListPrice = 15.95m,
+                            Quantity = 3,
                             BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
                         },
                         new BidMaterial
@@ -322,6 +323,7 @@ namespace NBDGreenerGrass.Data
                             InventoryDesc = "Crushed Grantie",
                             InventorySize = "1 Yard",
                             InventoryCode = "CRGRN",
+                            Quantity = 2,
                             InventoryListPrice = 14.00m,
                             BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
 
@@ -332,6 +334,7 @@ namespace NBDGreenerGrass.Data
                             InventoryDesc = "Pea Gravel",
                             InventorySize = "1 Yard",
                             InventoryCode = "PGRV",
+                            Quantity = 1,
                             InventoryListPrice = 20.00m,
                             BidID = context.Bids.FirstOrDefault(b => b.Stage == BidStage.Unapproved).ID
                         },
@@ -341,6 +344,7 @@ namespace NBDGreenerGrass.Data
                             InventoryDesc = "1\" Gravel",
                             InventorySize = "1 Yard",
                             InventoryCode = "GRV1",
+                            Quantity = 4,
                             InventoryListPrice = 5.90m,
                             BidID = context.Bids.FirstOrDefault(b => b.Stage == BidStage.Unapproved).ID
                         },
@@ -350,6 +354,7 @@ namespace NBDGreenerGrass.Data
                             InventoryDesc = "Topsoil",
                             InventorySize = "1 Yard",
                             InventoryCode = "TSOIL",
+                            Quantity = 2,
                             InventoryListPrice = 12.50m,
                             BidID = context.Bids.FirstOrDefault(b => b.Stage == BidStage.Unapproved).ID
                         });
@@ -364,6 +369,7 @@ namespace NBDGreenerGrass.Data
                             LabourType = "Production Worker",
                             LabourPrice = 30.00m,
                             LabourCost = 18.00m,
+                            HoursWorked = 10,
                             BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
                         },
                         new BidLabour
@@ -372,6 +378,7 @@ namespace NBDGreenerGrass.Data
                             LabourType = "Designer",
                             LabourPrice = 65.00m,
                             LabourCost = 40.00m,
+                            HoursWorked = 5,
                             BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
                         },
                         new BidLabour
@@ -380,6 +387,7 @@ namespace NBDGreenerGrass.Data
                             LabourType = "Equipment operator",
                             LabourPrice = 65.00m,
                             LabourCost = 45.00m,
+                            HoursWorked = 8,
                             BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
                         },
                         new BidLabour
@@ -388,6 +396,7 @@ namespace NBDGreenerGrass.Data
                             LabourType = "Botanist",
                             LabourPrice = 75.00m,
                             LabourCost = 50.00m,
+                            HoursWorked = 6,
                             BidID = context.Bids.FirstOrDefault(b => b.ID == 1).ID
                         },
                         new BidLabour
@@ -396,6 +405,7 @@ namespace NBDGreenerGrass.Data
                             LabourType = "Production Worker",
                             LabourPrice = 30.00m,
                             LabourCost = 18.00m,
+                            HoursWorked = 10,
                             BidID = context.Bids.FirstOrDefault(b => b.ID == 2).ID
                         });
                     context.SaveChanges();

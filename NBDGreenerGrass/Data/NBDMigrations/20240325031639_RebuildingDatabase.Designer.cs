@@ -11,14 +11,14 @@ using NBDGreenerGrass.Data;
 namespace NBDGreenerGrass.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240313080302_BidChanges")]
-    partial class BidChanges
+    [Migration("20240325031639_RebuildingDatabase")]
+    partial class RebuildingDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.16");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.17");
 
             modelBuilder.Entity("NBDGreenerGrass.Models.Bid", b =>
                 {
@@ -77,9 +77,7 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("HoursWorked")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ID")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("LabourCost")
@@ -107,9 +105,6 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                     b.Property<int>("InventoryID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ID")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("InventoryCode")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -127,6 +122,9 @@ namespace NBDGreenerGrass.Data.NBDMigrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("BidID", "InventoryID");
 

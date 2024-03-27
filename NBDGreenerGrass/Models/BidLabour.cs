@@ -6,8 +6,6 @@ namespace NBDGreenerGrass.Models
 
     public class BidLabour
     {
-        //TODO: is this a composite key?
-        public int ID { get; set; }
 
         [Display(Name = "Labour")]
         [Required(ErrorMessage = "Labour ID is required")]
@@ -23,8 +21,9 @@ namespace NBDGreenerGrass.Models
 
         // Needs to be added to our model
         [Display(Name = "Hours Worked")]
+        [Required(ErrorMessage = "Hours Worked is required")]
         [Range(0, int.MaxValue, ErrorMessage = "Hours Worked must be greater than 0")]
-        public int? HoursWorked { get; set; }
+        public int HoursWorked { get; set; }
 
         [Display(Name = "Labour Type")]
         [Required(ErrorMessage = "Labour Type is required")]
@@ -46,6 +45,8 @@ namespace NBDGreenerGrass.Models
         public decimal LabourCost { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
+
+
     }
 
 }

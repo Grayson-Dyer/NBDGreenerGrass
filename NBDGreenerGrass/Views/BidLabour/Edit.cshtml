@@ -1,0 +1,56 @@
+﻿@model NBDGreenerGrass.Models.BidLabour
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<br/>
+<h2 class="text-center">Edit Bid Labour</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form asp-action="Edit">
+                @*You can change call the read only fields to whatever you want*@
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="LabourID" />
+                <input type="hidden" asp-for="BidID" />
+
+                <div class="form-group">
+                    <label asp-for="LabourType" class="control-label">Labour Type</label>
+                    <input asp-for="LabourType" class="form-control" readonly />
+                    <span asp-validation-for="LabourType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LabourPrice" class="control-label">Labour Price</label>
+                    <input asp-for="LabourPrice" class="form-control" readonly />
+                    <span asp-validation-for="LabourPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LabourCost" class="control-label">Labour Cost</label>
+                    <input asp-for="LabourCost" class="form-control" readonly />
+                    <span asp-validation-for="LabourCost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HoursWorked" class="control-label">Hours Worked</label>
+                    <input asp-for="HoursWorked" class="form-control" />
+                    <span asp-validation-for="HoursWorked" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
