@@ -1,88 +1,85 @@
 ﻿@model NBDGreenerGrass.Models.Project
 
-@{
-    ViewData["Title"] = "Edit Project";
-}
+<br />
+<h2 class="text-center">Edit Project</h2> <!-- Centered Heading -->
 
+<hr />
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1>Edit Project</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <!-- Project Details Section -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Start" class="control-label"></label>
+                            <input asp-for="Start" class="form-control" />
+                            <span asp-validation-for="Start" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="End" class="control-label"></label>
+                            <input asp-for="End" class="form-control" />
+                            <span asp-validation-for="End" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Amount" class="control-label"></label>
+                            <input asp-for="Amount" class="form-control" placeholder="4000" />
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Created" class="control-label"></label>
+                            <input asp-for="Created" class="form-control" />
+                            <span asp-validation-for="Created" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ClientID" class="control-label"></label>
+                            <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Desc" class="control-label"></label>
+                            <textarea asp-for="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
+                            <span asp-validation-for="Desc" class="text-danger"></span>
+                        </div>
+                       
+                    </div>
+                    <!-- Project Address Section -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Street" class="control-label"></label>
+                            <input asp-for="Street" class="form-control" placeholder="456 Fake Street" />
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="City" class="control-label"></label>
+                            <input asp-for="City" class="form-control" placeholder="Welland" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Province" class="control-label"></label>
+                            <input asp-for="Province" class="form-control" placeholder="Enter project province" />
+                            <span asp-validation-for="Province" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Postal" class="control-label"></label>
+                            <input asp-for="Postal" class="form-control" placeholder="L3C 5X5" />
+                            <span asp-validation-for="Postal" class="text-danger"></span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <br />
+                <div class="form-group text-center">
+                    <!-- Centered Button -->
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
     </div>
-    <hr />
-    <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="ID" />
-        <div class="row form-group">
-            <div class="col-md-6">
-                <label asp-for="Start" class="control-label"></label>
-                <input asp-for="Start" class="form-control" />
-                <span asp-validation-for="Start" class="text-danger"></span>
-            </div>
-            <div class="col-md-6">
-                <label asp-for="End" class="control-label"></label>
-                <input asp-for="End" class="form-control" />
-                <span asp-validation-for="End" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-md-4">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="col-md-4">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="col-md-4">
-                <label asp-for="ClientID" class="control-label"></label>
-                <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
-                <span asp-validation-for="ClientID" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-md-6">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
-                <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="col-md-6">
-                <label asp-for="City" class="control-label"></label>
-                <select asp-for="City" class="form-control" asp-items="ViewBag.ClientID"></select>
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-md-6">
-                <label asp-for="Province" class="control-label"></label>
-                <input asp-for="Province" class="form-control" />
-                <span asp-validation-for="Province" class="text-danger"></span>
-            </div>
-            <div class="col-md-6">
-                <label asp-for="Postal" class="control-label"></label>
-                <input asp-for="Postal" class="form-control" />
-                <span asp-validation-for="Postal" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col-md-12">
-                <label asp-for="Desc" class="control-label"></label>
-                <textarea asp-for="Desc" class="form-control"></textarea>
-                <span asp-validation-for="Desc" class="text-danger"></span>
-            </div>
-        </div>
-        <br />
-        <div class="row form-group">
-            <div class="col-md-12 text-center">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </div>
-    </form>
-    <div class="row">
-        <div class="col-md-12 text-center">
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8 text-center">
+            <!-- Centered Back to List Link -->
             <a asp-action="Index">Back to List</a>
         </div>
     </div>

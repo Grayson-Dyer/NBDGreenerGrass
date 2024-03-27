@@ -155,7 +155,7 @@ namespace NBDGreenerGrass.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "City", project.ClientID);
+            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Name", project.ClientID);
             return View(project);
         }
 
@@ -195,7 +195,7 @@ namespace NBDGreenerGrass.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "City", project.ClientID);
+            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Name", project.ClientID);
             return View(project);
         }
 
