@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Amount" class="control-label"></label>
-                        <input asp-for="Amount" class="form-control" placeholder="$14000" />
+                        <input asp-for="Amount" class="form-control" placeholder="E.g 4000" />
                         <span asp-validation-for="Amount" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -31,10 +31,22 @@
                         <input asp-for="Created" class="form-control" />
                         <span asp-validation-for="Created" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label asp-for="ClientID" class="control-label"></label>
-                        <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+                        <select asp-for="ClientID" class="form-control" id="clientDropdown">
+                            <option value="">Select Client</option>
+                            @foreach (var client in ViewBag.ClientID)
+                            {
+                                <option value="@client.Value">@client.Text</option>
+                            }
+                        </select>
                     </div>
+
+                   @*  <div class="form-group">
+                        <label asp-for="ClientID" class="control-label"></label>
+                        <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
+                    </div> *@
                     <div class="form-group">
                         <label asp-for="Desc" class="control-label"></label>
                         <textarea asp-for="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
@@ -46,22 +58,22 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Street" class="control-label"></label>
-                        <input asp-for="Street" class="form-control" placeholder="456 Fake Street" />
+                        <input asp-for="Street" class="form-control" placeholder="E.g 456 Fake Street" />
                         <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="City" class="control-label"></label>
-                        <input asp-for="City" class="form-control" placeholder="Welland" />
+                        <input asp-for="City" class="form-control" placeholder="E.g Welland" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Province" class="control-label"></label>
-                        <input asp-for="Province" class="form-control" placeholder="Enter project province" />
+                        <input asp-for="Province" class="form-control" placeholder="E.g Enter project province" />
                         <span asp-validation-for="Province" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Postal" class="control-label"></label>
-                        <input asp-for="Postal" class="form-control" placeholder="L3C 5X5" />
+                        <input asp-for="Postal" class="form-control" placeholder="E.g L3C 5X5" />
                         <span asp-validation-for="Postal" class="text-danger"></span>
                     </div>
                     
@@ -86,3 +98,9 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<script>
+    $(document).ready(function () {
+        $('#clientDropdown').select2();
+    });
+</script>
