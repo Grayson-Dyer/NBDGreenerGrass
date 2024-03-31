@@ -40,6 +40,9 @@ namespace NBDGreenerGrass.Controllers
                 .Include(b => b.BidLabours)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
+            var projectHasApprovedBids = _context.Bids.Any(b => b.ProjectID == bid.ProjectID && b.Stage == Enums.BidStage.Approved);
+            ViewBag.ProjectHasApprovedBids = projectHasApprovedBids;
+
             if (bid == null)
             {
                 return NotFound();
@@ -240,7 +243,7 @@ namespace NBDGreenerGrass.Controllers
         //POST: Bids/Review/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BidReviewed(int id, [Bind("ID,ProjectID,DeniedManagerReason")] Bid bid, string action)
+        public async Task<IActionResult> BidReviewed(int id, [Bind("ID,ProjectID,DeniedManagerReason,ApprovedManagerReason")] Bid bid, string action)
         {
             if (id != bid.ID)
             {
@@ -258,6 +261,7 @@ namespace NBDGreenerGrass.Controllers
                     if (action == "Approve")
                     {
                         existingBid.BidReviewed();
+                        existingBid.ApprovedManagerReason = bid.ApprovedManagerReason;
                     }
                     else if (action == "Deny")
                     {
@@ -312,7 +316,7 @@ namespace NBDGreenerGrass.Controllers
         //POST: Bids/Approve/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BidApproval(int id, [Bind("ID,ProjectID,DeniedClientReason")] Bid bid, string action)
+        public async Task<IActionResult> BidApproval(int id, [Bind("ID,ProjectID,DeniedClientReason,ApprovedClientReason")] Bid bid, string action)
         {
             if (id != bid.ID)
             {
@@ -330,6 +334,7 @@ namespace NBDGreenerGrass.Controllers
                     if (action == "Approve")
                     {
                         existingBid.BidApproved();
+                        existingBid.ApprovedClientReason = bid.ApprovedClientReason;
                     }
                     else if (action == "Deny")
                     {

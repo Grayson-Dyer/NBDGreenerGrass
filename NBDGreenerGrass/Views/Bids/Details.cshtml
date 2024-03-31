@@ -22,16 +22,15 @@
             <dd class="col-sm-9">@ViewBag.TotalCost.ToString("C")</dd>
             <dt class="col-sm-3">Total Profit:</dt>
             <dd class="col-sm-9">@ViewBag.Profit.ToString("C")</dd>
-            @if (Model.Stage == NBDGreenerGrass.Enums.BidStage.Unapproved && !String.IsNullOrEmpty(Model.DeniedClientReason))
-            {
-                <dt class="col-sm-3">Denied Client Reason:</dt>
-                <dd class="col-sm-9">@Html.DisplayFor(model => model.DeniedClientReason)</dd>
-            }
-            else if (Model.Stage == NBDGreenerGrass.Enums.BidStage.Unapproved && !String.IsNullOrEmpty(Model.DeniedManagerReason))
-            {
-                <dt class="col-sm-3">Denied Manager Reason:</dt>
-                <dd class="col-sm-9">@Html.DisplayFor(model => model.DeniedManagerReason)</dd>
-            }
+            <dt class="col-sm-3">Denied Manager Reason:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DeniedManagerReason)</dd>
+            <dt class="col-sm-3">Denied Client Reason:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DeniedClientReason)</dd>
+            <dt class="col-sm-3">Approved Manager Reason:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.ApprovedManagerReason)</dd>
+            <dt class="col-sm-3">Approved Client Reason:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.ApprovedClientReason)</dd>
+            
         </dl>
     </div>
 </div>
@@ -76,6 +75,7 @@
                             <td>@material.Quantity</td>
                             <td>
                                 <a asp-action="Edit" asp-controller="BidMaterial" asp-route-bidId="@material.BidID" asp-route-inventoryId="@material.InventoryID">Edit</a>
+                                <a asp-action="Delete" asp-controller="BidMaterial" asp-route-bidId="@material.BidID" asp-route-inventoryId="@material.InventoryID">Delete</a>
                             </td>
                         </tr>
                     }
@@ -111,6 +111,7 @@
                             <td>@labour.HoursWorked</td>
                             <td>
                                 <a asp-action="Edit" asp-controller="BidLabour" asp-route-bidId="@labour.BidID" asp-route-labourId="@labour.LabourID">Edit</a>
+                                <a asp-action="Delete" asp-controller="BidLabour" asp-route-bidId="@labour.BidID" asp-route-labourId="@labour.LabourID">Delete</a>
                             </td>
                         </tr>
                     }
@@ -122,8 +123,14 @@
 
 <div class="mt-4">
 
-    <a class="btn btn-primary" asp-action="Review" asp-route-Id="@Model.ID" asp-route-ID="@Model?.ID">Review</a>
-    <a class="btn btn-success" asp-action="Approve" asp-route-Id="@Model.ID" asp-route-ID="@Model?.ID">Approve</a>
+    @if (Model.Stage == NBDGreenerGrass.Enums.BidStage.Unapproved && !ViewBag.ProjectHasApprovedBids)
+    {
+        <a class="btn btn-primary" asp-action="Review" asp-route-Id="@Model.ID" asp-route-ID="@Model?.ID">Manager Review</a>
+    }
+    else if (Model.Stage == NBDGreenerGrass.Enums.BidStage.Reviewed && !ViewBag.ProjectHasApprovedBids)
+    {
+        <a class="btn btn-success" asp-action="Approve" asp-route-Id="@Model.ID" asp-route-ID="@Model?.ID">Client Approve</a>
+    }
     <a class="btn btn-info" asp-route-returnUrl="@Context.Request.Path" asp-action="CreateBidMaterial" asp-controller="BidMaterial" asp-route-bidId="@Model.ID">Add Material</a>
     <a class="btn btn-info" asp-action="CreateBidLabour" asp-controller="BidLabour" asp-route-bidId="@Model.ID">Add Labour</a>
 </div>

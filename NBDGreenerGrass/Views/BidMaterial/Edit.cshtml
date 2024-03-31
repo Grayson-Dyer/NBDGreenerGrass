@@ -9,13 +9,27 @@
 <h2 class="text-center">Edit Bid Material</h2>
 
 <div class="container">
+
+    <div class="card mt-4">
+        <div class="card-header">
+            Budget Details
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <label for="projectCost">Project Cost:</label>
+                <span id="projectCostLookup" name="projectCostLookup">@ViewBag.ProjectCost</span>
+                <label for="bidTotalAmount">Total cost:</label>
+                <span id="totalCost">@((ViewBag.TotalCost != null ? ViewBag.TotalCost.ToString("F2") : "0"))</span>
+            </dl>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="BidID" />
                 <input type="hidden" asp-for="InventoryID" />
-
                 <div class="form-group">
                     <label asp-for="InventoryDesc" class="control-label">Description</label>
                     <input asp-for="InventoryDesc" class="form-control" readonly />
@@ -50,11 +64,34 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Details" asp-controller="Bids" asp-route-id="@Model.BidID">Back to List</a>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script>
+        $(document).ready(function () {
+            var initialTotalCost = parseFloat($("#totalCost").text());
+            var quantityInput = $("input[name='Quantity']");
+            var listPriceInput = $("#InventoryListPrice");
+
+            // Function to calculate and update the total cost
+            function updateTotalCost() {
+                var additionalCost = 0;
+                var quantity = parseFloat(quantityInput.val());
+                var listPrice = parseFloat(listPriceInput.val());
+                additionalCost += quantity * listPrice;
+                var totalCost = initialTotalCost + additionalCost;
+                $("#totalCost").text(totalCost.toFixed(2));
+            }
+
+            // Call the function on page load
+            updateTotalCost();
+
+            // Call the function when the quantity input is changed
+            quantityInput.change(updateTotalCost);
+
+            // Call the function when the list price input is changed
+            listPriceInput.change(updateTotalCost);
+        });
+    </script>
 }
