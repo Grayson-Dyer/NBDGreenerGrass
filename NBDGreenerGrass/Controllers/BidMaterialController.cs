@@ -47,13 +47,14 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidMaterial/CreateBidMaterial
-        public async Task<IActionResult> CreateBidMaterial(int bidId)
+        public async Task<IActionResult> CreateBidMaterial(int bidId, string returnUrl = null)
         {
             try
             {
                 var bid = await _context.Bids
                     .Include(b => b.BidMaterials)
                     .ThenInclude(bm => bm.Inventory)
+                    .Include(b => b.BidLabours)
                     .FirstOrDefaultAsync(b => b.ID == bidId);
 
                 if (bid == null)
@@ -65,8 +66,23 @@ namespace NBDGreenerGrass.Controllers
                 {
                     ProjectCost = _context.Projects.FirstOrDefault(p => p.ID == bid.ProjectID).Amount,
                     BidID = bidId,
-                    AvailableInventory = GetAvailableInventory()
+                    AvailableInventory = GetAvailableInventory(bidId),
+                    ReturnUrl = returnUrl // Add this line
                 };
+
+                decimal totalCost = 0;
+
+                foreach (var bidMaterial in bid.BidMaterials)
+                {
+                    totalCost += bidMaterial.InventoryListPrice * bidMaterial.Quantity;
+                }
+
+                foreach (var bidLabour in bid.BidLabours)
+                {
+                    totalCost += bidLabour.LabourPrice * bidLabour.HoursWorked;
+                }
+
+                ViewBag.TotalCost = totalCost;
 
                 return View(viewModel);
             }
@@ -82,6 +98,7 @@ namespace NBDGreenerGrass.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBidMaterial(BidMaterialViewModel viewModel, Dictionary<int, int> selectedInventory, Dictionary<int, int> quantities)
         {
+
             if (selectedInventory == null || quantities == null)
             {
                 // Handle invalid input
@@ -97,7 +114,7 @@ namespace NBDGreenerGrass.Controllers
             if (totalCost > project.Amount)
             {
                 ModelState.AddModelError("", "The total cost of all BidLabours and BidMaterials cannot exceed the Project cost.");
-                viewModel.AvailableInventory = GetAvailableInventory();
+                viewModel.AvailableInventory = GetAvailableInventory(viewModel.BidID);
                 return View(viewModel);
             }
 
@@ -112,7 +129,7 @@ namespace NBDGreenerGrass.Controllers
                 if (totalCost > project.Amount)
                 {
                     ModelState.AddModelError("", "The total cost of all BidLabours and BidMaterials cannot exceed the Project cost.");
-                    viewModel.AvailableInventory = GetAvailableInventory();
+                    viewModel.AvailableInventory = GetAvailableInventory(viewModel.BidID);
                     return View(viewModel);
                 }
                 // Create a new BidMaterial instance and save it to the database
@@ -136,7 +153,14 @@ namespace NBDGreenerGrass.Controllers
             await _context.SaveChangesAsync();
 
             // Redirect or return a view as needed
-            return RedirectToAction("CreateBidLabour", "BidLabour", new { bidID = viewModel.BidID });
+            if (!string.IsNullOrEmpty(viewModel.ReturnUrl))
+            {
+                return Redirect(viewModel.ReturnUrl);
+            }
+            else
+            {
+                return RedirectToAction("CreateBidLabour", "BidLabour", new { bidID = viewModel.BidID });
+            }
         }
 
 
@@ -289,10 +313,13 @@ namespace NBDGreenerGrass.Controllers
           return _context.BidMaterials.Any(e => e.BidID == id);
         }
 
-        public List<InventoryItem> GetAvailableInventory()
+        public List<InventoryItem> GetAvailableInventory(int bidId)
         {
+            int[] alreadySelectedItems = _context.BidMaterials.Where(bm => bm.BidID == bidId).Select(bl => bl.InventoryID).ToArray();
+
             return _context.Inventories
                 .Include(i => i.BidMaterials) // Include BidMaterials to avoid null reference
+                .Where(i => !alreadySelectedItems.Contains(i.ID))
                 .Select(i => new InventoryItem
                 {
                     ID = i.ID,

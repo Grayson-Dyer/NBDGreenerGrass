@@ -27,6 +27,7 @@ namespace NBDGreenerGrass.Controllers
                 var bid = await _context.Bids
                     .Include(b => b.BidLabours)
                     .ThenInclude(bl => bl.Labour)
+                    .Include(b => b.BidMaterials)
                     .FirstOrDefaultAsync(b => b.ID == bidId);
 
                 if (bid == null)
@@ -34,14 +35,30 @@ namespace NBDGreenerGrass.Controllers
                     return NotFound();
                 }
 
+                var projectAmount = await _context.Projects.FirstOrDefaultAsync(p => p.ID == bid.ProjectID);
 
 
                 var viewModel = new BidLabourViewModel
                 {
                     BidID = bidId,
-                    ProjectCost = _context.Projects.FirstOrDefault(p => p.ID == bid.ProjectID).Amount,
+                    ProjectCost = projectAmount.Amount,
                     AvailableLabourTypes = GetAvailableLabourTypes(bidId)
                 };
+
+                decimal totalCost = 0;
+
+                foreach (var material in bid.BidMaterials)
+                {
+                    totalCost += material.InventoryListPrice * material.Quantity;
+                }
+
+                foreach (var labour in bid.BidLabours)
+                {
+                    totalCost += labour.LabourPrice * labour.HoursWorked;
+                }
+
+                ViewBag.TotalCost = totalCost;
+
 
                 return View(viewModel);
             }

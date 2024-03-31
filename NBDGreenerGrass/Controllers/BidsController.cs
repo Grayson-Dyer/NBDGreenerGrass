@@ -45,6 +45,26 @@ namespace NBDGreenerGrass.Controllers
                 return NotFound();
             }
 
+            decimal totalCost = 0;
+
+            foreach (var material in bid.BidMaterials)
+            {
+                totalCost += material.InventoryListPrice * material.Quantity;
+            }
+
+            foreach (var labour in bid.BidLabours)
+            {
+                totalCost += labour.LabourPrice * labour.HoursWorked;
+            }
+
+
+            var projectCost = _context.Projects.Find(bid.ProjectID).Amount;
+
+
+            ViewBag.TotalCost = totalCost;
+            ViewBag.ProjectCost = projectCost;
+            ViewBag.Profit = projectCost - totalCost;
+
             return View(bid);
         }
 
