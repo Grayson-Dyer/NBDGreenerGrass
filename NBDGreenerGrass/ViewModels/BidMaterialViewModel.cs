@@ -2,9 +2,9 @@
 {
     public int BidID { get; set; }
     public IEnumerable<InventoryItem> AvailableInventory { get; set; }
-    public List<SelectedInventoryItem> SelectedInventoryItems { get; set; }
+    public List<SelectedInventoryItem> SelectedInventoryItems { get; set; } 
     public decimal ProjectCost { get; set; }
-
+    public string ReturnUrl { get; set; }
     public BidMaterialViewModel()
     {
         SelectedInventoryItems = new List<SelectedInventoryItem>();

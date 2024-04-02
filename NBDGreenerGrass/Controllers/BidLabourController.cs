@@ -27,6 +27,7 @@ namespace NBDGreenerGrass.Controllers
                 var bid = await _context.Bids
                     .Include(b => b.BidLabours)
                     .ThenInclude(bl => bl.Labour)
+                    .Include(b => b.BidMaterials)
                     .FirstOrDefaultAsync(b => b.ID == bidId);
 
                 if (bid == null)
@@ -34,14 +35,30 @@ namespace NBDGreenerGrass.Controllers
                     return NotFound();
                 }
 
+                var projectAmount = await _context.Projects.FirstOrDefaultAsync(p => p.ID == bid.ProjectID);
 
 
                 var viewModel = new BidLabourViewModel
                 {
                     BidID = bidId,
-                    ProjectCost = _context.Projects.FirstOrDefault(p => p.ID == bid.ProjectID).Amount,
+                    ProjectCost = projectAmount.Amount,
                     AvailableLabourTypes = GetAvailableLabourTypes(bidId)
                 };
+
+                decimal totalCost = 0;
+
+                foreach (var material in bid.BidMaterials)
+                {
+                    totalCost += material.InventoryListPrice * material.Quantity;
+                }
+
+                foreach (var labour in bid.BidLabours)
+                {
+                    totalCost += labour.LabourPrice * labour.HoursWorked;
+                }
+
+                ViewBag.TotalCost = totalCost;
+
 
                 return View(viewModel);
             }
@@ -102,6 +119,14 @@ namespace NBDGreenerGrass.Controllers
                     LabourPrice = labour.LabourPrice,
                     LabourCost = labour.LabourCost
                 };
+
+                var bid = await _context.Bids.FirstOrDefaultAsync(b => b.ID == viewModel.BidID); 
+                bid.DeniedClientReason = null;
+                bid.ApprovedClientReason = null;
+                bid.DeniedManagerReason = null;
+                bid.ApprovedManagerReason = null;
+                bid.BidDemote();
+                _context.Update(bid);
 
                 await _context.BidLabours.AddAsync(bidLabour);
             }
@@ -173,13 +198,34 @@ namespace NBDGreenerGrass.Controllers
             {
                 return NotFound();
             }
+            var bid = await _context.Bids
+               .Include(b => b.BidMaterials)
+               .ThenInclude(bm => bm.Inventory)
+               .Include(b => b.BidLabours)
+               .FirstOrDefaultAsync(b => b.ID == bidId);
 
-            var bidMaterial = await _context.BidLabours.FindAsync(bidId, labourId);
-            if (bidMaterial == null)
+            decimal totalCost = 0;
+
+            foreach (var bm in bid.BidMaterials)
+            {
+                totalCost += bm.InventoryListPrice * bm.Quantity;
+            }
+
+            foreach (var bl in bid.BidLabours)
+            {
+                totalCost += bl.LabourPrice * bl.HoursWorked;
+            }
+
+            ViewBag.ProjectCost = (await _context.Projects.FirstOrDefaultAsync(p => p.ID == bid.ProjectID)).Amount;
+
+            var bidLabour = await _context.BidLabours.FindAsync(bidId, labourId);
+            ViewBag.TotalCost = totalCost - ( bidLabour.LabourPrice * bidLabour.HoursWorked );
+
+            if (bidLabour == null)
             {
                 return NotFound();
             }
-            return View(bidMaterial);
+            return View(bidLabour);
         }
 
         // POST: BidMaterial/Edit/5
@@ -215,12 +261,42 @@ namespace NBDGreenerGrass.Controllers
                     if (totalCost > _context.Projects.FirstOrDefault(p => p.ID == bid.ProjectID).Amount)
                     {
                         ModelState.AddModelError("", "The total cost of all BidLabours and BidMaterials cannot exceed the Project cost.");
+                        var project = await _context.Projects.FirstOrDefaultAsync(p => p.ID == _context.Bids.FirstOrDefault(b => b.ID == bidLabour.BidID).ProjectID);
+                        ViewBag.ProjectCost = project.Amount;
+
+                        var bids = await _context.Bids
+                          .Include(b => b.BidMaterials)
+                          .ThenInclude(bm => bm.Inventory)
+                          .Include(b => b.BidLabours)
+                          .FirstOrDefaultAsync(b => b.ID == bidId);
+
+                        decimal reloadTotalCost = 0;
+
+                        foreach (var bm in bid.BidMaterials)
+                        {
+                            reloadTotalCost += bm.InventoryListPrice * bm.Quantity;
+                        }
+
+                        foreach (var bl in bid.BidLabours)
+                        {
+                            reloadTotalCost += bl.LabourPrice * bl.HoursWorked;
+                        }
+
+                        ViewBag.TotalCost = reloadTotalCost - (existingBidLabour.HoursWorked * existingBidLabour.LabourPrice);
+
                         return View(bidLabour);
                     }
                     // Update the quantity of the existing bid material
                     existingBidLabour.HoursWorked = bidLabour.HoursWorked;
 
                     _context.Update(existingBidLabour);
+                    bid.DeniedClientReason = null;
+                    bid.ApprovedClientReason = null;
+                    bid.DeniedManagerReason = null;
+                    bid.ApprovedManagerReason = null;
+                    _context.Update(bid);
+                    bid.BidDemote();
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -243,43 +319,49 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: BidLabour/Delete/5
-        /* public async Task<IActionResult> Delete(int? id)
-         {
-             if (id == null || _context.BidLabours == null)
-             {
-                 return NotFound();
-             }
+        public async Task<IActionResult> Delete(int? bidId, int? labourId)
+        {
+            if (bidId == null || labourId == null || _context.BidLabours == null)
+            {
+                return NotFound();
+            }
 
-             var bidLabour = await _context.BidLabours
-                 .Include(b => b.Bid)
-                 .Include(b => b.Labour)
-                 .FirstOrDefaultAsync(m => m.BidID == id);
-             if (bidLabour == null)
-             {
-                 return NotFound();
-             }
+            var bidLabour = await _context.BidLabours
+                .Include(b => b.Bid)
+                .Include(b => b.Labour)
+                .FirstOrDefaultAsync(m => m.BidID == bidId && m.LabourID == labourId);
+            if (bidLabour == null)
+            {
+                return NotFound();
+            }
 
-             return View(bidLabour);
-         }
+            return View(bidLabour);
+        }
 
-         // POST: BidLabour/Delete/5
-         [HttpPost, ActionName("Delete")]
-         [ValidateAntiForgeryToken]
-         public async Task<IActionResult> DeleteConfirmed(int id)
-         {
-             if (_context.BidLabours == null)
-             {
-                 return Problem("Entity set 'NBDContext.BidLabours'  is null.");
-             }
-             var bidLabour = await _context.BidLabours.FindAsync(id);
-             if (bidLabour != null)
-             {
-                 _context.BidLabours.Remove(bidLabour);
-             }
+        // POST: BidLabour/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int bidId, int labourId)
+        {
+            if (_context.BidLabours == null)
+            {
+                return Problem("Entity set 'NBDContext.BidLabours' is null.");
+            }
 
-             await _context.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
-         }*/
+            var bidLabour = await _context.BidLabours.FindAsync(bidId, labourId);
+
+            if (bidLabour == null)
+            {
+                return NotFound();
+            }
+
+            int deletedBidId = bidLabour.BidID;
+
+            _context.BidLabours.Remove(bidLabour);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Bids", new { id = deletedBidId });
+        }
 
         private bool BidLabourExists(int id)
         {

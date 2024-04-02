@@ -9,14 +9,27 @@
 <h2 class="text-center">Edit Bid Labour</h2>
 
 <div class="container">
+
+    <div class="card mt-4">
+        <div class="card-header">
+            Budget Details
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <label for="projectCost">Project Cost:</label>
+                <span id="projectCostLookup" name="projectCostLookup">@ViewBag.ProjectCost</span>
+                <label for="bidTotalAmount">Total cost:</label>
+                <span id="totalCost">@((ViewBag.TotalCost != null ? ViewBag.TotalCost.ToString("F2") : "0"))</span>
+            </dl>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <form asp-action="Edit">
-                @*You can change call the read only fields to whatever you want*@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="LabourID" />
                 <input type="hidden" asp-for="BidID" />
-
                 <div class="form-group">
                     <label asp-for="LabourType" class="control-label">Labour Type</label>
                     <input asp-for="LabourType" class="form-control" readonly />
@@ -46,11 +59,34 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Details" asp-controller="Bids" asp-route-id="@Model.BidID">Back to List</a>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script>
+        $(document).ready(function () {
+            var initialTotalCost = parseFloat($("#totalCost").text());
+            var hoursWorkedInput = $("input[name='HoursWorked']");
+            var labourPriceInput = $("#LabourPrice");
+
+            // Function to calculate and update the total cost
+            function updateTotalCost() {
+                var additionalCost = 0;
+                var hoursWorked = parseFloat(hoursWorkedInput.val());
+                var labourPrice = parseFloat(labourPriceInput.val());
+                additionalCost += hoursWorked * labourPrice;
+                var totalCost = initialTotalCost + additionalCost;
+                $("#totalCost").text(totalCost.toFixed(2));
+            }
+
+            // Call the function on page load
+            updateTotalCost();
+
+            // Call the function when the hours worked input is changed
+            hoursWorkedInput.change(updateTotalCost);
+
+            // Call the function when the labour price input is changed
+            labourPriceInput.change(updateTotalCost);
+        });
+    </script>
 }

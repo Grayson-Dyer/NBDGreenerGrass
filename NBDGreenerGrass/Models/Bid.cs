@@ -32,6 +32,14 @@ namespace NBDGreenerGrass.Models
         [DataType(DataType.MultilineText)]
         public string DeniedManagerReason { get; set; }
 
+        [Display(Name = "Client Approved Description")]
+        [DataType(DataType.MultilineText)]
+        public string ApprovedClientReason { get; set; }
+
+        [Display(Name = "Manager Approved Description")]
+        [DataType(DataType.MultilineText)]
+        public string ApprovedManagerReason { get; set; }
+
         // Get rid of these
         //[Display(Name = "Bid Staff")]
         //[Required(ErrorMessage = "BidStaff ID is required")]
