@@ -84,7 +84,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Details/5
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Details(int? id)
@@ -116,7 +116,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Create
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public IActionResult Create()
@@ -152,7 +152,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Edit/5
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? id)
@@ -213,7 +213,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Delete/5
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? id)

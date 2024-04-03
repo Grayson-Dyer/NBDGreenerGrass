@@ -22,7 +22,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         //Get
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidLabour(int bidId)
@@ -199,7 +199,7 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidLabour/Edit/5
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? bidId, int? labourId)
@@ -329,7 +329,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: BidLabour/Delete/5
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? bidId, int? labourId)
