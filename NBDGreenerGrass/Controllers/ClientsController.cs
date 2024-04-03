@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NBDGreenerGrass.Controllers
 {
+    [AllowAnonymous]
     public class ClientsController : Controller
     {
         private readonly NBDContext _context;
@@ -155,6 +157,9 @@ namespace NBDGreenerGrass.Controllers
 
 
         // GET: Clients/Details/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Clients == null)
@@ -174,6 +179,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Clients/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public IActionResult Create()
         {
             ViewData["ClientRoleID"] = new SelectList(_context.ClientRoles, "ID", "Role");
@@ -185,6 +193,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Create([Bind("ID,Name,ContactFirst,ContactLast,Phone,Street,City,Postal,Province,ClientRoleID")] Client client)
         {
             try
@@ -206,6 +215,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Clients/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Clients == null)
@@ -227,6 +239,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ContactFirst,ContactLast,Phone,Street,City,Postal,Province,ClientRoleID")] Client client)
         {
             if (id != client.ID)
@@ -263,6 +276,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Clients/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Clients == null)
@@ -284,6 +300,7 @@ namespace NBDGreenerGrass.Controllers
         // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try

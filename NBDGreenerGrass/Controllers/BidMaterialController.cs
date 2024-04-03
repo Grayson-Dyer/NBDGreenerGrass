@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using NBDGreenerGrass.Models;
 
 namespace NBDGreenerGrass.Controllers
 {
+    [AllowAnonymous]
     public class BidMaterialController : Controller
     {
         private readonly NBDContext _context;
@@ -47,6 +49,9 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidMaterial/CreateBidMaterial
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidMaterial(int bidId, string returnUrl = null)
         {
             try
@@ -96,6 +101,8 @@ namespace NBDGreenerGrass.Controllers
 
         // POST: BidMaterial/CreateBidMaterial
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidMaterial(BidMaterialViewModel viewModel, Dictionary<int, int> selectedInventory, Dictionary<int, int> quantities)
         {
 
@@ -200,6 +207,9 @@ namespace NBDGreenerGrass.Controllers
          }*/
 
         // GET: BidMaterial/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? bidId, int? inventoryId)
         {
             if (bidId == null || inventoryId == null || _context.BidMaterials == null)
@@ -244,6 +254,8 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
+
         public async Task<IActionResult> Edit(int bidId, int inventoryId, [Bind("BidID,InventoryID,Quantity,InventoryDesc,InventorySize,InventoryCode,InventoryListPrice")] BidMaterial bidMaterial)
         {
             if (bidId != bidMaterial.BidID || inventoryId != bidMaterial.InventoryID)
@@ -332,6 +344,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: BidMaterial/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? bidId, int? inventoryId)
         {
             if (bidId == null || inventoryId == null || _context.BidMaterials == null)
@@ -354,6 +369,8 @@ namespace NBDGreenerGrass.Controllers
         // POST: BidMaterial/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
+
         public async Task<IActionResult> DeleteConfirmed(int bidId, int inventoryId)
         {
             if (_context.BidMaterials == null)

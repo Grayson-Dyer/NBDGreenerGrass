@@ -2,5 +2,9 @@
 Add-Migration -Context NBDContext -o Data\NBDMigrations Initial
 Update-Database -Context NBDContext
 
+Add-Migration -Context ApplicationDbContext -o Data\Migrations Initials
+Update-Database -Context ApplicationDbContext
+
+
 Remeber to add...
             ExtraMigration.Steps(migrationBuilder);

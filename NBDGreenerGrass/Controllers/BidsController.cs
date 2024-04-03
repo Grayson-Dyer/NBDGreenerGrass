@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using NBDGreenerGrass.Models;
 
 namespace NBDGreenerGrass.Controllers
 {
+    [AllowAnonymous]
     public class BidsController : Controller
     {
         private readonly NBDContext _context;
@@ -28,6 +30,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Bids/Details/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -73,6 +78,9 @@ namespace NBDGreenerGrass.Controllers
 
 
         // GET: Bids/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public IActionResult Create(int projectId)
         {
             var bid = new Bid { ProjectID = projectId };
@@ -84,6 +92,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Create([Bind("ID,Description,ProjectID")] Bid bid)
         {
             try
@@ -112,6 +121,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Bids/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? id, int? projectId)
         {
             if (id == null || projectId == null || _context.Bids == null)
@@ -133,6 +145,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Description,ProjectID")] Bid bid)
         {
             if (id != bid.ID)
@@ -170,6 +183,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Bids/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Bids == null)
@@ -191,6 +207,8 @@ namespace NBDGreenerGrass.Controllers
         // POST: Bids/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
+
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
@@ -222,6 +240,9 @@ namespace NBDGreenerGrass.Controllers
 
 
         //GET: Bids/Review/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Review(int? id)
         {
             if (id == null || _context.Bids == null)
@@ -243,6 +264,7 @@ namespace NBDGreenerGrass.Controllers
         //POST: Bids/Review/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> BidReviewed(int id, [Bind("ID,ProjectID,DeniedManagerReason,ApprovedManagerReason")] Bid bid, string action)
         {
             if (id != bid.ID)
@@ -296,6 +318,9 @@ namespace NBDGreenerGrass.Controllers
 
 
         //GET: Bids/Approve/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> Approve(int? id)
         {
             if (id == null || _context.Bids == null)
@@ -316,6 +341,8 @@ namespace NBDGreenerGrass.Controllers
         //POST: Bids/Approve/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
+
         public async Task<IActionResult> BidApproval(int id, [Bind("ID,ProjectID,DeniedClientReason,ApprovedClientReason")] Bid bid, string action)
         {
             if (id != bid.ID)

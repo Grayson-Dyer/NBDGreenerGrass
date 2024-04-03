@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using NBDGreenerGrass.Models;
 
 namespace NBDGreenerGrass.Controllers
 {
+    [AllowAnonymous]
     public class BidLabourController : Controller
     {
         private readonly NBDContext _context;
@@ -20,6 +22,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         //Get
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidLabour(int bidId)
         {
             try
@@ -69,6 +74,8 @@ namespace NBDGreenerGrass.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidLabour(BidLabourViewModel viewModel, Dictionary<int, int> selectedLabourTypes, Dictionary<int, int> hoursWorked)
         {
             if (selectedLabourTypes == null || hoursWorked == null)
@@ -192,6 +199,9 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidLabour/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? bidId, int? labourId)
         {
             if (bidId == null || labourId == null || _context.BidMaterials == null)
@@ -319,6 +329,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: BidLabour/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? bidId, int? labourId)
         {
             if (bidId == null || labourId == null || _context.BidLabours == null)
@@ -341,6 +354,7 @@ namespace NBDGreenerGrass.Controllers
         // POST: BidLabour/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> DeleteConfirmed(int bidId, int labourId)
         {
             if (_context.BidLabours == null)
