@@ -48,6 +48,10 @@
         </div>
     </div>
     <input type="hidden" name="bidID" value="@Model.BidID" />
+    @if (Context.Request.Headers["Referer"].ToString().Contains("/Bids/Details/"))
+    {
+        <a href="@Context.Request.Headers["Referer"]" class="btn btn-secondary">Back to Bid Details</a>
+    }
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
