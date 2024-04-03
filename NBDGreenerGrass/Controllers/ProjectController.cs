@@ -122,12 +122,13 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Start,End,Amount,Created,Street,City,Province,Postal,Desc,ClientID")] Project project)
+        public async Task<IActionResult> Create([Bind("ID,Start,End,Amount,Street,City,Province,Postal,Desc,ClientID")] Project project)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    project.Created = DateTime.Now;
                     _context.Add(project);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -164,7 +165,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Start,End,Amount,Created,Street,City,Province,Postal,Desc,ClientID")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Start,End,Amount,Street,City,Province,Postal,Desc,ClientID")] Project project)
         {
             if (id != project.ID)
             {
@@ -238,9 +239,16 @@ namespace NBDGreenerGrass.Controllers
 
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException dex)
             {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+                if (dex.GetBaseException().Message.Contains("FOREIGN KEY constraint failed"))
+                {
+                    ModelState.AddModelError("", "Unable to delete project. Remember, you cannot delete a project that has bids in the system.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
             }
 
             return RedirectToAction(nameof(Index));

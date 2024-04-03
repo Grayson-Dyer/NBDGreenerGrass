@@ -300,9 +300,16 @@ namespace NBDGreenerGrass.Controllers
 
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException dex)
             {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, contact your system administrator.");
+                if (dex.GetBaseException().Message.Contains("FOREIGN KEY constraint failed"))
+                {
+                    ModelState.AddModelError("", "Unable to delete client. Remember, you cannot delete a client that has active projects.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
             }
 
             return RedirectToAction(nameof(Index));

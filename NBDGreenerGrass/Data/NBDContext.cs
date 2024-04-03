@@ -39,6 +39,21 @@ namespace NBDGreenerGrass.Data
             modelBuilder.Entity<Bid>()
                 .HasMany(bm => bm.BidMaterials)
                 .WithOne(b => b.Bid);
+
+
+            //If a project has a bid, then it cannot be deleted
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.Bids)
+                .WithOne(b => b.Project)
+                .OnDelete(DeleteBehavior.Restrict);
+            //If a client has a project, then it cannot be deleted
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.Projects)
+                .WithOne(p => p.Client)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
             // BidStaff no longer exists
             //modelBuilder.Entity<BidStaff>()
             //    .HasKey(ps => new { ps.ProjectID, ps.StaffID });
