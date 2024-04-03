@@ -11,7 +11,7 @@ using NBDGreenerGrass.Models;
 
 namespace NBDGreenerGrass.Controllers
 {
-    [AllowAnonymous]
+
     public class BidMaterialController : Controller
     {
         private readonly NBDContext _context;
@@ -49,8 +49,6 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidMaterial/CreateBidMaterial
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidMaterial(int bidId, string returnUrl = null)
         {
@@ -207,8 +205,6 @@ namespace NBDGreenerGrass.Controllers
          }*/
 
         // GET: BidMaterial/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? bidId, int? inventoryId)
         {
@@ -344,8 +340,6 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: BidMaterial/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? bidId, int? inventoryId)
         {

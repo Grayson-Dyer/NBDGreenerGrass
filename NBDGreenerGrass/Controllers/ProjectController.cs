@@ -13,7 +13,6 @@ using NBDGreenerGrass.Models;
 
 namespace NBDGreenerGrass.Controllers
 {
-    [AllowAnonymous]
     public class ProjectController : Controller
     {
         private readonly NBDContext _context;
@@ -84,8 +83,6 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Details/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -116,8 +113,6 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public IActionResult Create()
         {
@@ -152,8 +147,6 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -213,8 +206,6 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Project/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? id)
         {
