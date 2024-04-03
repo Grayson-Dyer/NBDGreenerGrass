@@ -211,6 +211,8 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Clients/Edit/5
+        [Authorize(Roles = "Management,Designer,Sales")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Clients == null)
