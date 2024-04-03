@@ -8,10 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Data\NBDMigrations\" />
-    <Folder Include="Utilities\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mailkit" Version="4.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.17" />

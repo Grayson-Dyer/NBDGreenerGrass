@@ -11,7 +11,7 @@ using NBDGreenerGrass.Models;
 
 namespace NBDGreenerGrass.Controllers
 {
-    [AllowAnonymous]
+
     public class BidLabourController : Controller
     {
         private readonly NBDContext _context;
@@ -22,8 +22,6 @@ namespace NBDGreenerGrass.Controllers
         }
 
         //Get
-        [HttpGet]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidLabour(int bidId)
         {
@@ -199,8 +197,6 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidLabour/Edit/5
-        [HttpGet]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int? bidId, int? labourId)
         {
@@ -243,6 +239,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> Edit(int bidId, int labourId, [Bind("BidID,LabourID,HoursWorked,LabourType,LabourPrice,LabourCost")] BidLabour bidLabour)
         {
             if (bidId != bidLabour.BidID || labourId != bidLabour.LabourID)
@@ -329,8 +326,6 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: BidLabour/Delete/5
-        [HttpGet]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management")]
         public async Task<IActionResult> Delete(int? bidId, int? labourId)
         {

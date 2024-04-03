@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using NBDGreenerGrass.ViewModels;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using NBDGreenerGrass.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +55,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+
+
 
 builder.Services.AddControllersWithViews(config =>
 {
@@ -60,6 +66,10 @@ builder.Services.AddControllersWithViews(config =>
                      .Build();
     config.Filters.Add(new AuthorizeFilter(policy));
 });
+
+builder.Services.AddSingleton<IEmailConfiguration>(builder.Configuration
+    .GetSection("EmailConfiguration").Get<EmailConfiguration>());
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 //builder.Services.AddAuthentication(options =>
 //{
