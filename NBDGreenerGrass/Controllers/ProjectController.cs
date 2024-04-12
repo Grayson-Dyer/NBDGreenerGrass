@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using NBDGreenerGrass.Data;
 using NBDGreenerGrass.Enums;
 using NBDGreenerGrass.Models;
+using NBDGreenerGrass.Utilities;
 
 namespace NBDGreenerGrass.Controllers
 {
@@ -79,7 +80,10 @@ namespace NBDGreenerGrass.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            return View(await nBDContext.ToListAsync());
+            int pageSize = 10;//Change as required
+            var pagedData = await PaginatedList<Project>.CreateAsync(nBDContext.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: Project/Details/5

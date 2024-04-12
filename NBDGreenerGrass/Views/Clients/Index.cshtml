@@ -40,46 +40,47 @@
             </div>
         </div>
     </div>
-</form>
-<div class="table-responsive">
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>
-                    <a asp-action="Index" asp-route-actionButton="Name" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "Name" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "Name" ? "wheat" : "inherit")">Client Name</a>
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-actionButton="ContactFirst" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "ContactFirst" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "ContactFirst" ? "wheat" : "inherit")">Contact First Name</a>
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-actionButton="ContactLast" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "ContactLast" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "ContactLast" ? "wheat" : "inherit")">Contact Last Name</a>
-                </th>
-                <th>
-                    Phone
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-actionButton="ClientRole" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "ClientRole" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "ClientRole" ? "wheat" : "inherit")">Client Role</a>
-                </th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ContactFirst)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ContactLast)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Phone)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ClientRole.Role)</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a asp-action="Details" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.ID"><i class="fa-solid fa-trash"></i></a>
-                    </td>
+                    <th>
+                        <a asp-action="Index" asp-route-actionButton="Name" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "Name" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "Name" ? "wheat" : "inherit")">Client Name</a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-actionButton="ContactFirst" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "ContactFirst" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "ContactFirst" ? "wheat" : "inherit")">Contact First Name</a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-actionButton="ContactLast" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "ContactLast" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "ContactLast" ? "wheat" : "inherit")">Contact Last Name</a>
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-actionButton="ClientRole" asp-route-sortDirection="@(ViewData["sortField"].ToString() == "ClientRole" && ViewData["sortDirection"].ToString().ToLower() == "asc" ? "desc" : "asc")" style="color: @(ViewData["sortField"].ToString() == "ClientRole" ? "wheat" : "inherit")">Client Role</a>
+                    </th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ContactFirst)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ContactLast)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ClientRole.Role)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.ID"><i class="fa-solid fa-circle-info"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.ID"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <partial name="_PagingNavBar" />
+    </div>
+</form>
 

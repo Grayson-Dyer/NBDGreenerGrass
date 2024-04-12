@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NBDGreenerGrass.Data;
 using NBDGreenerGrass.Models;
+using NBDGreenerGrass.Utilities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NBDGreenerGrass.Controllers
@@ -151,7 +152,10 @@ namespace NBDGreenerGrass.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            return View(await nBDContext.ToListAsync());
+            int pageSize = 10;
+            var pagedData = await PaginatedList<Client>.CreateAsync(nBDContext.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
 
