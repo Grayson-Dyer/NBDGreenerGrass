@@ -53,11 +53,11 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Postal)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Province)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Province)
+        <dd class="col-sm-10">
+            @Enum.GetName(typeof(NBDGreenerGrass.Enums.Province), Model.Province)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ClientRole)

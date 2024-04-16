@@ -191,7 +191,7 @@ namespace NBDGreenerGrass.Data
                             Phone = "111-555-5555",
                             Street = "999 Fake Street",
                             City = "Toronto",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "Z1Z 2Z3",
                             ClientRoleID = 1
                         },
@@ -202,7 +202,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Torrence",
                             Street = "43 Jessica Street",
                             City = "Montreal",
-                            Province = "QB",
+                            Province = Province.QC,
                             Postal = "A3B 3C3",
                             Phone = "999-555-5555",
                             ClientRoleID = 8
@@ -215,7 +215,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Joel",
                             Street = "111 Real Street",
                             City = "Toronto",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "A3A 3A3",
                             Phone = "222-555-5555",
                             ClientRoleID = 2
@@ -228,7 +228,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Person",
                             Street = "321 Electric Avenue",
                             City = "St. Catharines",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "A1A 1A1",
                             Phone = "333-555-5555",
                             ClientRoleID = 1
@@ -240,7 +240,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Ross",
                             Street = "123 Fake Street",
                             City = "Kingston",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "A1B 2C3",
                             Phone = "416-555-5555",
                             ClientRoleID = 1
@@ -252,7 +252,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Parker",
                             Street = "456 Spider Street",
                             City = "New York",
-                            Province = "NY",
+                            Province = Province.ON,
                             Postal = "10001",
                             Phone = "444-555-5555",
                             ClientRoleID = 3
@@ -264,7 +264,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Stark",
                             Street = "789 Iron Street",
                             City = "Los Angeles",
-                            Province = "CA",
+                            Province = Province.ON,
                             Postal = "90001",
                             Phone = "555-555-5555",
                             ClientRoleID = 4
@@ -276,7 +276,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Wayne",
                             Street = "123 Bat Street",
                             City = "Gotham",
-                            Province = "NY",
+                            Province = Province.NT,
                             Postal = "10002",
                             Phone = "666-555-5555",
                             ClientRoleID = 5
@@ -288,7 +288,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Kent",
                             Street = "456 Super Street",
                             City = "Metropolis",
-                            Province = "IL",
+                            Province = Province.YT,
                             Postal = "61801",
                             Phone = "777-555-5555",
                             ClientRoleID = 6
@@ -300,7 +300,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Prince",
                             Street = "789 Wonder Street",
                             City = "Washington",
-                            Province = "DC",
+                            Province = Province.ON,
                             Postal = "20001",
                             Phone = "888-555-5555",
                             ClientRoleID = 7
@@ -312,7 +312,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Allen",
                             Street = "123 Flash Street",
                             City = "Central City",
-                            Province = "MO",
+                            Province = Province.QC,
                             Postal = "64101",
                             Phone = "999-555-5555",
                             ClientRoleID = 8
@@ -324,7 +324,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Curry",
                             Street = "456 Aqua Street",
                             City = "Amnesty Bay",
-                            Province = "ME",
+                            Province = Province.BC,
                             Postal = "04606",
                             Phone = "101-555-5555",
                             ClientRoleID = 9
@@ -336,7 +336,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Jordan",
                             Street = "789 Lantern Street",
                             City = "Coast City",
-                            Province = "CA",
+                            Province = Province.PE,
                             Postal = "90002",
                             Phone = "102-555-5555",
                             ClientRoleID = 10
@@ -348,7 +348,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Queen",
                             Street = "123 Arrow Street",
                             City = "Star City",
-                            Province = "CA",
+                            Province = Province.ON,
                             Postal = "90003",
                             Phone = "103-555-5555",
                             ClientRoleID = 11
@@ -360,7 +360,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "West",
                             Street = "456 Kid Street",
                             City = "Keystone City",
-                            Province = "KS",
+                            Province = Province.AB,
                             Postal = "66101",
                             Phone = "104-555-5555",
                             ClientRoleID = 12
@@ -372,7 +372,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Coyote",
                             Street = "123 Desert Street",
                             City = "Phoenix",
-                            Province = "AZ",
+                            Province = Province.SK,
                             Postal = "85001",
                             Phone = "105-555-5555",
                             ClientRoleID = 13
@@ -384,7 +384,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Stark",
                             Street = "456 Iron Street",
                             City = "Los Angeles",
-                            Province = "CA",
+                            Province = Province.BC,
                             Postal = "90001",
                             Phone = "106-555-5555",
                             ClientRoleID = 14
@@ -396,7 +396,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Wayne",
                             Street = "789 Bat Street",
                             City = "Gotham",
-                            Province = "NY",
+                            Province = Province.ON,
                             Postal = "10002",
                             Phone = "107-555-5555",
                             ClientRoleID = 15
@@ -408,7 +408,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Osborn",
                             Street = "123 Goblin Street",
                             City = "New York",
-                            Province = "NY",
+                            Province = Province.QC,
                             Postal = "10001",
                             Phone = "108-555-5555",
                             ClientRoleID = 15
@@ -420,7 +420,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Luthor",
                             Street = "456 Super Street",
                             City = "Metropolis",
-                            Province = "IL",
+                            Province = Province.NS,
                             Postal = "61801",
                             Phone = "109-555-5555",
                             ClientRoleID = 12
@@ -432,7 +432,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Pym",
                             Street = "789 Ant Street",
                             City = "San Francisco",
-                            Province = "CA",
+                            Province = Province.ON,
                             Postal = "94101",
                             Phone = "110-555-5555",
                             ClientRoleID = 7
@@ -444,7 +444,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Queen",
                             Street = "123 Arrow Street",
                             City = "Star City",
-                            Province = "CA",
+                            Province = Province.NU,
                             Postal = "90003",
                             Phone = "111-555-5555",
                             ClientRoleID = 3
@@ -456,7 +456,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Rand",
                             Street = "456 Fist Street",
                             City = "New York",
-                            Province = "NY",
+                            Province = Province.MB,
                             Postal = "10001",
                             Phone = "112-555-5555",
                             ClientRoleID = 1
@@ -468,7 +468,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Kord",
                             Street = "789 Beetle Street",
                             City = "Chicago",
-                            Province = "IL",
+                            Province = Province.ON,
                             Postal = "60601",
                             Phone = "113-555-5555",
                             ClientRoleID = 10
@@ -480,7 +480,7 @@ namespace NBDGreenerGrass.Data
                             ContactLast = "Wells",
                             Street = "123 Flash Street",
                             City = "Central City",
-                            Province = "MO",
+                            Province = Province.SK,
                             Postal = "64101",
                             Phone = "114-555-5555",
                             ClientRoleID = 11

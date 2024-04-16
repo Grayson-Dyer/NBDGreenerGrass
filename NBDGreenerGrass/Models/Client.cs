@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using NBDGreenerGrass.Enums;
 
 namespace NBDGreenerGrass.Models
 {
@@ -52,8 +53,7 @@ namespace NBDGreenerGrass.Models
 
         [Display(Name = "Client Province")]
         [Required(ErrorMessage = "Client Province is required")]
-        [StringLength(50, ErrorMessage = "Client Province should be at most 50 characters")]
-        public string Province { get; set; }
+        public Province Province { get; set; }
 
         [Display(Name = "Contact Role")]
         [Required(ErrorMessage = "Contact Role is required")]
