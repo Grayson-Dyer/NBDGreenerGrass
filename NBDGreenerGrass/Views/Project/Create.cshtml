@@ -18,17 +18,17 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="End" class="control-label"></label>
-                        <input asp-for="End" class="form-control" />
+                        <input asp-for="End" id="End" class="form-control" />
                         <span asp-validation-for="End" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Amount" class="control-label"></label>
-                        <input asp-for="Amount" class="form-control" placeholder="E.g 4000" />
+                        <input asp-for="Amount" id="Amount" class="form-control" placeholder="E.g 4000" />
                         <span asp-validation-for="Amount" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Created" class="control-label"></label>
-                        <input asp-for="Created" class="form-control" />
+                        <input asp-for="Created" id="Created" class="form-control" />
                         <span asp-validation-for="Created" class="text-danger"></span>
                     </div>
 
@@ -49,7 +49,7 @@
                     </div> *@
                     <div class="form-group">
                         <label asp-for="Desc" class="control-label"></label>
-                        <textarea asp-for="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
+                        <textarea asp-for="Desc" id="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
                         <span asp-validation-for="Desc" class="text-danger"></span>
                     </div>
                    
@@ -58,22 +58,22 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Street" class="control-label"></label>
-                        <input asp-for="Street" class="form-control" placeholder="E.g 456 Fake Street" />
+                        <input asp-for="Street" id="Street" class="form-control" placeholder="E.g 456 Fake Street" />
                         <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="City" class="control-label"></label>
-                        <input asp-for="City" class="form-control" placeholder="E.g Welland" />
+                        <input asp-for="City" id="City" class="form-control" placeholder="E.g Welland" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Province" class="control-label"></label>
-                        <input asp-for="Province" class="form-control" placeholder="E.g Enter project province" />
+                        <input asp-for="Province" id="Province" class="form-control" placeholder="E.g Enter project province" />
                         <span asp-validation-for="Province" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Postal" class="control-label"></label>
-                        <input asp-for="Postal" class="form-control" placeholder="E.g L3C 5X5" />
+                        <input asp-for="Postal" id="Postal" class="form-control" placeholder="E.g L3C 5X5" />
                         <span asp-validation-for="Postal" class="text-danger"></span>
                     </div>
                     
@@ -85,6 +85,7 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+        <input id="AutoFill" type="button" value="Auto Fill" class="btn btn-primary" />
     </div>
 </div>
 
@@ -102,5 +103,18 @@
 <script>
     $(document).ready(function () {
         $('#clientDropdown').select2();
+    });
+
+    atfbtn = document.getElementById("AutoFill")
+    atfbtn.addEventListener("click", function () {
+        document.getElementById("Amount").value="4000"
+        document.getElementById("End").value="2024-12-24"
+        document.getElementById("Street").value="42 Possibility Rd."
+        document.getElementById("City").value="St. Catharines"
+        document.getElementById("Province").value="Ontario"
+        document.getElementById("Postal").value="A1B 2C3"
+        document.getElementById("Desc").value = "Lorem Ipsum Dolor Sit Amet"
+        document.getElementById("Created").value = "2024-05-23"
+        document.getElementById("clientDropdown").options[1].selected=true
     });
 </script>
