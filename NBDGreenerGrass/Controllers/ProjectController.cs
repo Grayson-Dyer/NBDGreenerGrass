@@ -80,7 +80,7 @@ namespace NBDGreenerGrass.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            int pageSize = 10;//Change as required
+            int pageSize = 5;//Change as required
             var pagedData = await PaginatedList<Project>.CreateAsync(nBDContext.AsNoTracking(), page ?? 1, pageSize);
 
             return View(pagedData);
