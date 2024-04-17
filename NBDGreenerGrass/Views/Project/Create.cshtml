@@ -27,32 +27,24 @@
                         <span asp-validation-for="Amount" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Created" class="control-label"></label>
-                        <input asp-for="Created" class="form-control" />
-                        <span asp-validation-for="Created" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
                         <label asp-for="ClientID" class="control-label"></label>
-                        <select asp-for="ClientID" class="form-control" id="clientDropdown">
+                        <select asp-for="ClientID" class="form-control custom-select" id="clientDropdown" style="width: 100%; height: auto;">
                             <option value="">Select Client</option>
-                            @foreach (var client in ViewBag.ClientID)
+                            @{
+                                var sortedClients = ((IEnumerable<SelectListItem>)ViewBag.ClientID).OrderBy(x => x.Text);
+                            }
+                            @foreach (var client in sortedClients)
                             {
                                 <option value="@client.Value">@client.Text</option>
                             }
                         </select>
                     </div>
 
-                   @*  <div class="form-group">
-                        <label asp-for="ClientID" class="control-label"></label>
-                        <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
-                    </div> *@
                     <div class="form-group">
                         <label asp-for="Desc" class="control-label"></label>
                         <textarea asp-for="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
                         <span asp-validation-for="Desc" class="text-danger"></span>
                     </div>
-                   
                 </div>
                 <!-- Project Address Section -->
                 <div class="col-md-6">
@@ -67,16 +59,29 @@
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Province" class="control-label"></label>
-                        <input asp-for="Province" class="form-control" placeholder="E.g Enter project province" />
-                        <span asp-validation-for="Province" class="text-danger"></span>
+                        <label for="provinceDropdown" class="control-label">Province</label>
+                        <select id="provinceDropdown" class="form-control" asp-for="Province">
+                            <option value="">Select Province</option>
+                            <option value="AB">AB</option>
+                            <option value="BC">BC</option>
+                            <option value="MB">MB</option>
+                            <option value="NB">NB</option>
+                            <option value="NL">NL</option>
+                            <option value="NS">NS</option>
+                            <option value="ON">ON</option>
+                            <option value="PE">PE</option>
+                            <option value="QC">QC</option>
+                            <option value="SK">SK</option>
+                            <option value="NT">NT</option>
+                            <option value="NU">NU</option>
+                            <option value="YT">YT</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label asp-for="Postal" class="control-label"></label>
                         <input asp-for="Postal" class="form-control" placeholder="E.g L3C 5X5" />
                         <span asp-validation-for="Postal" class="text-danger"></span>
                     </div>
-                    
                 </div>
             </div>
             <br />
@@ -97,10 +102,13 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    <!-- Include Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $('#clientDropdown').select2();
-    });
-</script>
+    <!-- Initialize Select2 -->
+    <script>
+        $(document).ready(function () {
+            $('#clientDropdown').select2();
+        });
+    </script>
+}

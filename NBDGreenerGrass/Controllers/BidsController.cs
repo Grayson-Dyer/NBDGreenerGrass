@@ -87,7 +87,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> Create([Bind("ID,Description,ProjectID")] Bid bid)
         {
             try
@@ -116,7 +116,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Bids/Edit/5
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> Edit(int? id, int? projectId)
         {
             if (id == null || projectId == null || _context.Bids == null)
@@ -138,7 +138,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Description,ProjectID")] Bid bid)
         {
             if (id != bid.ID)
@@ -232,7 +232,7 @@ namespace NBDGreenerGrass.Controllers
 
         //GET: Bids/Review/5
    
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> Review(int? id)
         {
             if (id == null || _context.Bids == null)
@@ -254,7 +254,7 @@ namespace NBDGreenerGrass.Controllers
         //POST: Bids/Review/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management")]
         public async Task<IActionResult> BidReviewed(int id, [Bind("ID,ProjectID,DeniedManagerReason,ApprovedManagerReason")] Bid bid, string action)
         {
             if (id != bid.ID)
