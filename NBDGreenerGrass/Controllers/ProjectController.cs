@@ -186,6 +186,7 @@ namespace NBDGreenerGrass.Controllers
             {
                 try
                 {
+                   
                     _context.Update(project);
                     await _context.SaveChangesAsync();
                 }

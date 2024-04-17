@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
+using NBDGreenerGrass.Enums;
 
 namespace NBDGreenerGrass.Models
 {
@@ -47,8 +48,8 @@ namespace NBDGreenerGrass.Models
 
         [Display(Name = "Project Province")]
         [Required(ErrorMessage = "Project Province is required")]
-        [StringLength(50, ErrorMessage = "Project Province should be at most 50 characters")]
-        public string Province { get; set; }
+        [EnumDataType(typeof(Province))]
+        public Province Province { get; set; }
 
         [Display(Name = "Project Postal Code")]
         [Required(ErrorMessage = "Project Postal Code is required")]

@@ -49,7 +49,6 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidMaterial/CreateBidMaterial
-        P5_GraysonDyer_Fixes
         [HttpGet]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidMaterial(int bidId, string returnUrl = null, string searchInventoryDesc = null, string searchInventoryCode = null, string sortOrder = null)
