@@ -13,49 +13,49 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" placeholder="E.g GreenGrass Company" />
+                        <input asp-for="Name" id="Name" class="form-control" placeholder="E.g GreenGrass Company" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ContactFirst" class="control-label"></label>
-                        <input asp-for="ContactFirst" class="form-control" placeholder="E.g Harry" />
+                        <input asp-for="ContactFirst" id="First" class="form-control" placeholder="E.g Harry" />
                         <span asp-validation-for="ContactFirst" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ContactLast" class="control-label"></label>
-                        <input asp-for="ContactLast" class="form-control" placeholder="E.g Duke" />
+                        <input asp-for="ContactLast" id="Last" class="form-control" placeholder="E.g Duke" />
                         <span asp-validation-for="ContactLast" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Phone" class="control-label"></label>
-                        <input asp-for="Phone" class="form-control" placeholder="E.g 278-980-5667" />
+                        <input asp-for="Phone" id="Phone" class="form-control" placeholder="E.g 278-980-5667" />
                         <span asp-validation-for="Phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ClientRoleID" class="control-label"></label>
-                        <select asp-for="ClientRoleID" class="form-control" asp-items="ViewBag.ClientRoleID"></select>
+                        <select asp-for="ClientRoleID" id="Role" class="form-control" asp-items="ViewBag.ClientRoleID"></select>
                     </div>
                 </div>
                 <!-- Address Section -->
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Street" class="control-label"></label>
-                        <input asp-for="Street" class="form-control" placeholder="E,g 401 Fake Street" />
+                        <input asp-for="Street" id="Street" class="form-control" placeholder="E,g 401 Fake Street" />
                         <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="City" class="control-label"></label>
-                        <input asp-for="City" class="form-control" placeholder="E.g Welland" />
+                        <input asp-for="City" id="City" class="form-control" placeholder="E.g Welland" />
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Postal" class="control-label"></label>
-                        <input asp-for="Postal" class="form-control" placeholder="E.g L3C 5X5" />
+                        <input asp-for="Postal" id="Postal" class="form-control" placeholder="E.g L3C 5X5" />
                         <span asp-validation-for="Postal" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Province" class="control-label"></label>
-                        <input asp-for="Province" class="form-control" placeholder="E.g ON" />
+                        <select asp-for="Province" id="Province" class="form-control" asp-items="Html.GetEnumSelectList<NBDGreenerGrass.Enums.Province>()"></select>
                         <span asp-validation-for="Province" class="text-danger"></span>
                     </div>
                 </div>
@@ -66,6 +66,7 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+        <input id="AutoFill" type="button" value="Auto Fill" class="btn btn-primary" />
     </div>
 </div>
 
@@ -79,3 +80,18 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<script>
+    atfbtn = document.getElementById("AutoFill")
+    atfbtn.addEventListener("click", function () {
+        document.getElementById("Street").value="42 Possibility Rd."
+        document.getElementById("City").value="St. Catharines"
+        document.getElementById("Province").options[0].selected=true
+        document.getElementById("Postal").value="A1B 2C3"
+        document.getElementById("First").value="Greg"
+        document.getElementById("Last").value="Heffley"
+        document.getElementById("Phone").value="111-222-5555"
+        document.getElementById("Name").value="Generic Business Inc."
+        document.getElementById("Role").options[0].selected = true
+    });
+</script>

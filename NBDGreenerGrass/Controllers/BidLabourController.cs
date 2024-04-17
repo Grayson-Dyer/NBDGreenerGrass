@@ -22,8 +22,9 @@ namespace NBDGreenerGrass.Controllers
         }
 
         //Get
-        [Authorize(Roles = "Management,Designer")]
-        public async Task<IActionResult> CreateBidLabour(int bidId)
+        P5_GraysonDyer_Fixes
+        [Authorize(Roles = "Management,Designer,Sales")]
+        public async Task<IActionResult> CreateBidLabour(int bidId, string searchLabourType = null, string sortOrder = null)
         {
             try
             {
@@ -45,9 +46,17 @@ namespace NBDGreenerGrass.Controllers
                 {
                     BidID = bidId,
                     ProjectCost = projectAmount.Amount,
-                    AvailableLabourTypes = GetAvailableLabourTypes(bidId)
+                    AvailableLabourTypes = GetAvailableLabourTypes(bidId),
+                    SearchLabourType = searchLabourType
                 };
 
+                viewModel.CurrentFilter = searchLabourType;
+
+                if (!string.IsNullOrEmpty(searchLabourType))
+                {
+                    viewModel.AvailableLabourTypes = viewModel.AvailableLabourTypes
+                        .Where(l => l.LabourType.Contains(searchLabourType));
+                }
                 decimal totalCost = 0;
 
                 foreach (var material in bid.BidMaterials)
@@ -62,6 +71,31 @@ namespace NBDGreenerGrass.Controllers
 
                 ViewBag.TotalCost = totalCost;
 
+                viewModel.LabourTypeSort = String.IsNullOrEmpty(sortOrder) ? "labour_desc" : "";
+                viewModel.LabourPriceSort = sortOrder == "Price" ? "price_desc" : "Price";
+                viewModel.LabourCostSort = sortOrder == "Cost" ? "cost_desc" : "Cost";
+
+                switch (sortOrder)
+                {
+                    case "labour_desc":
+                        viewModel.AvailableLabourTypes = viewModel.AvailableLabourTypes.OrderByDescending(l => l.LabourType);
+                        break;
+                    case "Price":
+                        viewModel.AvailableLabourTypes = viewModel.AvailableLabourTypes.OrderBy(l => l.LabourPrice);
+                        break;
+                    case "price_desc":
+                        viewModel.AvailableLabourTypes = viewModel.AvailableLabourTypes.OrderByDescending(l => l.LabourPrice);
+                        break;
+                    case "Cost":
+                        viewModel.AvailableLabourTypes = viewModel.AvailableLabourTypes.OrderBy(l => l.LabourCost);
+                        break;
+                    case "cost_desc":
+                        viewModel.AvailableLabourTypes = viewModel.AvailableLabourTypes.OrderByDescending(l => l.LabourCost);
+                        break;
+                    default:
+                        viewModel.AvailableLabourTypes = viewModel.AvailableLabourTypes.OrderBy(l => l.LabourType);
+                        break;
+                }
 
                 return View(viewModel);
             }

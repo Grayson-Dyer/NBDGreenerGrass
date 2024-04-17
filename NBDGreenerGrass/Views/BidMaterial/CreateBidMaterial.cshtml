@@ -2,6 +2,25 @@
 
 <h2>Add Material to Bid</h2>
 
+<form asp-controller="BidMaterial" asp-action="CreateBidMaterial" method="get">
+    <div class="form-group">
+        <label for="SearchInventoryDesc">Search Inventory Description:</label>
+        <input type="text" id="SearchInventoryDesc" name="SearchInventoryDesc" value="@Model.SearchInventoryDesc" class="form-control" />
+        <label for="SearchInventoryCode">Search Inventory Code:</label>
+        <input type="text" id="SearchInventoryCode" name="SearchInventoryCode" value="@Model.SearchInventoryCode" class="form-control" />
+
+    </div>
+    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl"/>
+    <input type="hidden" name="bidId" value="@Model.BidID" />
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<h1>Project:</h1>
+<span id="projectCostLookup" name="projectCostLookup">@Model.ProjectCost</span>
+<label for="projectCost">Project Cost:</label>
+<label for="bidTotalAmount">Total cost:</label>
+<span id="totalCost">@((ViewBag.TotalCost != null ? ViewBag.TotalCost.ToString("F2") : "0"))</span>
+
 <form asp-action="CreateBidMaterial" method="post">
     <div class="form-group">
         <label>Available Inventory</label>
@@ -9,21 +28,22 @@
 
             <input type="hidden" asp-for="ReturnUrl" />
 
-            <h1>Project:</h1>
-            <label for="projectCost">Project Cost:</label>
-            <span id="projectCostLookup" name="projectCostLookup">@Model.ProjectCost</span>
-            <label for="bidTotalAmount">Total cost:</label>
-            <span id="totalCost">@((ViewBag.TotalCost != null ? ViewBag.TotalCost.ToString("F2") : "0"))</span>
-
-
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
                     <tr>
                         <th>Select</th>
-                        <th>Description</th>
-                        <th>Size</th>
-                        <th>Code</th>
-                        <th>List Price</th>
+                        <th>
+                            <a asp-action="CreateBidMaterial" asp-route-bidId="@Model.BidID" asp-route-returnUrl="@Model.ReturnUrl" asp-route-searchInventoryDesc="@Model.CurrentInventoryDescFilter" asp-route-searchInventoryCode="@Model.CurrentInventoryCodeFilter" asp-route-sortOrder="@Model.InventoryDescSort">Description</a>
+                        </th>
+                        <th>
+                            <a asp-action="CreateBidMaterial" asp-route-bidId="@Model.BidID" asp-route-returnUrl="@Model.ReturnUrl" asp-route-searchInventoryDesc="@Model.CurrentInventoryDescFilter" asp-route-searchInventoryCode="@Model.CurrentInventoryCodeFilter" asp-route-sortOrder="@Model.InventorySizeSort">Size</a>
+                        </th>
+                        <th>
+                            <a asp-action="CreateBidMaterial" asp-route-bidId="@Model.BidID" asp-route-returnUrl="@Model.ReturnUrl" asp-route-searchInventoryDesc="@Model.CurrentInventoryDescFilter" asp-route-searchInventoryCode="@Model.CurrentInventoryCodeFilter" asp-route-sortOrder="@Model.InventoryCodeSort">Code</a>
+                        </th>
+                        <th>
+                            <a asp-action="CreateBidMaterial" asp-route-bidId="@Model.BidID" asp-route-returnUrl="@Model.ReturnUrl" asp-route-searchInventoryDesc="@Model.CurrentInventoryDescFilter" asp-route-searchInventoryCode="@Model.CurrentInventoryCodeFilter" asp-route-sortOrder="@Model.InventoryListPriceSort">List Price</a>
+                        </th>
                         <th>Quantity</th>
                     </tr>
                 </thead>
@@ -70,7 +90,7 @@
 
 
             // Make something better than an alert here!
-            $('form').submit(function (e) {
+            $('form[method="post"]').submit(function (e) {
                 if ($("input[type='checkbox']:checked").length === 0) {
                     e.preventDefault();
                     alert('Please select at least one inventory item.');
