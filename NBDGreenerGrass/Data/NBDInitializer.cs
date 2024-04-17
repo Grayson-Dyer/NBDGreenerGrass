@@ -499,7 +499,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "123 Fake Street",
                             City = "Toronto",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "Z1Z 1Z1",
                             ClientID = context.Clients.FirstOrDefault(c => c.ContactFirst == "Jack").ID
                         },
@@ -508,7 +508,7 @@ namespace NBDGreenerGrass.Data
                             Start = DateTime.Now,
                             End = DateTime.Now.AddDays(7),
                             City = "Montreal",
-                            Province = "QB",
+                            Province = Province.QC,
                             Postal = "A1A 1A1",
                             Street = "456 Fake Street",
                             Created = DateTime.Now,
@@ -520,7 +520,7 @@ namespace NBDGreenerGrass.Data
                             Start = DateTime.Now,
                             End = DateTime.Now.AddDays(7),
                             City = "Toronto",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "B1B 1B1",
                             Street = "23 Real Street",
                             Created = DateTime.Now,
@@ -532,7 +532,7 @@ namespace NBDGreenerGrass.Data
                             Start = DateTime.Now,
                             End = DateTime.Now.AddDays(7),
                             City = "St. Catharines",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "C1C 1C1",
                             Street = "99 Real Street",
                             Created = DateTime.Now,
@@ -543,7 +543,7 @@ namespace NBDGreenerGrass.Data
                         {
                             Start = DateTime.Now,
                             End = DateTime.Now.AddDays(7),
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "Z0Z 0Z0",
                             Street = "789 Fake Street",
                             City = "Toronto",
@@ -559,7 +559,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "123 Acme Street",
                             City = "Phoenix",
-                            Province = "ON",
+                            Province = Province.AB,
                             Postal = "85001",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Acme Corporation").ID
                         },
@@ -571,7 +571,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "456 Stark Street",
                             City = "Los Angeles",
-                            Province = "ON",
+                            Province = Province.SK,
                             Postal = "90001",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Stark Industries").ID
                         },
@@ -583,7 +583,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "789 Wayne Street",
                             City = "Gotham",
-                            Province = "ON",
+                            Province = Province.SK,
                             Postal = "10002",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Wayne Enterprises").ID
                         },
@@ -595,7 +595,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "123 Oscorp Street",
                             City = "New York",
-                            Province = "ON",
+                            Province = Province.NL,
                             Postal = "10001",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Oscorp Industries").ID
                         },
@@ -607,7 +607,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "456 LexCorp Street",
                             City = "Metropolis",
-                            Province = "QC",
+                            Province = Province.BC,
                             Postal = "61801",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "LexCorp Industries").ID
                         },
@@ -619,7 +619,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "789 Pym Street",
                             City = "San Francisco",
-                            Province = "QC",
+                            Province = Province.ON,
                             Postal = "94101",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Pym Technologies").ID
                         },
@@ -631,7 +631,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "123 Queen Street",
                             City = "Star City",
-                            Province = "ON",
+                            Province = Province.YT,
                             Postal = "90003",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Queen Consolidated").ID
                         },
@@ -643,7 +643,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "456 Rand Street",
                             City = "New York",
-                            Province = "ON",
+                            Province = Province.BC,
                             Postal = "10001",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Rand Enterprises").ID
                         },
@@ -655,7 +655,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "789 Kord Street",
                             City = "Chicago",
-                            Province = "QC",
+                            Province = Province.NU,
                             Postal = "60601",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Kord Industries").ID
                         },
@@ -667,7 +667,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "123 STAR Street",
                             City = "Central City",
-                            Province = "ON",
+                            Province = Province.YT,
                             Postal = "64101",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "S.T.A.R. Labs").ID
                         },
@@ -679,7 +679,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "321 Acme Street",
                             City = "Phoenix",
-                            Province = "ON",
+                            Province = Province.PE,
                             Postal = "85002",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Acme Corporation").ID
                         },
@@ -691,7 +691,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "654 Stark Street",
                             City = "Los Angeles",
-                            Province = "ON",
+                            Province = Province.AB,
                             Postal = "90002",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Stark Industries").ID
                         },
@@ -703,7 +703,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "987 Wayne Street",
                             City = "Gotham",
-                            Province = "NT",
+                            Province = Province.BC,
                             Postal = "10003",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Wayne Enterprises").ID
                         },
@@ -715,7 +715,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "321 Oscorp Street",
                             City = "New York",
-                            Province = "NW",
+                            Province =  Province.NT,
                             Postal = "10002",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Oscorp Industries").ID
                         },
@@ -727,7 +727,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "654 LexCorp Street",
                             City = "Metropolis",
-                            Province = "ON",
+                            Province = Province.AB,
                             Postal = "61802",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "LexCorp Industries").ID
                         },
@@ -739,7 +739,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "987 Pym Street",
                             City = "San Francisco",
-                            Province = "NB",
+                            Province = Province.PE,
                             Postal = "94102",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Pym Technologies").ID
                         },
@@ -751,7 +751,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "321 Queen Street",
                             City = "Star City",
-                            Province = "QC",
+                            Province = Province.ON,
                             Postal = "90004",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Queen Consolidated").ID
                         },
@@ -763,7 +763,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "654 Rand Street",
                             City = "New York",
-                            Province = "ON",
+                            Province = Province.YT,
                             Postal = "10002",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Rand Enterprises").ID
                         },
@@ -775,7 +775,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "987 Kord Street",
                             City = "Chicago",
-                            Province = "NB",
+                            Province = Province.ON,
                             Postal = "60602",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Kord Industries").ID
                         },
@@ -787,7 +787,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "321 STAR Street",
                             City = "Central City",
-                            Province = "NL",
+                            Province = Province.ON,
                             Postal = "64102",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "S.T.A.R. Labs").ID
                         },
@@ -799,7 +799,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "123 Acme Street",
                             City = "Phoenix",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "85003",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Acme Corporation").ID
                         },
@@ -811,7 +811,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "456 Stark Street",
                             City = "Los Angeles",
-                            Province = "BC",
+                            Province = Province.ON,
                             Postal = "90003",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Stark Industries").ID
                         },
@@ -823,7 +823,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "789 Wayne Street",
                             City = "Gotham",
-                            Province = "SK",
+                            Province = Province.ON,
                             Postal = "10004",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Wayne Enterprises").ID
                         },
@@ -835,7 +835,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "123 Oscorp Street",
                             City = "New York",
-                            Province = "QB",
+                            Province = Province.QC,
                             Postal = "10003",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "Oscorp Industries").ID
                         },
@@ -847,7 +847,7 @@ namespace NBDGreenerGrass.Data
                             Created = DateTime.Now,
                             Street = "456 LexCorp Street",
                             City = "Metropolis",
-                            Province = "ON",
+                            Province = Province.ON,
                             Postal = "61803",
                             ClientID = context.Clients.FirstOrDefault(c => c.Name == "LexCorp Industries").ID
                         });
