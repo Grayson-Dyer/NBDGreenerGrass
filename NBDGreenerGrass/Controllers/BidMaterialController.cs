@@ -49,9 +49,11 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidMaterial/CreateBidMaterial
+        P5_GraysonDyer_Fixes
         [HttpGet]
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidMaterial(int bidId, string returnUrl = null, string searchInventoryDesc = null, string searchInventoryCode = null, string sortOrder = null)
+
         {
             try
             {
@@ -184,7 +186,7 @@ namespace NBDGreenerGrass.Controllers
         // POST: BidMaterial/CreateBidMaterial
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> CreateBidMaterial(BidMaterialViewModel viewModel, Dictionary<int, int> selectedInventory, Dictionary<int, int> quantities)
         {
 
@@ -289,7 +291,7 @@ namespace NBDGreenerGrass.Controllers
          }*/
 
         // GET: BidMaterial/Edit/5
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> Edit(int? bidId, int? inventoryId)
         {
             if (bidId == null || inventoryId == null || _context.BidMaterials == null)
@@ -334,7 +336,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
 
         public async Task<IActionResult> Edit(int bidId, int inventoryId, [Bind("BidID,InventoryID,Quantity,InventoryDesc,InventorySize,InventoryCode,InventoryListPrice")] BidMaterial bidMaterial)
         {

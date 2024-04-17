@@ -152,7 +152,7 @@ namespace NBDGreenerGrass.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            int pageSize = 10;
+            int pageSize = 5;
             var pagedData = await PaginatedList<Client>.CreateAsync(nBDContext.AsNoTracking(), page ?? 1, pageSize);
 
             return View(pagedData);
@@ -215,6 +215,8 @@ namespace NBDGreenerGrass.Controllers
         }
 
         // GET: Clients/Edit/5
+        [Authorize(Roles = "Management,Designer,Sales")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Clients == null)

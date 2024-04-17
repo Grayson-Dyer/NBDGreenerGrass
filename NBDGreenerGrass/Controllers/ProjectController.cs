@@ -80,7 +80,7 @@ namespace NBDGreenerGrass.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
-            int pageSize = 10;//Change as required
+            int pageSize = 5;//Change as required
             var pagedData = await PaginatedList<Project>.CreateAsync(nBDContext.AsNoTracking(), page ?? 1, pageSize);
 
             return View(pagedData);
@@ -130,12 +130,13 @@ namespace NBDGreenerGrass.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
-        public async Task<IActionResult> Create([Bind("ID,Start,End,Amount,Created,Street,City,Province,Postal,Desc,ClientID")] Project project)
+        public async Task<IActionResult> Create([Bind("ID,Start,End,Amount,Street,City,Province,Postal,Desc,ClientID")] Project project)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    project.Created = DateTime.Now;
                     _context.Add(project);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -174,7 +175,7 @@ namespace NBDGreenerGrass.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Management,Designer,Sales")]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Start,End,Amount,Created,Street,City,Province,Postal,Desc,ClientID")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Start,End,Amount,Street,City,Province,Postal,Desc,ClientID")] Project project)
         {
             if (id != project.ID)
             {

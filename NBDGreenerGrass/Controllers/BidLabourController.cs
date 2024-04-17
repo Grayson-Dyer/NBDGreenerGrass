@@ -22,6 +22,7 @@ namespace NBDGreenerGrass.Controllers
         }
 
         //Get
+        P5_GraysonDyer_Fixes
         [Authorize(Roles = "Management,Designer,Sales")]
         public async Task<IActionResult> CreateBidLabour(int bidId, string searchLabourType = null, string sortOrder = null)
         {
@@ -106,7 +107,7 @@ namespace NBDGreenerGrass.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> CreateBidLabour(BidLabourViewModel viewModel, Dictionary<int, int> selectedLabourTypes, Dictionary<int, int> hoursWorked)
         {
             if (selectedLabourTypes == null || hoursWorked == null)
@@ -230,7 +231,7 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidLabour/Edit/5
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> Edit(int? bidId, int? labourId)
         {
             if (bidId == null || labourId == null || _context.BidMaterials == null)
@@ -272,7 +273,7 @@ namespace NBDGreenerGrass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Management,Designer,Sales")]
+        [Authorize(Roles = "Management,Designer")]
         public async Task<IActionResult> Edit(int bidId, int labourId, [Bind("BidID,LabourID,HoursWorked,LabourType,LabourPrice,LabourCost")] BidLabour bidLabour)
         {
             if (bidId != bidLabour.BidID || labourId != bidLabour.LabourID)

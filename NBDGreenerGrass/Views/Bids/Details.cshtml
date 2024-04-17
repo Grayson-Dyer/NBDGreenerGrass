@@ -73,10 +73,17 @@
                             <td>@material.InventoryCode</td>
                             <td>@material.InventoryListPrice.ToString("C")</td>
                             <td>@material.Quantity</td>
-                            <td>
-                                <a asp-action="Edit" asp-controller="BidMaterial" asp-route-bidId="@material.BidID" asp-route-inventoryId="@material.InventoryID">Edit</a>
-                                <a asp-action="Delete" asp-controller="BidMaterial" asp-route-bidId="@material.BidID" asp-route-inventoryId="@material.InventoryID">Delete</a>
-                            </td>
+                             @if (User.Identity.IsAuthenticated)
+                            {
+                                @if (User.IsInRole("Management") || User.IsInRole("Designer"))
+                                {
+                                    <td>
+                                        <a asp-action="Edit" asp-controller="BidMaterial" asp-route-bidId="@material.BidID" asp-route-inventoryId="@material.InventoryID">Edit</a>
+                                        <a asp-action="Delete" asp-controller="BidMaterial" asp-route-bidId="@material.BidID" asp-route-inventoryId="@material.InventoryID">Delete</a>
+                                    </td>
+                                }
+
+                            }
                         </tr>
                     }
                 </tbody>
@@ -109,10 +116,17 @@
                             <td>@labour.LabourPrice.ToString("C")</td>
                             <td>@labour.LabourCost.ToString("C")</td>
                             <td>@labour.HoursWorked</td>
-                            <td>
-                                <a asp-action="Edit" asp-controller="BidLabour" asp-route-bidId="@labour.BidID" asp-route-labourId="@labour.LabourID">Edit</a>
-                                <a asp-action="Delete" asp-controller="BidLabour" asp-route-bidId="@labour.BidID" asp-route-labourId="@labour.LabourID">Delete</a>
-                            </td>
+                             @if (User.Identity.IsAuthenticated)
+                            {
+                                @if (User.IsInRole("Management") || User.IsInRole("Designer"))
+                                {
+                                    <td>
+                                        <a asp-action="Edit" asp-controller="BidLabour" asp-route-bidId="@labour.BidID" asp-route-labourId="@labour.LabourID">Edit</a>
+                                        <a asp-action="Delete" asp-controller="BidLabour" asp-route-bidId="@labour.BidID" asp-route-labourId="@labour.LabourID">Delete</a>
+                                    </td>
+                                }
+
+                            }
                         </tr>
                     }
                 </tbody>
@@ -131,12 +145,26 @@
     {
         <a class="btn btn-success" asp-action="Approve" asp-route-Id="@Model.ID" asp-route-ID="@Model?.ID">Client Approve</a>
     }
-    <a class="btn btn-info" asp-route-returnUrl="@Context.Request.Path" asp-action="CreateBidMaterial" asp-controller="BidMaterial" asp-route-bidId="@Model.ID">Add Material</a>
-    <a class="btn btn-info" asp-action="CreateBidLabour" asp-controller="BidLabour" asp-route-bidId="@Model.ID">Add Labour</a>
+
+     @if (User.Identity.IsAuthenticated)
+            {
+        @if (User.IsInRole("Management") || User.IsInRole("Designer"))
+        {
+            <a class="btn btn-info" asp-route-returnUrl="@Context.Request.Path" asp-action="CreateBidMaterial" asp-controller="BidMaterial" asp-route-bidId="@Model.ID">Add Material</a>
+            <a class="btn btn-info" asp-action="CreateBidLabour" asp-controller="BidLabour" asp-route-bidId="@Model.ID">Add Labour</a>
+        }
+
+    }
 </div>
 
-
+@if (User.Identity.IsAuthenticated)
+            {
+        @if (User.IsInRole("Management") || User.IsInRole("Designer"))
+        {
 <div class="mt-4">
-    <a class="btn btn-primary" asp-action="Edit" asp-route-projectId="@Model.ProjectID" asp-route-id="@Model?.ID">Edit</a>
+   
+            <a class="btn btn-primary" asp-action="Edit" asp-route-projectId="@Model.ProjectID" asp-route-id="@Model?.ID">Edit</a>
+   
     <a class="btn btn-secondary" asp-action="Details" asp-controller="Project" asp-route-id="@Model.ProjectID">Back to Project Details</a>
 </div>
+        }}

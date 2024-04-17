@@ -27,32 +27,24 @@
                         <span asp-validation-for="Amount" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Created" class="control-label"></label>
-                        <input asp-for="Created" id="Created" class="form-control" />
-                        <span asp-validation-for="Created" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
                         <label asp-for="ClientID" class="control-label"></label>
-                        <select asp-for="ClientID" class="form-control" id="clientDropdown">
+                        <select asp-for="ClientID" class="form-control custom-select" id="clientDropdown" style="width: 100%; height: auto;">
                             <option value="">Select Client</option>
-                            @foreach (var client in ViewBag.ClientID)
+                            @{
+                                var sortedClients = ((IEnumerable<SelectListItem>)ViewBag.ClientID).OrderBy(x => x.Text);
+                            }
+                            @foreach (var client in sortedClients)
                             {
                                 <option value="@client.Value">@client.Text</option>
                             }
                         </select>
                     </div>
 
-                   @*  <div class="form-group">
-                        <label asp-for="ClientID" class="control-label"></label>
-                        <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
-                    </div> *@
                     <div class="form-group">
                         <label asp-for="Desc" class="control-label"></label>
                         <textarea asp-for="Desc" id="Desc" class="form-control" placeholder="Enter additional project notes"></textarea>
                         <span asp-validation-for="Desc" class="text-danger"></span>
                     </div>
-                   
                 </div>
                 <!-- Project Address Section -->
                 <div class="col-md-6">
@@ -76,7 +68,6 @@
                         <input asp-for="Postal" id="Postal" class="form-control" placeholder="E.g L3C 5X5" />
                         <span asp-validation-for="Postal" class="text-danger"></span>
                     </div>
-                    
                 </div>
             </div>
             <br />
@@ -98,23 +89,33 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <!-- Include Select2 JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+  <script>
+      $(document).ready(function () {
+          $('#clientDropdown').select2();
+      });
+
+      atfbtn = document.getElementById("AutoFill")
+      atfbtn.addEventListener("click", function () {
+          document.getElementById("Amount").value="4000"
+          document.getElementById("End").value="2024-12-24"
+          document.getElementById("Street").value="42 Possibility Rd."
+          document.getElementById("City").value="St. Catharines"
+          document.getElementById("Province").value="Ontario"
+          document.getElementById("Postal").value="A1B 2C3"
+          document.getElementById("Desc").value = "Lorem Ipsum Dolor Sit Amet"
+          document.getElementById("Created").value = "2024-05-23"
+          document.getElementById("clientDropdown").options[1].selected=true
+      });
+  </script>
+
+    <!-- Initialize Select2 -->
+  <script>
+      $(document).ready(function () {
+          $('#clientDropdown').select2();
+      });
+  </script>
 }
 
-<script>
-    $(document).ready(function () {
-        $('#clientDropdown').select2();
-    });
-
-    atfbtn = document.getElementById("AutoFill")
-    atfbtn.addEventListener("click", function () {
-        document.getElementById("Amount").value="4000"
-        document.getElementById("End").value="2024-12-24"
-        document.getElementById("Street").value="42 Possibility Rd."
-        document.getElementById("City").value="St. Catharines"
-        document.getElementById("Province").value="Ontario"
-        document.getElementById("Postal").value="A1B 2C3"
-        document.getElementById("Desc").value = "Lorem Ipsum Dolor Sit Amet"
-        document.getElementById("Created").value = "2024-05-23"
-        document.getElementById("clientDropdown").options[1].selected=true
-    });
-</script>
