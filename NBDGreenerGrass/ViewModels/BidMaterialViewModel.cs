@@ -5,6 +5,21 @@
     public List<SelectedInventoryItem> SelectedInventoryItems { get; set; } 
     public decimal ProjectCost { get; set; }
     public string ReturnUrl { get; set; }
+
+
+    // Sorting & Filtering
+    public string SearchInventoryDesc { get; set; }
+    public string SearchInventoryCode { get; set; }
+    public string SortOrder { get; set; }
+    public string InventoryDescSort { get; set; }
+    public string InventoryCodeSort { get; set; }
+    public string InventorySizeSort { get; set; } 
+    public string InventoryListPriceSort { get; set; }
+
+
+    public string CurrentInventoryDescFilter { get; set; }
+    public string CurrentInventoryCodeFilter { get; set; }
+
     public BidMaterialViewModel()
     {
         SelectedInventoryItems = new List<SelectedInventoryItem>();

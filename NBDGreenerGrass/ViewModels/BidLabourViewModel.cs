@@ -5,6 +5,13 @@
     public List<SelectedLabour> SelectedLabourTypes { get; set; }
     public decimal ProjectCost { get; set;}
 
+    // Sorting & Filtering
+    public string SearchLabourType { get; set; }
+    public string CurrentFilter { get; set; }
+    public string LabourTypeSort { get; set; }
+    public string LabourPriceSort { get; set; }
+    public string LabourCostSort { get; set; }
+
     public BidLabourViewModel()
     {
         SelectedLabourTypes = new List<SelectedLabour>();

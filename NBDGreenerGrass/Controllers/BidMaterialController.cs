@@ -49,11 +49,13 @@ namespace NBDGreenerGrass.Controllers
         }*/
 
         // GET: BidMaterial/CreateBidMaterial
+        [HttpGet]
         [Authorize(Roles = "Management,Designer,Sales")]
-        public async Task<IActionResult> CreateBidMaterial(int bidId, string returnUrl = null)
+        public async Task<IActionResult> CreateBidMaterial(int bidId, string returnUrl = null, string searchInventoryDesc = null, string searchInventoryCode = null, string sortOrder = null)
         {
             try
             {
+                
                 var bid = await _context.Bids
                     .Include(b => b.BidMaterials)
                     .ThenInclude(bm => bm.Inventory)
@@ -65,14 +67,57 @@ namespace NBDGreenerGrass.Controllers
                     return NotFound();
                 }
 
+                // Create a new BidMaterialViewModel instance and populate it with the necessary data
                 var viewModel = new BidMaterialViewModel
                 {
                     ProjectCost = _context.Projects.FirstOrDefault(p => p.ID == bid.ProjectID).Amount,
                     BidID = bidId,
                     AvailableInventory = GetAvailableInventory(bidId),
-                    ReturnUrl = returnUrl // Add this line
+                    ReturnUrl = returnUrl,
+                    SearchInventoryDesc = searchInventoryDesc,
+                    SearchInventoryCode = searchInventoryCode
                 };
+                
+                viewModel.CurrentInventoryDescFilter = searchInventoryDesc;
+                viewModel.CurrentInventoryCodeFilter = searchInventoryCode;
 
+                // Filter the available inventory based on the searchInventoryDesc
+                
+                if (!string.IsNullOrEmpty(searchInventoryDesc) || !string.IsNullOrEmpty(searchInventoryCode))
+                {
+
+                    if (!string.IsNullOrEmpty(searchInventoryDesc) && !string.IsNullOrEmpty(searchInventoryCode))
+                    {
+                        string searchDesc = searchInventoryDesc.ToLower();
+                        string searchCode = searchInventoryCode.ToLower();
+
+                        viewModel.AvailableInventory = viewModel.AvailableInventory
+                            .Where(i => i.InventoryDesc.ToLower().Contains(searchDesc) && i.InventoryCode.ToLower().Contains(searchCode))
+                            .ToList();
+                    }
+                    else if (!string.IsNullOrEmpty(searchInventoryDesc))
+                    {
+                        string searchDesc = searchInventoryDesc.ToLower();
+
+                        viewModel.AvailableInventory = viewModel.AvailableInventory
+                            .Where(i => i.InventoryDesc.ToLower().Contains(searchDesc))
+                            .ToList();
+                    }
+                    else if (!string.IsNullOrEmpty(searchInventoryCode))
+                    {
+                        string searchCode = searchInventoryCode.ToLower();
+
+                        viewModel.AvailableInventory = viewModel.AvailableInventory
+                            .Where(i => i.InventoryCode.ToLower().Contains(searchCode))
+                            .ToList();
+                    }
+                }
+
+                
+
+
+
+                // Calculate the total cost of all BidMaterials and BidLabours
                 decimal totalCost = 0;
 
                 foreach (var bidMaterial in bid.BidMaterials)
@@ -85,7 +130,46 @@ namespace NBDGreenerGrass.Controllers
                     totalCost += bidLabour.LabourPrice * bidLabour.HoursWorked;
                 }
 
+
+
+
                 ViewBag.TotalCost = totalCost;
+
+                viewModel.InventoryDescSort = string.IsNullOrEmpty(sortOrder) ? "inventory_desc" : "";
+                viewModel.InventoryCodeSort = sortOrder == "inventory_code" ? "inventory_code_desc" : "inventory_code";
+                viewModel.InventorySizeSort = sortOrder == "inventory_size" ? "inventory_size_desc" : "inventory_size";
+                viewModel.InventoryListPriceSort = sortOrder == "inventory_list_price" ? "inventory_list_price_desc" : "inventory_list_price";
+
+                viewModel.SortOrder = sortOrder;
+
+                switch (sortOrder)
+                {
+                    case "inventory_desc":
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderByDescending(i => i.InventoryDesc).ToList();
+                        break;
+                    case "inventory_code":
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderBy(i => i.InventoryCode).ToList();
+                        break;
+                    case "inventory_code_desc":
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderByDescending(i => i.InventoryCode).ToList();
+                        break;
+                    case "inventory_size":
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderBy(i => i.InventorySize).ToList();
+                        break;
+                    case "inventory_size_desc":
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderByDescending(i => i.InventorySize).ToList();
+                        break;
+                    case "inventory_list_price":
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderBy(i => i.InventoryListPrice).ToList();
+                        break;
+                    case "inventory_list_price_desc":
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderByDescending(i => i.InventoryListPrice).ToList();
+                        break;
+                    default:
+                        viewModel.AvailableInventory = viewModel.AvailableInventory.OrderBy(i => i.InventoryDesc).ToList();
+                        break;
+
+                }
 
                 return View(viewModel);
             }
